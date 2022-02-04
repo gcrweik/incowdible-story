@@ -12,6 +12,7 @@ public class GUI implements ActionListener
 	private JTextArea texte;
 	private JLabel image;
 
+	/*Commentaire Roman*/
 	public GUI(Jeu j) {
 		jeu = j;
 		creerGUI();
