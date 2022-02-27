@@ -26,7 +26,7 @@ public class Zone
 	}
 
 	public String descriptionLongue() {
-		return "Vous êtes dans " + description + "\nSorties : " + sorties();
+		return "Vous etes dans la zone : " + description + "\nSorties : " + sorties();
 	}
 
 	private String sorties() {

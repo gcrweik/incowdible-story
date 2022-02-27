@@ -1,4 +1,4 @@
 package jeu;
 public enum Sortie {
-	NORD, SUD, EST, OUEST;
+	NORD,NORD_EST, SUD, EST, OUEST,;
 }

@@ -12,18 +12,52 @@ public class Jeu {
 	public void setGUI( GUI g) { gui = g; afficherMessageDeBienvenue(); }
     
 	private void creerCarte() {
-		Zone[] zones = new Zone[4];
-		zones[0] = new Zone("le couloir", "Couloir.jpg" );
-		zones[1] = new Zone("l'escalier", "Escalier.jpg" );
-		zones[2] = new Zone("la grande salle", "GrandeSalle.jpg" );
-		zones[3] = new Zone("la salle Ã  manger", "SalleAManger.jpg" );
-		zones[0].ajouteSortie(Sortie.EST, zones[1]);
-		zones[1].ajouteSortie(Sortie.OUEST, zones[0]);
-		zones[1].ajouteSortie(Sortie.EST, zones[2]);
-		zones[2].ajouteSortie(Sortie.OUEST, zones[1]);
-		zones[3].ajouteSortie(Sortie.NORD, zones[1]);
-		zones[1].ajouteSortie(Sortie.SUD, zones[3]);
-		zoneCourante = zones[1]; 
+		Zone[] zones = new Zone[9];
+		zones[0] = new Zone("La Cellule", "Cellule.png" );
+		zones[1] = new Zone("Couloir", "Couloir.png" );
+		zones[2] = new Zone("Cours Interieur", "CoursInterieur.png" );
+		zones[3] = new Zone("Cafétéria", "Cafétéria.png" );
+		zones[4] = new Zone("Cours Exterieur", "CoursExterieur.png" );
+		zones[5] = new Zone("Cours de Sport", "Sport.png" );
+		zones[6] = new Zone("Mur", "Mur.png" );
+		zones[7] = new Zone("Escalier", "Escalier.png");
+		zones[8] = new Zone("Bureau de Directeur", "Bureau.png");
+		
+		// La sortie de Cellule
+		zones[0].ajouteSortie(Sortie.SUD, zones[1]);
+		
+		// Les sorties de Couloir
+		zones[1].ajouteSortie(Sortie.NORD, zones[0]);
+		zones[1].ajouteSortie(Sortie.SUD, zones[2]);
+		
+		// Les sorties de Cours Interieur
+		zones[2].ajouteSortie(Sortie.NORD, zones[1]);
+		zones[2].ajouteSortie(Sortie.NORD_EST, zones[7]);
+		zones[2].ajouteSortie(Sortie.EST, zones[3]);
+		zones[2].ajouteSortie(Sortie.OUEST, zones[4]);
+		
+		// Les sorties d'Escalier
+		zones[7].ajouteSortie(Sortie.OUEST, zones[2]);
+		zones[7].ajouteSortie(Sortie.NORD, zones[8]);
+		
+		// Les sorties de Cafétéria
+		zones[3].ajouteSortie(Sortie.OUEST, zones[2]);
+		
+		// Les sorties de Cours Exterieur
+		zones[4].ajouteSortie(Sortie.EST, zones[2]);
+		zones[4].ajouteSortie(Sortie.SUD, zones[5]);
+		
+		// Les sorties de Cours de Sport
+		zones[5].ajouteSortie(Sortie.NORD, zones[4]);
+		zones[5].ajouteSortie(Sortie.SUD, zones[6]);
+		
+		// Les sorties de Mur
+		zones[6].ajouteSortie(Sortie.NORD, zones[5]);
+		
+		// Les sorties de Bureau de Directeur
+		zones[8].ajouteSortie(Sortie.OUEST, zones[7]);
+		
+		zoneCourante = zones[0]; 
 	}
 
 	private void afficherLocalisation() {
@@ -49,6 +83,9 @@ public class Jeu {
 			case "N" : case "NORD" :
 				allerEn( "NORD"); 
 				break;
+			case "NE" : case "NORD_EST" :
+				allerEn( "NORD_EST"); 
+				break;
 			case "S" : case "SUD" :
 				allerEn( "SUD"); 
 				break;
@@ -70,7 +107,7 @@ public class Jeu {
 	private void afficherAide() {
 		gui.afficher("Etes-vous perdu ?");
 		gui.afficher();
-		gui.afficher("Les commandes autorisÃ©es sont :");
+		gui.afficher("Les commandes autorisées sont :");
 		gui.afficher();
 		gui.afficher(Commande.toutesLesDescriptions().toString());
 		gui.afficher();
