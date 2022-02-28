@@ -40,9 +40,17 @@ public class GUI implements ActionListener
 	}
 
 	private void creerGUI() {
-		fenetre = new JFrame("Jeu");
+		
+		//Titre du jeu 
+		fenetre = new JFrame("Incowdible Story");
 		entree = new JTextField(34);
 
+		
+		// Changement de l'icon de l'application
+		URL iconURL = getClass().getResource("images/IconApplication.png");
+		ImageIcon icon = new ImageIcon(iconURL);
+		fenetre.setIconImage(icon.getImage());
+		
 		texte = new JTextArea();
 		texte.setEditable(false);
 		JScrollPane listScroller = new JScrollPane(texte);
@@ -52,6 +60,8 @@ public class GUI implements ActionListener
 		JPanel panel = new JPanel();
 		image = new JLabel();
 		
+		image.setHorizontalAlignment(JLabel.CENTER);
+		image.setVerticalAlignment(JLabel.CENTER);
 		
 		panel.setLayout(new BorderLayout());
 		panel.add(image, BorderLayout.NORTH);
@@ -64,8 +74,9 @@ public class GUI implements ActionListener
 
 		entree.addActionListener(this);
 
-		fenetre.pack();
+		
 		// Permet de mettre la fenetre en plein ecran au lancement
+		fenetre.pack();
 		fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		fenetre.setVisible(true);
 		entree.requestFocus();
