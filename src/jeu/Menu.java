@@ -1,11 +1,17 @@
 package jeu;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import util_class.RoundedBorder;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.net.URL;
 
 public class Menu implements ActionListener {
@@ -15,8 +21,27 @@ public class Menu implements ActionListener {
 	JButton btn_load = new JButton("Load");
 	JButton btn_controls = new JButton("Controls");
 	JButton btn_exit = new JButton("Exit");
+	Clip clip; // Pour le son
 
 	public Menu() {
+		
+		URL music_url = getClass().getResource("sounds/MenuMusic.wav");
+
+		// Initialisation de Audio Input
+		try {
+			clip = AudioSystem.getClip();
+			AudioInputStream audio_input = AudioSystem.getAudioInputStream(music_url);
+			clip.open(audio_input);
+		} catch (LineUnavailableException e) {
+			// Lien indisponible
+			e.printStackTrace();
+		} catch (UnsupportedAudioFileException e) {
+			// Le format non reconnu
+			e.printStackTrace();
+		} catch (IOException e) {
+			// Exception
+			e.printStackTrace();
+		}
 
 		// Image du fond du menu
 		JLabel background = new JLabel(new ImageIcon(getClass().getResource("images/menu_background.gif")));
@@ -78,6 +103,7 @@ public class Menu implements ActionListener {
 		btn_exit.setFocusable(false);
 
 		// Parametrage de la JFrame
+		clip.start(); // Commence de jouer le son
 		menu_frame.setSize(new Dimension(750, 410));
 		menu_frame.setResizable(false);
 		menu_frame.setLocationRelativeTo(null);
@@ -89,6 +115,7 @@ public class Menu implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btn_start) {
 			menu_frame.dispose();
+			clip.close();// Arrete le son
 			Jeu jeu = new Jeu();
 			GUI gui = new GUI(jeu);
 			jeu.setGUI(gui);

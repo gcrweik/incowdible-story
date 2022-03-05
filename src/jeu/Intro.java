@@ -5,11 +5,14 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,24 +25,33 @@ public class Intro implements KeyListener {
 	JPanel intro_panel = new JPanel();
 	JButton btn_next = new JButton("Next");
 	CardLayout card = new CardLayout();
-	BufferedImage[] images = new BufferedImage[3];
+	Clip clip; // Pour le son
 	int counter = 0; // Counter de scenes
 
 	public Intro() {
 
-		// Ajout d'images dans une liste de BufferedImage
+		URL music_url = getClass().getResource("sounds/IntroMusic.wav");
+
+		// Initialisation de Audio Input
 		try {
-			images[0] = ImageIO.read(getClass().getResource("images/Scene1.png"));
-			images[1] = ImageIO.read(getClass().getResource("images/CoursInterieur.png"));
-			images[2] = ImageIO.read(getClass().getResource("images/CoursExterieur.png"));
+			clip = AudioSystem.getClip();
+			AudioInputStream audio_input = AudioSystem.getAudioInputStream(music_url);
+			clip.open(audio_input);
+		} catch (LineUnavailableException e) {
+			// Lien indisponible
+			e.printStackTrace();
+		} catch (UnsupportedAudioFileException e) {
+			// Le format non reconnu
+			e.printStackTrace();
 		} catch (IOException e) {
+			// Exception
 			e.printStackTrace();
 		}
 
-		// Creattion de label des scenes
-		JLabel scene1 = new JLabel(new ImageIcon(images[0]));
-		JLabel scene2 = new JLabel(new ImageIcon(images[1]));
-		JLabel scene3 = new JLabel(new ImageIcon(images[2]));
+		// Creation de label des scenes
+		JLabel scene1 = new JLabel(new ImageIcon(getClass().getResource("images/Scene1_Old.gif")));
+		JLabel scene2 = new JLabel(new ImageIcon(getClass().getResource("images/CoursInterieur.png")));
+		JLabel scene3 = new JLabel(new ImageIcon(getClass().getResource("images/CoursExterieur.png")));
 
 		// Layout qui permet de mettre les labels un sur l'autre
 		intro_panel.setLayout(card);
@@ -62,6 +74,7 @@ public class Intro implements KeyListener {
 		intro_frame.setIconImage(icon.getImage());
 
 		// Reglage de la JFrame
+		clip.start(); // Commence de jouer le son
 		intro_frame.setSize(new Dimension(960, 540));
 		intro_frame.setResizable(false);
 		intro_frame.setLocationRelativeTo(null);
@@ -82,7 +95,8 @@ public class Intro implements KeyListener {
 				card.next(intro_panel);
 				counter += 1;
 			} else {
-				intro_frame.dispose();
+				intro_frame.dispose(); // Fermer la JFrame
+				clip.close(); // Arrete le son
 				Menu menu = new Menu();
 			}
 		}
