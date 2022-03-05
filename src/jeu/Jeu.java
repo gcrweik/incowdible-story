@@ -3,7 +3,7 @@ public class Jeu {
 	
 	private GUI gui; 
 	private Zone zoneCourante;
-    
+	
 	public Jeu() {
 		creerCarte();
 		gui = null;
