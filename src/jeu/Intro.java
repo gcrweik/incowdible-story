@@ -50,8 +50,10 @@ public class Intro implements KeyListener {
 
 		// Creation de label des scenes
 		JLabel scene1 = new JLabel(new ImageIcon(getClass().getResource("images/Scene1_Old.gif")));
-		JLabel scene2 = new JLabel(new ImageIcon(getClass().getResource("images/CoursInterieur.png")));
-		JLabel scene3 = new JLabel(new ImageIcon(getClass().getResource("images/CoursExterieur.png")));
+		JLabel scene2 = new JLabel(new ImageIcon(getClass().getResource("images/Scene2_Old.gif")));
+		JLabel scene3 = new JLabel(new ImageIcon(getClass().getResource("images/Scene3_Old.gif")));
+		JLabel scene4 = new JLabel(new ImageIcon(getClass().getResource("images/Scene4_Old.gif")));
+		JLabel scene5 = new JLabel(new ImageIcon(getClass().getResource("images/CoursExterieur.png")));
 
 		// Layout qui permet de mettre les labels un sur l'autre
 		intro_panel.setLayout(card);
@@ -60,6 +62,8 @@ public class Intro implements KeyListener {
 		intro_panel.add(scene1);
 		intro_panel.add(scene2);
 		intro_panel.add(scene3);
+		intro_panel.add(scene4);
+		intro_panel.add(scene5);
 
 		// Listener su JPanel pour
 		intro_panel.addKeyListener(this);
@@ -74,7 +78,7 @@ public class Intro implements KeyListener {
 		intro_frame.setIconImage(icon.getImage());
 
 		// Reglage de la JFrame
-		clip.start(); // Commence de jouer le son
+		clip.loop(Clip.LOOP_CONTINUOUSLY); // Commence de jouer le son en boucle
 		intro_frame.setSize(new Dimension(960, 540));
 		intro_frame.setResizable(false);
 		intro_frame.setLocationRelativeTo(null);
@@ -91,7 +95,7 @@ public class Intro implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			if (counter < 2) {
+			if (counter < 4) {
 				card.next(intro_panel);
 				counter += 1;
 			} else {
