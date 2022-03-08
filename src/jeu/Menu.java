@@ -103,7 +103,7 @@ public class Menu implements ActionListener {
 		btn_exit.setFocusable(false);
 
 		// Parametrage de la JFrame
-		clip.start(); // Commence de jouer le son
+		clip.loop(Clip.LOOP_CONTINUOUSLY); // Commence de jouer le son en boucle
 		menu_frame.setSize(new Dimension(750, 410));
 		menu_frame.setResizable(false);
 		menu_frame.setLocationRelativeTo(null);
