@@ -53,7 +53,7 @@ public class Intro implements KeyListener {
 		JLabel scene2 = new JLabel(new ImageIcon(getClass().getResource("images/Scene2_Old.gif")));
 		JLabel scene3 = new JLabel(new ImageIcon(getClass().getResource("images/Scene3_Old.gif")));
 		JLabel scene4 = new JLabel(new ImageIcon(getClass().getResource("images/Scene4_Old.gif")));
-		JLabel scene5 = new JLabel(new ImageIcon(getClass().getResource("images/CoursExterieur.png")));
+		JLabel scene5 = new JLabel(new ImageIcon(getClass().getResource("images/Scene5_NonInf_Old.gif")));
 
 		// Layout qui permet de mettre les labels un sur l'autre
 		intro_panel.setLayout(card);
