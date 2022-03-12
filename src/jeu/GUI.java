@@ -7,10 +7,11 @@ import java.net.URL;
 public class GUI implements ActionListener
 {
 	private Jeu jeu;
-	private JFrame fenetre;
-	private JTextField entree;
-	private JTextArea texte;
-	private JLabel image;
+	private JFrame fenetre = new JFrame("The Incowdible Story");
+	private JPanel panel = new JPanel();
+	private JTextField entree = new JTextField(34);
+	private JTextArea texte = new JTextArea();
+	private JLabel image = new JLabel();
 	
 	public GUI(Jeu j) {
 		jeu = j;
@@ -40,26 +41,18 @@ public class GUI implements ActionListener
 	}
 
 	private void creerGUI() {
-		
-		//Titre du jeu 
-		fenetre = new JFrame("Incowdible Story");
-		entree = new JTextField(34);
 
-		
 		// Changement de l'icon de l'application
 		URL iconURL = getClass().getResource("images/IconApplication.png");
 		ImageIcon icon = new ImageIcon(iconURL);
 		fenetre.setIconImage(icon.getImage());
 		
-		texte = new JTextArea();
+		
 		texte.setEditable(false);
 		JScrollPane listScroller = new JScrollPane(texte);
 		listScroller.setPreferredSize(new Dimension(1920,1080));
 		listScroller.setMinimumSize(new Dimension(850, 600));
 
-		JPanel panel = new JPanel();
-		image = new JLabel();
-		
 		image.setHorizontalAlignment(JLabel.CENTER);
 		image.setVerticalAlignment(JLabel.CENTER);
 		
