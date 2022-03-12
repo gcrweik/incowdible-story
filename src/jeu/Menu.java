@@ -16,7 +16,7 @@ import java.net.URL;
 
 public class Menu implements ActionListener {
 
-	JFrame menu_frame = new JFrame("Incowdible Story");
+	JFrame menu_frame = new JFrame("The Incowdible Story");
 	JButton btn_start = new JButton("New Game");
 	JButton btn_load = new JButton("Load");
 	JButton btn_controls = new JButton("Controls");
@@ -58,7 +58,7 @@ public class Menu implements ActionListener {
 		GridBagConstraints c = new GridBagConstraints();
 
 		// Titre du menu
-		background.add(new JLabel("<html><h1><strong><i>Incowdible Story</i></strong></h1><hr></html>"), c);
+		background.add(new JLabel("<html><h1><strong><i>The Incowdible Story</i></strong></h1><hr></html>"), c);
 
 		// Parametrage des boutons ronds
 		btn_start.setBorder(new RoundedBorder(10));

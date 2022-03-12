@@ -21,9 +21,8 @@ import javax.swing.JPanel;
 
 public class Intro implements KeyListener {
 
-	JFrame intro_frame = new JFrame("Incowdible Story");
+	JFrame intro_frame = new JFrame("The Incowdible Story");
 	JPanel intro_panel = new JPanel();
-	JButton btn_next = new JButton("Next");
 	CardLayout card = new CardLayout();
 	Clip clip; // Pour le son
 	int counter = 0; // Counter de scenes
