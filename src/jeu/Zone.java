@@ -1,7 +1,7 @@
 package jeu;
 import java.util.HashMap;
 
-public class Zone 
+public class Zone implements java.io.Serializable
 {
 	private String description;
 	private String nomImage;
@@ -12,7 +12,7 @@ public class Zone
 		nomImage = image;
 		sorties = new HashMap<>();
 	}
-
+	
 	public void ajouteSortie(Sortie sortie, Zone zoneVoisine) {
 		sorties.put(sortie.name(), zoneVoisine);
 	}
