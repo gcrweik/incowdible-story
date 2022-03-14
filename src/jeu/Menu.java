@@ -16,7 +16,7 @@ import java.net.URL;
 
 public class Menu implements ActionListener {
 
-	JFrame menu_frame = new JFrame("The Incowdible Story");
+	JFrame menu_frame = new JFrame("Menu");
 	JButton btn_start = new JButton("New Game");
 	JButton btn_load = new JButton("Load");
 	JButton btn_controls = new JButton("Controls");
@@ -24,7 +24,7 @@ public class Menu implements ActionListener {
 	Clip clip; // Pour le son
 
 	public Menu() {
-		
+
 		URL music_url = getClass().getResource("sounds/MenuMusic.wav");
 
 		// Initialisation de Audio Input
@@ -121,10 +121,15 @@ public class Menu implements ActionListener {
 			jeu.setGUI(gui);
 		}
 		if (e.getSource() == btn_load) {
-			// TODO Action sur le bouton load
+			menu_frame.dispose();
+			clip.close(); // Arrete le son
+			Jeu jeu_loaded = GUI.loadGame(); // Charge une partie à partir de la sauvegarde
+			GUI gui = new GUI(jeu_loaded);
+			jeu_loaded.setGUI(gui);
+
 		}
 		if (e.getSource() == btn_controls) {
-			// TODO Action sur le bouton controls
+			// A développer
 		}
 		if (e.getSource() == btn_exit) {
 			System.exit(0);
