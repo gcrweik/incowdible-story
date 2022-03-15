@@ -1,9 +1,10 @@
 package jeu;
 
-public class Jeu implements java.io.Serializable  {
+public class Jeu implements java.io.Serializable {
 
 	private GUI gui;
 	private Zone zoneCourante;
+	private Element mainCharacter = new Element(563, 139, 32, 64, "MargueriteProjet.png");
 
 	public Jeu() {
 		creerCarte();
@@ -17,16 +18,17 @@ public class Jeu implements java.io.Serializable  {
 
 	private void creerCarte() {
 		Zone[] zones = new Zone[9];
-		zones[0] = new Zone("La Cellule", "Cellule.png");
-		zones[1] = new Zone("Couloir", "Couloir.png");
-		zones[2] = new Zone("Cours Interieur", "CoursInterieur.png");
-		zones[3] = new Zone("Cafétéria", "Cafétéria.png");
-		zones[4] = new Zone("Cours Exterieur", "CoursExterieur.png");
-		zones[5] = new Zone("Cours de Sport", "Sport.png");
-		zones[6] = new Zone("Mur", "Mur.png");
-		zones[7] = new Zone("Escalier", "Escalier.png");
-		zones[8] = new Zone("Bureau de Directeur", "Bureau.png");
-
+		zones[0] = new Zone("La Cellule", "Cellule.png", 712, 497);
+		zones[1] = new Zone("Couloir", "Couloir.png", 734, 23);
+		zones[2] = new Zone("Cours Interieur", "CoursInterieur.png", 693, 139);
+		/*
+		 * zones[3] = new Zone("Cafétéria", "Cafétéria.png" ); zones[4] = new
+		 * Zone("Cours Exterieur", "CoursExterieur.png" ); zones[5] = new
+		 * Zone("Cours de Sport", "Sport.png" ); zones[6] = new Zone("Mur", "Mur.png" );
+		 * zones[7] = new Zone("Escalier", "Escalier.png"); zones[8] = new
+		 * Zone("Bureau de Directeur", "Bureau.png");
+		 */
+		
 		// La sortie de Cellule
 		zones[0].ajouteSortie(Sortie.SUD, zones[1]);
 
@@ -40,27 +42,23 @@ public class Jeu implements java.io.Serializable  {
 		zones[2].ajouteSortie(Sortie.EST, zones[3]);
 		zones[2].ajouteSortie(Sortie.OUEST, zones[4]);
 
-		// Les sorties d'Escalier
-		zones[7].ajouteSortie(Sortie.OUEST, zones[2]);
-		zones[7].ajouteSortie(Sortie.NORD, zones[8]);
-
-		// Les sorties de Cafétéria
-		zones[3].ajouteSortie(Sortie.OUEST, zones[2]);
-
-		// Les sorties de Cours Exterieur
-		zones[4].ajouteSortie(Sortie.EST, zones[2]);
-		zones[4].ajouteSortie(Sortie.SUD, zones[5]);
-
-		// Les sorties de Cours de Sport
-		zones[5].ajouteSortie(Sortie.NORD, zones[4]);
-		zones[5].ajouteSortie(Sortie.SUD, zones[6]);
-
-		// Les sorties de Mur
-		zones[6].ajouteSortie(Sortie.NORD, zones[5]);
-
-		// Les sorties de Bureau de Directeur
-		zones[8].ajouteSortie(Sortie.OUEST, zones[7]);
-
+		/*
+		 * // Les sorties d'Escalier zones[7].ajouteSortie(Sortie.OUEST, zones[2]);
+		 * zones[7].ajouteSortie(Sortie.NORD, zones[8]);
+		 * 
+		 * // Les sorties de Cafétéria zones[3].ajouteSortie(Sortie.OUEST, zones[2]);
+		 * 
+		 * // Les sorties de Cours Exterieur zones[4].ajouteSortie(Sortie.EST,
+		 * zones[2]); zones[4].ajouteSortie(Sortie.SUD, zones[5]);
+		 * 
+		 * // Les sorties de Cours de Sport zones[5].ajouteSortie(Sortie.NORD,
+		 * zones[4]); zones[5].ajouteSortie(Sortie.SUD, zones[6]);
+		 * 
+		 * // Les sorties de Mur zones[6].ajouteSortie(Sortie.NORD, zones[5]);
+		 * 
+		 * // Les sorties de Bureau de Directeur zones[8].ajouteSortie(Sortie.OUEST,
+		 * zones[7]);
+		 */
 		zoneCourante = zones[0];
 	}
 
@@ -77,6 +75,7 @@ public class Jeu implements java.io.Serializable  {
 		gui.afficher("Appuyez sur la touche 'Escape' pour ouvrir le menu. ");
 		gui.afficher();
 		afficherLocalisation();
+		gui.afficheElement(mainCharacter);
 		gui.afficheImage(zoneCourante.nomImage());
 	}
 
@@ -132,9 +131,14 @@ public class Jeu implements java.io.Serializable  {
 			gui.afficher("Pas de sortie " + direction);
 			gui.afficher();
 		} else {
+			// Supprime l'ancien personnage
+			gui.image.removeAll();
 			zoneCourante = nouvelle;
 			gui.afficher(zoneCourante.descriptionLongue());
 			gui.afficher();
+			// Crée et affiche le personnage à la zone de spawn de la salle.
+			mainCharacter.setCoordinates(zoneCourante.xSpawn, zoneCourante.ySpawn);
+			gui.afficheElement(mainCharacter);
 			gui.afficheImage(zoneCourante.nomImage());
 		}
 	}
