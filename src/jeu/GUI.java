@@ -17,7 +17,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 	private JPanel panel = new JPanel();
 	private JTextField entree = new JTextField(34);
 	private JTextArea texte = new JTextArea();
-	private JLabel image = new JLabel();
+	public JLabel image = new JLabel();
 	InputMap gui_input = panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in game.
 	static ImageIcon check_icon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
 																									// MessageDialog
@@ -40,7 +40,46 @@ public class GUI implements ActionListener, java.io.Serializable {
 		URL imageURL = this.getClass().getClassLoader().getResource("jeu/images/" + nomImage);
 		if (imageURL != null) {
 			image.setIcon(new ImageIcon(imageURL));
+			
+			final JTextField text = new JTextField();
+			;
+			fenetre.add(text, BorderLayout.SOUTH);
+
+			image.addMouseListener(new MouseListener() {
+				public void mousePressed(MouseEvent me) {
+				}
+
+				public void mouseReleased(MouseEvent me) {
+				}
+
+				public void mouseEntered(MouseEvent me) {
+				}
+
+				public void mouseExited(MouseEvent me) {
+				}
+
+				public void mouseClicked(MouseEvent me) {
+					int x = me.getX();
+					int y = me.getY();
+					text.setText("X:" + x + " Y:" + y);
+				}
+			});
 		}
+	}
+	
+	// Methode permettant de créer puis afficher l'elements aux coordonées donné.
+	public JLabel afficheElement(Element element) {
+		JLabel objectLabel = new JLabel();
+		objectLabel.setBounds(element.x, element.y, element.imageWidth, element.imageHeight);
+
+		URL imageURL = this.getClass().getClassLoader().getResource("jeu/images/" + element.imageName);
+		if (imageURL != null) {
+			objectLabel.setIcon(new ImageIcon(imageURL));
+			image.add(objectLabel);
+			return objectLabel;
+		} else
+			System.out.println("Une erreur est arrivée");
+		return null;
 	}
 
 	public void enable(boolean ok) {
@@ -85,13 +124,12 @@ public class GUI implements ActionListener, java.io.Serializable {
 			}
 		});
 
-		// Listener pour le chat
+		// Listener pour le chat.
 		entree.addActionListener(this);
 		entree.requestFocus();
 
-		// Permet de mettre la fenetre en plein ecran au lancement
-		fenetre.pack();
-		fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// Parametrage de l'ecran.
+		fenetre.setSize(1920,800);
 		fenetre.setVisible(true);
 		entree.requestFocusInWindow();
 	}
