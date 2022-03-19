@@ -1,4 +1,4 @@
-package jeu;
+package game;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -18,23 +18,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Intro implements KeyListener {
+public class Introduction implements KeyListener {
 
-	JFrame intro_frame = new JFrame("The Incowdible Story");
-	JPanel intro_panel = new JPanel();
+	JFrame introFrame = new JFrame("The Incowdible Story");
+	JPanel introPanel = new JPanel();
 	CardLayout card = new CardLayout();
 	Clip clip; // Pour le son
 	int counter = 0; // Counter de scenes
 
-	public Intro() {
+	public Introduction() {
 
-		URL music_url = getClass().getResource("sounds/IntroMusic.wav");
+		URL musicUrl = getClass().getResource("sounds/IntroMusic.wav");
 
 		// Initialisation de Audio Input
 		try {
 			clip = AudioSystem.getClip();
-			AudioInputStream audio_input = AudioSystem.getAudioInputStream(music_url);
-			clip.open(audio_input);
+			AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicUrl);
+			clip.open(audioInput);
 		} catch (LineUnavailableException e) {
 			// Lien indisponible
 			e.printStackTrace();
@@ -54,34 +54,34 @@ public class Intro implements KeyListener {
 		JLabel scene5 = new JLabel(new ImageIcon(getClass().getResource("images/Scene5_NonInf_Old.gif")));
 
 		// Layout qui permet de mettre les labels un sur l'autre
-		intro_panel.setLayout(card);
+		introPanel.setLayout(card);
 
 		// Ajout de scenes dans le JPanel
-		intro_panel.add(scene1);
-		intro_panel.add(scene2);
-		intro_panel.add(scene3);
-		intro_panel.add(scene4);
-		intro_panel.add(scene5);
+		introPanel.add(scene1);
+		introPanel.add(scene2);
+		introPanel.add(scene3);
+		introPanel.add(scene4);
+		introPanel.add(scene5);
 
 		// Listener su JPanel pour
-		intro_panel.addKeyListener(this);
-		intro_panel.setFocusable(true);
+		introPanel.addKeyListener(this);
+		introPanel.setFocusable(true);
 
 		// Ajout de JPanel dans la JFrame
-		intro_frame.getContentPane().add(intro_panel, BorderLayout.CENTER);
+		introFrame.getContentPane().add(introPanel, BorderLayout.CENTER);
 
 		// Changement de l'icon de l'application
 		URL iconURL = getClass().getResource("images/IconApplication.png");
 		ImageIcon icon = new ImageIcon(iconURL);
-		intro_frame.setIconImage(icon.getImage());
+		introFrame.setIconImage(icon.getImage());
 
 		// Reglage de la JFrame
 		clip.loop(Clip.LOOP_CONTINUOUSLY); // Commence de jouer le son en boucle
-		intro_frame.setSize(new Dimension(960, 540));
-		intro_frame.setResizable(false);
-		intro_frame.setLocationRelativeTo(null);
-		intro_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		intro_frame.setVisible(true);
+		introFrame.setSize(new Dimension(960, 540));
+		introFrame.setResizable(false);
+		introFrame.setLocationRelativeTo(null);
+		introFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		introFrame.setVisible(true);
 	}
 
 	@Override
@@ -94,10 +94,10 @@ public class Intro implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (counter < 4) {
-				card.next(intro_panel);
+				card.next(introPanel);
 				counter += 1;
 			} else {
-				intro_frame.dispose(); // Fermer la JFrame
+				introFrame.dispose(); // Fermer la JFrame
 				clip.close(); // Arrete le son
 				Menu menu = new Menu();
 			}

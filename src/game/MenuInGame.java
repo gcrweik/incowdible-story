@@ -1,4 +1,4 @@
-package jeu;
+package game;
 
 import javax.swing.*;
 
@@ -10,33 +10,33 @@ import java.net.URL;
 
 public class MenuInGame implements ActionListener, KeyListener {
 
-	static JFrame mini_menu = new JFrame("Game Options");
-	JButton btn_save = new JButton("Save");
-	JButton btn_options = new JButton("Options");
-	JButton btn_menu = new JButton("Menu");
-	JButton btn_exit = new JButton("Exit");
+	static JFrame miniMenu = new JFrame("Game Options");
+	JButton btnSave = new JButton("Save");
+	JButton btnOptions = new JButton("Options");
+	JButton btnMenu = new JButton("Menu");
+	JButton btnExit = new JButton("Exit");
 
 	public MenuInGame() {
 
 		// Image du fond du menu
 		JLabel background = new JLabel(new ImageIcon(getClass().getResource("images/menu_background.gif")));
-		mini_menu.add(background);
+		miniMenu.add(background);
 		background.setLayout(new OverlayLayout(background));
 
 		// Changement de l'icon de l'application
 		URL iconURL = getClass().getResource("images/IconApplication.png");
 		ImageIcon icon = new ImageIcon(iconURL);
-		mini_menu.setIconImage(icon.getImage());
+		miniMenu.setIconImage(icon.getImage());
 
 		// Parametrage de Layout
 		background.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
 		// Parametrage des boutons ronds
-		btn_save.setBorder(new RoundedBorder(10));
-		btn_options.setBorder(new RoundedBorder(10));
-		btn_menu.setBorder(new RoundedBorder(10));
-		btn_exit.setBorder(new RoundedBorder(10));
+		btnSave.setBorder(new RoundedBorder(10));
+		btnOptions.setBorder(new RoundedBorder(10));
+		btnMenu.setBorder(new RoundedBorder(10));
+		btnExit.setBorder(new RoundedBorder(10));
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -48,66 +48,66 @@ public class MenuInGame implements ActionListener, KeyListener {
 		c.gridy = 1; // Change la position dans le layout
 		c.anchor = GridBagConstraints.CENTER;
 		c.weighty = 1;
-		background.add(btn_save, c);
+		background.add(btnSave, c);
 
 		c.gridy = 2;
 		c.weighty = 0.5;
-		background.add(btn_options, c);
+		background.add(btnOptions, c);
 
 		c.gridy = 3;
 		c.weighty = 1;
-		background.add(btn_menu, c);
+		background.add(btnMenu, c);
 
 		c.gridy = 4;
 		c.weighty = 0.5;
-		background.add(btn_exit, c);
+		background.add(btnExit, c);
 
 		// Listener pour les boutons
-		btn_save.addActionListener(this);
-		btn_options.addActionListener(this);
-		btn_menu.addActionListener(this);
-		btn_exit.addActionListener(this);
+		btnSave.addActionListener(this);
+		btnOptions.addActionListener(this);
+		btnMenu.addActionListener(this);
+		btnExit.addActionListener(this);
 
 		// Desactive le focus sur les buttons
-		btn_save.setFocusable(false);
-		btn_options.setFocusable(false);
-		btn_menu.setFocusable(false);
-		btn_exit.setFocusable(false);
+		btnSave.setFocusable(false);
+		btnOptions.setFocusable(false);
+		btnMenu.setFocusable(false);
+		btnExit.setFocusable(false);
 
 		// Listener pour revenir au jeu
-		mini_menu.addKeyListener(this);
-		mini_menu.setFocusable(true);
+		miniMenu.addKeyListener(this);
+		miniMenu.setFocusable(true);
 
 		// Parametrage de la JFrame
-		mini_menu.setSize(new Dimension(750, 410));
-		mini_menu.setResizable(false);
-		mini_menu.setLocationRelativeTo(null);
-		mini_menu.setVisible(true);
+		miniMenu.setSize(new Dimension(750, 410));
+		miniMenu.setResizable(false);
+		miniMenu.setLocationRelativeTo(null);
+		miniMenu.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Permet de recuperer le nom de la sauvegarde(sans espaces et caracteres
 		// speciaux) et de la sauvegarder.
-		if (e.getSource() == btn_save) {
-			String save_name = JOptionPane.showInputDialog(mini_menu, "Name your save slot:", null);
-			if (!save_name.isEmpty() && save_name.matches("[a-zA-Z0-9]*")) {
-				GUI.savegame(save_name);
+		if (e.getSource() == btnSave) {
+			String saveName = JOptionPane.showInputDialog(miniMenu, "Name your save slot (12 characters max):", null);
+			if (!saveName.isEmpty() && saveName.matches("[a-zA-Z0-9]*") && saveName.length()<=12) {
+				GUI.savegame(saveName);
 			} else {
-				JOptionPane.showMessageDialog(mini_menu,
-						"The name of the save can't contain any special characters,spaces or be empty!", "Error",
+				JOptionPane.showMessageDialog(miniMenu,
+						"The name of the save can't contain any special characters,spaces, be too long or empty!", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		if (e.getSource() == btn_options) {
+		if (e.getSource() == btnOptions) {
 			// A developper
 		}
-		if (e.getSource() == btn_menu) {
-			mini_menu.dispose(); // Ferme la JFrame.
-			GUI.disposeMenuFrame();
+		if (e.getSource() == btnMenu) {
+			miniMenu.dispose(); // Ferme la JFrame.
+			GUI.disposeGUIFrame();
 			Menu menu = new Menu(); // Revient dans le menu.
 		}
-		if (e.getSource() == btn_exit) {
+		if (e.getSource() == btnExit) {
 			System.exit(0);
 		}
 
@@ -122,7 +122,7 @@ public class MenuInGame implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			mini_menu.dispose();
+			miniMenu.dispose();
 		}
 
 	}

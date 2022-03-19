@@ -1,7 +1,7 @@
-package jeu;
+package game;
 
 public class Main {
 	public static void main(String[] args) {
-		Intro intro= new Intro();
+		Introduction intro = new Introduction();
 ;	}
 }
