@@ -81,6 +81,7 @@ public class End implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			endFrame.dispose(); // Fermer la JFrame
 			clip.close(); // Arrete le son
+			@SuppressWarnings("unused")
 			Menu menu = new Menu();
 		}
 	}

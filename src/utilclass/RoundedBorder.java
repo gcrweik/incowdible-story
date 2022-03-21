@@ -1,4 +1,4 @@
-package util_class;
+package utilclass;
 
 import java.awt.Component;
 import java.awt.Graphics;
