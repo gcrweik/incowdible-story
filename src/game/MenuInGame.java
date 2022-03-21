@@ -2,7 +2,7 @@ package game;
 
 import javax.swing.*;
 
-import util_class.RoundedBorder;
+import utilclass.RoundedBorder;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -92,7 +92,7 @@ public class MenuInGame implements ActionListener, KeyListener {
 		if (e.getSource() == btnSave) {
 			String saveName = JOptionPane.showInputDialog(miniMenu, "Name your save slot (12 characters max):", null);
 			if (!saveName.isEmpty() && saveName.matches("[a-zA-Z0-9]*") && saveName.length()<=12) {
-				GUI.savegame(saveName);
+				GUI.saveGame(saveName);
 			} else {
 				JOptionPane.showMessageDialog(miniMenu,
 						"The name of the save can't contain any special characters,spaces, be too long or empty!", "Error",
@@ -105,6 +105,7 @@ public class MenuInGame implements ActionListener, KeyListener {
 		if (e.getSource() == btnMenu) {
 			miniMenu.dispose(); // Ferme la JFrame.
 			GUI.disposeGUIFrame();
+			@SuppressWarnings("unused")
 			Menu menu = new Menu(); // Revient dans le menu.
 		}
 		if (e.getSource() == btnExit) {

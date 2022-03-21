@@ -128,6 +128,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 			private static final long serialVersionUID = 1L;
 
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unused")
 				MenuInGame miniMenu = new MenuInGame();
 
 			}
@@ -155,7 +156,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 	 * 
 	 * @param saveName Le nom de la sauvegarde.
 	 */
-	static void savegame(String saveName) {
+	static void saveGame(String saveName) {
 		try {
 			File savedFile = new File("saves/" + saveName + ".sav");
 			if (!savedFile.exists()) {

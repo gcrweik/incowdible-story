@@ -7,7 +7,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
-import util_class.RoundedBorder;
+import utilclass.RoundedBorder;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -125,6 +125,7 @@ public class Menu implements ActionListener {
 			jeu.setGUI(gui);
 		}
 		if (e.getSource() == btnLoad) {
+			@SuppressWarnings("unused")
 			LoadMenu load = new LoadMenu();
 
 		}

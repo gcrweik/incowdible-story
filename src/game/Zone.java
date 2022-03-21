@@ -24,8 +24,8 @@ public class Zone implements java.io.Serializable {
 
 	}
 
-	public void addExit(Exit sortie, Zone zoneVoisine) {
-		exits.put(sortie.name(), zoneVoisine);
+	public void addExit(Exit exit, Zone neighboringArea) {
+		exits.put(exit.name(), neighboringArea);
 	}
 
 	public String nameImage() {

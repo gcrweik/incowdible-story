@@ -99,6 +99,7 @@ public class Introduction implements KeyListener {
 			} else {
 				introFrame.dispose(); // Fermer la JFrame
 				clip.close(); // Arrete le son
+				@SuppressWarnings("unused")
 				Menu menu = new Menu();
 			}
 		}
