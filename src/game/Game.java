@@ -40,13 +40,13 @@ public class Game implements java.io.Serializable {
 		zones[1].addExit(Exit.NORD, zones[0]);
 		zones[1].addExit(Exit.SUD, zones[2]);
 
-		/*
 		// Les sorties de Cours Interieur
 		zones[2].addExit(Exit.NORD, zones[1]);
 		zones[2].addExit(Exit.NORD_EST, zones[7]);
 		zones[2].addExit(Exit.EST, zones[3]);
 		zones[2].addExit(Exit.OUEST, zones[4]);
-
+		
+		/*
 		// Les sorties d'Escalier
 		zones[7].addExit(Exit.OUEST, zones[2]);
 		zones[7].addExit(Exit.NORD, zones[8]);
