@@ -27,7 +27,7 @@ public class LoadMenu implements ActionListener {
 	private JButton btnDelete = new JButton("Delete");
 	private String[] fileNames; // Une liste de nom de sauvegardes.
 	private String[] refreshedSaves; // Une list pour refresh aprés une supression.
-	private File f = new File("saves");// Le chemin vers le dossier des sauvegardes.
+	private File f = new File("saves/gamesaves");// Le chemin vers le dossier des sauvegardes.
 	private ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
 																									// MessageDialog
 	private Color blueBackground = new Color(170, 224, 242);
@@ -151,7 +151,7 @@ public class LoadMenu implements ActionListener {
 		if (e.getSource() == btnPlay) {
 			try {
 				String playedSaves = listSaves.getSelectedValue().toString();
-				Menu.clip.close();
+				Menu.musicMenu.stopMusic();
 				Menu.disposeMenuFrame();
 				loadFrame.dispose();
 				Game loadedGame = GUI.loadGame(playedSaves); // Charge une partie à partir de la sauvegarde
@@ -166,7 +166,7 @@ public class LoadMenu implements ActionListener {
 		if (e.getSource() == btnDelete) {
 			try {
 				String clickedSave = listSaves.getSelectedValue().toString();
-				String deletedSave = "saves/" + clickedSave + ".sav";
+				String deletedSave = "saves/gamesaves/" + clickedSave + ".sav";
 
 				int confirmDelete = JOptionPane.showConfirmDialog(null, "Do you really want to delete this save?",
 						"Delete a save!", JOptionPane.YES_NO_OPTION);

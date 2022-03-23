@@ -32,7 +32,7 @@ public class Game implements java.io.Serializable {
 		 * zones[7] = new Zone("Escalier", "Escalier.png"); zones[8] = new
 		 * Zone("Bureau de Directeur", "Bureau.png");
 		 */
-		
+
 		// La sortie de Cellule
 		zones[0].addExit(Exit.SUD, zones[1]);
 
@@ -40,29 +40,34 @@ public class Game implements java.io.Serializable {
 		zones[1].addExit(Exit.NORD, zones[0]);
 		zones[1].addExit(Exit.SUD, zones[2]);
 
+		/*
 		// Les sorties de Cours Interieur
 		zones[2].addExit(Exit.NORD, zones[1]);
 		zones[2].addExit(Exit.NORD_EST, zones[7]);
 		zones[2].addExit(Exit.EST, zones[3]);
 		zones[2].addExit(Exit.OUEST, zones[4]);
 
-		/*
-		 * // Les sorties d'Escalier zones[7].ajouteSortie(Sortie.OUEST, zones[2]);
-		 * zones[7].ajouteSortie(Sortie.NORD, zones[8]);
-		 * 
-		 * // Les sorties de Cafétéria zones[3].ajouteSortie(Sortie.OUEST, zones[2]);
-		 * 
-		 * // Les sorties de Cours Exterieur zones[4].ajouteSortie(Sortie.EST,
-		 * zones[2]); zones[4].ajouteSortie(Sortie.SUD, zones[5]);
-		 * 
-		 * // Les sorties de Cours de Sport zones[5].ajouteSortie(Sortie.NORD,
-		 * zones[4]); zones[5].ajouteSortie(Sortie.SUD, zones[6]);
-		 * 
-		 * // Les sorties de Mur zones[6].ajouteSortie(Sortie.NORD, zones[5]);
-		 * 
-		 * // Les sorties de Bureau de Directeur zones[8].ajouteSortie(Sortie.OUEST,
-		 * zones[7]);
-		 */
+		// Les sorties d'Escalier
+		zones[7].addExit(Exit.OUEST, zones[2]);
+		zones[7].addExit(Exit.NORD, zones[8]);
+
+		// Les sorties de Cafétéria
+		zones[3].addExit(Exit.OUEST, zones[2]);
+
+		// Les sorties de Cours Exterieur
+		zones[4].addExit(Exit.EST, zones[2]);
+		zones[4].addExit(Exit.SUD, zones[5]);
+
+		// Les sorties de Cours de Sport
+		zones[5].addExit(Exit.NORD, zones[4]);
+		zones[5].addExit(Exit.SUD, zones[6]);
+
+		// Les sorties de Mur
+		zones[6].addExit(Exit.NORD, zones[5]);
+
+		// Les sorties de Bureau de Directeur
+		zones[8].addExit(Exit.OUEST, zones[7]);
+		*/
 		currentZone = zones[0];
 	}
 

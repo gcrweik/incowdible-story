@@ -4,14 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.net.URL;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,29 +13,11 @@ import javax.swing.JPanel;
 
 public class End implements KeyListener {
 
-	JFrame endFrame = new JFrame("The Incowdible Story");
-	JPanel endPanel = new JPanel();
-	Clip clip; // Pour le son
+	private JFrame endFrame = new JFrame("The Incowdible Story");
+	private JPanel endPanel = new JPanel();
+	private Music musicEnd = new Music("EndMusic");
 
 	public End() {
-
-		URL musicURL = getClass().getResource("sounds/EndMusic.wav");
-
-		// Initialisation de Audio Input
-		try {
-			clip = AudioSystem.getClip();
-			AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicURL);
-			clip.open(audioInput);
-		} catch (LineUnavailableException e) {
-			// Lien indisponible
-			e.printStackTrace();
-		} catch (UnsupportedAudioFileException e) {
-			// Le format non reconnu
-			e.printStackTrace();
-		} catch (IOException e) {
-			// Exception
-			e.printStackTrace();
-		}
 
 		// Creation de la scene
 		JLabel endScene = new JLabel(new ImageIcon(getClass().getResource("images/Scene_End.gif")));
@@ -62,7 +38,7 @@ public class End implements KeyListener {
 		endFrame.setIconImage(icon.getImage());
 
 		// Reglage de la JFrame
-		clip.loop(Clip.LOOP_CONTINUOUSLY); // Commence de jouer le son en boucle
+		musicEnd.playMusic(); // Commence de jouer le son en boucle
 		endFrame.setSize(new Dimension(750, 600));
 		endFrame.setResizable(false);
 		endFrame.setLocationRelativeTo(null);
@@ -80,7 +56,7 @@ public class End implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			endFrame.dispose(); // Fermer la JFrame
-			clip.close(); // Arrete le son
+			musicEnd.stopMusic();// Arrete le son
 			@SuppressWarnings("unused")
 			Menu menu = new Menu();
 		}
