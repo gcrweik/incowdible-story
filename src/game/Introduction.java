@@ -5,14 +5,8 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.net.URL;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,31 +14,13 @@ import javax.swing.JPanel;
 
 public class Introduction implements KeyListener {
 
-	JFrame introFrame = new JFrame("The Incowdible Story");
-	JPanel introPanel = new JPanel();
-	CardLayout card = new CardLayout();
-	Clip clip; // Pour le son
-	int counter = 0; // Counter de scenes
+	private JFrame introFrame = new JFrame("The Incowdible Story");
+	private JPanel introPanel = new JPanel();
+	private CardLayout card = new CardLayout();
+	private Music musicIntro = new Music("IntroMusic");
+	private int counter = 0; // Counter de scenes
 
 	public Introduction() {
-
-		URL musicUrl = getClass().getResource("sounds/IntroMusic.wav");
-
-		// Initialisation de Audio Input
-		try {
-			clip = AudioSystem.getClip();
-			AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicUrl);
-			clip.open(audioInput);
-		} catch (LineUnavailableException e) {
-			// Lien indisponible
-			e.printStackTrace();
-		} catch (UnsupportedAudioFileException e) {
-			// Le format non reconnu
-			e.printStackTrace();
-		} catch (IOException e) {
-			// Exception
-			e.printStackTrace();
-		}
 
 		// Creation de label des scenes
 		JLabel scene1 = new JLabel(new ImageIcon(getClass().getResource("images/Scene1_Old.gif")));
@@ -76,7 +52,7 @@ public class Introduction implements KeyListener {
 		introFrame.setIconImage(icon.getImage());
 
 		// Reglage de la JFrame
-		clip.loop(Clip.LOOP_CONTINUOUSLY); // Commence de jouer le son en boucle
+		musicIntro.playMusic();// Commence de jouer le son en boucle
 		introFrame.setSize(new Dimension(960, 540));
 		introFrame.setResizable(false);
 		introFrame.setLocationRelativeTo(null);
@@ -98,7 +74,7 @@ public class Introduction implements KeyListener {
 				counter += 1;
 			} else {
 				introFrame.dispose(); // Fermer la JFrame
-				clip.close(); // Arrete le son
+				musicIntro.stopMusic(); // Arrete le son
 				@SuppressWarnings("unused")
 				Menu menu = new Menu();
 			}

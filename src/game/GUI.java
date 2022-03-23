@@ -22,7 +22,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 	private JTextField textInput = new JTextField(34);
 	private JTextArea chat = new JTextArea();
 	public JLabel image = new JLabel();
-	InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in game.
+	private InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in game.
 	static ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
 																								// MessageDialog
 
@@ -158,7 +158,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 	 */
 	static void saveGame(String saveName) {
 		try {
-			File savedFile = new File("saves/" + saveName + ".sav");
+			File savedFile = new File("saves/gamesaves/" + saveName + ".sav");
 			if (!savedFile.exists()) {
 				FileOutputStream fos = new FileOutputStream(savedFile);
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -187,7 +187,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 	 */
 	static Game loadGame(String loadName) {
 		try {
-			File loadedFile = new File("saves/" + loadName + ".sav");
+			File loadedFile = new File("saves/gamesaves/" + loadName + ".sav");
 			FileInputStream fis = new FileInputStream(loadedFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			game = (Game) ois.readObject();

@@ -1,57 +1,34 @@
 package game;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import utilclass.RoundedBorder;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.net.URL;
 
 public class Menu implements ActionListener {
 
-	static JFrame menuFrames = new JFrame("Menu");
-	JButton btnStart = new JButton("New Game");
-	JButton btnLoad = new JButton("Load");
-	JButton btnControls = new JButton("Controls");
-	JButton btnExit = new JButton("Exit");
-	static Clip clip; // Pour le son
+	static JFrame menuFrame = new JFrame("Menu");
+	private JButton btnStart = new JButton("New Game");
+	private JButton btnLoad = new JButton("Load");
+	private JButton btnSound = new JButton("Sound");
+	private JButton btnControls = new JButton("Controls");
+	private JButton btnExit = new JButton("Exit");
+	static Music musicMenu = new Music("MenuMusic");
 
 	public Menu() {
 
-		URL musicUrl = getClass().getResource("sounds/MenuMusic.wav");
-
-		// Initialisation de Audio Input
-		try {
-			clip = AudioSystem.getClip();
-			AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicUrl);
-			clip.open(audioInput);
-		} catch (LineUnavailableException e) {
-			// Lien indisponible
-			e.printStackTrace();
-		} catch (UnsupportedAudioFileException e) {
-			// Le format non reconnu
-			e.printStackTrace();
-		} catch (IOException e) {
-			// Exception
-			e.printStackTrace();
-		}
-
 		// Image du fond du menu
 		JLabel background = new JLabel(new ImageIcon(getClass().getResource("images/menu_background.gif")));
-		menuFrames.add(background);
+		menuFrame.add(background);
 		background.setLayout(new OverlayLayout(background));
 
 		// Changement de l'icon de l'application
 		URL iconURL = getClass().getResource("images/IconApplication.png");
 		ImageIcon icon = new ImageIcon(iconURL);
-		menuFrames.setIconImage(icon.getImage());
+		menuFrame.setIconImage(icon.getImage());
 
 		// Parametrage de Layout
 		background.setLayout(new GridBagLayout());
@@ -63,6 +40,7 @@ public class Menu implements ActionListener {
 		// Parametrage des boutons ronds
 		btnStart.setBorder(new RoundedBorder(10));
 		btnLoad.setBorder(new RoundedBorder(10));
+		btnSound.setBorder(new RoundedBorder(10));
 		btnControls.setBorder(new RoundedBorder(10));
 		btnExit.setBorder(new RoundedBorder(10));
 
@@ -84,42 +62,48 @@ public class Menu implements ActionListener {
 
 		c.gridy = 3;
 		c.weighty = 1;
-		background.add(btnControls, c);
+		background.add(btnSound, c);
 
 		c.gridy = 4;
 		c.weighty = 0.5;
+		background.add(btnControls, c);
+
+		c.gridy = 5;
+		c.weighty = 1;
 		background.add(btnExit, c);
 
 		// Listener pour les boutons
 		btnStart.addActionListener(this);
 		btnLoad.addActionListener(this);
+		btnSound.addActionListener(this);
 		btnControls.addActionListener(this);
 		btnExit.addActionListener(this);
 
 		// Desactive le focus sur les buttons
 		btnStart.setFocusable(false);
 		btnLoad.setFocusable(false);
+		btnSound.setFocusable(false);
 		btnControls.setFocusable(false);
 		btnExit.setFocusable(false);
 
 		// Parametrage de la JFrame
-		clip.loop(Clip.LOOP_CONTINUOUSLY); // Commence de jouer le son en boucle
-		menuFrames.setSize(new Dimension(750, 410));
-		menuFrames.setResizable(false);
-		menuFrames.setLocationRelativeTo(null);
-		menuFrames.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		menuFrames.setVisible(true);
+		musicMenu.playMusic();// Commence de jouer le son en boucle
+		menuFrame.setSize(new Dimension(750, 410));
+		menuFrame.setResizable(false);
+		menuFrame.setLocationRelativeTo(null);
+		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		menuFrame.setVisible(true);
 	}
 
 	public static void disposeMenuFrame() {
-		menuFrames.dispose();
+		menuFrame.dispose();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnStart) {
-			menuFrames.dispose();
-			clip.close();// Arrete le son
+			menuFrame.dispose();
+			musicMenu.stopMusic();// Arrete le son
 			Game jeu = new Game();
 			GUI gui = new GUI(jeu);
 			jeu.setGUI(gui);
@@ -127,6 +111,17 @@ public class Menu implements ActionListener {
 		if (e.getSource() == btnLoad) {
 			@SuppressWarnings("unused")
 			LoadMenu load = new LoadMenu();
+
+		}
+		if (e.getSource() == btnSound) {
+			if (SoundMenu.soundFrame == null || SoundMenu.soundFrame.getParent() == null) {
+				int loadedoptions = SoundMenu.loadMusicOptions(); // Charge une partie à partir de la sauvegarde
+				@SuppressWarnings("unused")
+				SoundMenu sound = new SoundMenu(loadedoptions);
+			} else {
+				SoundMenu.soundFrame.toFront();
+				SoundMenu.soundFrame.repaint();
+			}
 
 		}
 		if (e.getSource() == btnControls) {
