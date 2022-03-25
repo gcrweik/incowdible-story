@@ -25,7 +25,8 @@ public class GUI implements ActionListener, java.io.Serializable {
 	private InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in game.
 	static ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
 																								// MessageDialog
-
+	
+	
 	public GUI(Game j) {
 		game = j;
 		createGUI();

@@ -1,5 +1,8 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Element implements java.io.Serializable {
 	/**
 	 * 
@@ -10,6 +13,7 @@ public class Element implements java.io.Serializable {
 	int imageHeight;
 	int imageWidth;
 	String imageName;
+	public List<String> lastZones = new ArrayList<String>();
 
 	public Element(int x, int y, int imageWidth, int imageHeight, String imageName) {
 		this.x = x;
@@ -24,4 +28,5 @@ public class Element implements java.io.Serializable {
 		this.y = y;
 	}
 
+	
 }
