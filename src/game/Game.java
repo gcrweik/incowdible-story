@@ -1,16 +1,12 @@
 package game;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class Game implements java.io.Serializable {
 
@@ -19,9 +15,11 @@ public class Game implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private GUI gui;
+	private Zone[] zones = new Zone[9];
 	private Zone currentZone;
 	private Element mainCharacter = new Element(563, 139, 32, 64, "MargueriteProjet.png");
 	private boolean possibleExit;
+	private int timerCounter;
 
 	private File f = new File("solutions/solution1.txt");
 
@@ -36,7 +34,6 @@ public class Game implements java.io.Serializable {
 	}
 
 	private void createMap() {
-		Zone[] zones = new Zone[9];
 		zones[0] = new Zone("La Cellule", "Cellule.png", 712, 497);
 		zones[1] = new Zone("Couloir", "Couloir.png", 734, 23);
 		zones[2] = new Zone("Cours Interieur", "CoursInterieur.png", 693, 139);
@@ -107,8 +104,8 @@ public class Game implements java.io.Serializable {
 			break;
 		case "N":
 		case "NORD":
-			reverse(readingCommand);
 			goTo("NORD");
+			reverse(readingCommand);
 			break;
 		case "NE":
 		case "NORD_EST":
@@ -140,8 +137,14 @@ public class Game implements java.io.Serializable {
 			break;
 		case "T":
 		case "TERMINER":
-			executeSolution(f);
-			break;
+			if (currentZone == zones[0]) {
+				executeSolution(f);
+				break;
+			} else {
+				gui.show("Pour executer cette commande il faut etre dans la Cellule!");
+				break;
+			}
+
 		default:
 			gui.show("Commande inconnue");
 			break;
@@ -177,8 +180,12 @@ public class Game implements java.io.Serializable {
 		}
 	}
 
-	// Méthode permettant l'execution de la solution qui est un fichier texte avec
-	// les commandes a suivre.
+	/**
+	 * Une methode qui permet d'executer un fichier texte avec la suite des
+	 * commander pour terminer la partie.
+	 * 
+	 * @param solution Le fichier d'execution.
+	 */
 	private void executeSolution(File solution) {
 		Scanner input;
 		try {
@@ -186,26 +193,37 @@ public class Game implements java.io.Serializable {
 			List<String> list = new ArrayList<String>();
 			while (input.hasNextLine()) {
 				list.add(input.nextLine());
-				System.out.println("Regarde regarde regarde: " + list);
 			}
-			
+
 			TimerTask task = new TimerTask() {
-				int a =0;
+
 				public void run() {
-						goTo("SUD");
-						a+=1;
+					String currentLine = list.get(timerCounter);
+					goTo(currentLine);
+					timerCounter++;
+					if (timerCounter >= list.size()) {
+						timerCounter = 0;
+						this.cancel();
+						gui.show("La solution a fini de s'executer !");
+					}
+
 				}
 			};
 			Timer timer = new Timer("Timer");
 			timer.schedule(task, 1000, 1000);
-			System.out.println("Vous êtes arrivés à destination");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	// Permet d'avoir la commande inverse de celle entrer en parametre.
+	/**
+	 * Une methode qui permet d'ajouter l'inverse de la sortie prise par la personne
+	 * dans une liste.
+	 * 
+	 * @param direction La sortie à inverser.
+	 * @return String vide.
+	 */
 	private String reverse(String direction) {
 
 		char d = direction.toUpperCase().charAt(0);
@@ -227,10 +245,14 @@ public class Game implements java.io.Serializable {
 		if (possibleExit) {
 			mainCharacter.lastZones.add(direction);
 		}
-		return direction;
+		return "";
 	}
 
-	// Méthode permettant de recupérer la commande de la derniere salle visitée.
+	/**
+	 * Une methode qui permet de recuperer la derniere salle visité par le joueur.
+	 * 
+	 * @return Le nom de la derniere salle.
+	 */
 	private String returnTo() {
 		if (mainCharacter.lastZones.size() > 0) {
 			String lastCommand = mainCharacter.lastZones.get(mainCharacter.lastZones.size() - 1);
