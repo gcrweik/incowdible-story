@@ -88,12 +88,24 @@ public class Introduction implements KeyListener {
 	}
 
 	public Music getMusic() {
-		return musicIntro;
+		return this.musicIntro;
 
 	}
 
 	public int getCounter() {
 		return this.counter;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Introduction))
+			return false;
+
+		Introduction other = (Introduction) obj;
+
+		return this.counter == other.counter && this.musicIntro.equals(other.musicIntro);
 	}
 
 }

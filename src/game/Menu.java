@@ -133,4 +133,20 @@ public class Menu implements ActionListener {
 
 	}
 
+	public Music getMusic() {
+		return Menu.musicMenu;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Menu))
+			return false;
+
+		Menu other = (Menu) obj;
+
+		return Menu.musicMenu.equals(other.getMusic());
+	}
+
 }

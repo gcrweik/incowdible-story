@@ -79,4 +79,21 @@ public class Music {
 		clip.stop();
 	}
 
+	public String toString() {
+		return "sounds/" + this.songName + ".sav";
+
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Music))
+			return false;
+
+		Music other = (Music) obj;
+		return this.songName == other.songName;
+
+	}
+
 }

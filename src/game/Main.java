@@ -5,10 +5,9 @@ public class Main {
 		@SuppressWarnings("unused")
 
 		Introduction intro = new Introduction();
-		/*
-		Game jeu = new Game();
-		GUI gui = new GUI(jeu);
-		jeu.setGUI(gui);
-		*/
+		
+		//Game jeu = new Game();
+		//GUI gui = new GUI(jeu);
+		//jeu.setGUI(gui);
 ;	}
 }
