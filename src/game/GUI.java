@@ -20,8 +20,8 @@ public class GUI implements ActionListener, java.io.Serializable {
 	private static JFrame guiFrame;
 	private JPanel guiPanel = new JPanel();
 	private JTextField textInput = new JTextField(34);
-	private JTextArea chat = new JTextArea();
-	public JLabel image = new JLabel();
+	private static JTextArea chat = new JTextArea();
+	public static JLabel image = new JLabel();
 	private InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in game.
 	static ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
 																								// MessageDialog
@@ -32,7 +32,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 		createGUI();
 	}
 
-	public void show(String s) {
+	public static void show(String s) {
 		chat.append(s);
 		chat.setCaretPosition(chat.getDocument().getLength());
 	}
@@ -72,20 +72,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 		}
 	}
 
-	// Methode permettant de créer puis afficher l'elements aux coordonées donné.
-	public JLabel showElement(Element element) {
-		JLabel objectLabel = new JLabel();
-		objectLabel.setBounds(element.x, element.y, element.imageWidth, element.imageHeight);
-
-		URL imageURL = this.getClass().getClassLoader().getResource("game/images/" + element.imageName);
-		if (imageURL != null) {
-			objectLabel.setIcon(new ImageIcon(imageURL));
-			image.add(objectLabel);
-			return objectLabel;
-		} else
-			System.out.println("Une erreur est arrivée");
-		return null;
-	}
+	
 
 	public void enable(boolean ok) {
 		textInput.setEditable(ok);

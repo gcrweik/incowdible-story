@@ -14,15 +14,16 @@ public class Game implements java.io.Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private GUI gui;
+	public GUI gui;
 	private Zone[] zones = new Zone[9];
 	private Zone currentZone;
-	private Element mainCharacter = new Element(563, 139, 32, 64, "MargueriteProjet.png");
+	private MainCharacter mainCharacter = new MainCharacter(563, 139, 32, 64, "MargueriteProjet.png");
+	private KeyElement key = new KeyElement(0, 0, 32, 32, "check_icon.png", "key"); //à modifier par la bonne image/nom
+	private Npc matou = new Npc(755, 503, 32, 64, "MatouProjet.png");
 	private boolean possibleExit;
 	private int timerCounter;
 
 	private Backpack sac = new Backpack();
-
 
 	private File f = new File("solutions/solution1.txt");
 
@@ -40,13 +41,13 @@ public class Game implements java.io.Serializable {
 		zones[0] = new Zone("La Cellule", "Cellule.png", 712, 497);
 		zones[1] = new Zone("Couloir", "Couloir.png", 734, 23);
 		zones[2] = new Zone("Cours Interieur", "CoursInterieur.png", 693, 139);
-		/*
-		 * zones[3] = new Zone("CafÃ©tÃ©ria", "CafÃ©tÃ©ria.png" ); zones[4] = new
-		 * Zone("Cours Exterieur", "CoursExterieur.png" ); zones[5] = new
-		 * Zone("Cours de Sport", "Sport.png" ); zones[6] = new Zone("Mur", "Mur.png" );
-		 * zones[7] = new Zone("Escalier", "Escalier.png"); zones[8] = new
-		 * Zone("Bureau de Directeur", "Bureau.png");
-		 */
+
+		zones[3] = new Zone("Cafétéria", "Cafétéria.png", 588, 42);
+		zones[4] = new Zone("Cours Exterieur", "CoursExterieur.png", 1111, 218);
+		zones[5] = new Zone("Cours de Sport", "Sport.png", 771, 36);
+		zones[6] = new Zone("Mur", "Mur.png", 766, 296);
+		zones[7] = new Zone("Escalier", "Escalier.png", 706, 428);
+		zones[8] = new Zone("Bureau de Directeur", "Bureau.png", 656, 299);
 
 		// La sortie de Cellule
 		zones[0].addExit(Exit.SUD, zones[1]);
@@ -61,22 +62,27 @@ public class Game implements java.io.Serializable {
 		zones[2].addExit(Exit.EST, zones[3]);
 		zones[2].addExit(Exit.OUEST, zones[4]);
 
-		/*
-		 * // Les sorties d'Escalier zones[7].addExit(Exit.OUEST, zones[2]);
-		 * zones[7].addExit(Exit.NORD, zones[8]);
-		 * 
-		 * // Les sorties de CafÃ©tÃ©ria zones[3].addExit(Exit.OUEST, zones[2]);
-		 * 
-		 * // Les sorties de Cours Exterieur zones[4].addExit(Exit.EST, zones[2]);
-		 * zones[4].addExit(Exit.SUD, zones[5]);
-		 * 
-		 * // Les sorties de Cours de Sport zones[5].addExit(Exit.NORD, zones[4]);
-		 * zones[5].addExit(Exit.SUD, zones[6]);
-		 * 
-		 * // Les sorties de Mur zones[6].addExit(Exit.NORD, zones[5]);
-		 * 
-		 * // Les sorties de Bureau de Directeur zones[8].addExit(Exit.OUEST, zones[7]);
-		 */
+		// Les sorties d'Escalier
+		zones[7].addExit(Exit.OUEST, zones[2]);
+		zones[7].addExit(Exit.NORD, zones[8]);
+
+		// Les sorties de Cafétéria
+		zones[3].addExit(Exit.OUEST, zones[2]);
+
+		// Les sorties de Cours Exterieur
+		zones[4].addExit(Exit.EST, zones[2]);
+		zones[4].addExit(Exit.SUD, zones[5]);
+
+		// Les sorties de Cours de Sport
+		zones[5].addExit(Exit.NORD, zones[4]);
+		zones[5].addExit(Exit.SUD, zones[6]);
+
+		// Les sorties de Mur
+		zones[6].addExit(Exit.NORD, zones[5]);
+
+		// Les sorties de Bureau de Directeur
+		zones[8].addExit(Exit.OUEST, zones[7]);
+
 		currentZone = zones[0];
 	}
 
@@ -93,7 +99,7 @@ public class Game implements java.io.Serializable {
 		gui.show("Appuyez sur la touche 'Escape' pour ouvrir le menu. ");
 		gui.show();
 		showLocation();
-		gui.showElement(mainCharacter);
+		mainCharacter.showElement();
 		gui.showImage(currentZone.nameImage());
 
 	}
@@ -148,7 +154,6 @@ public class Game implements java.io.Serializable {
 				break;
 			}
 
-
 		case "SA":
 		case "SAC":
 			showSac();
@@ -183,13 +188,30 @@ public class Game implements java.io.Serializable {
 			gui.show();
 			// CrÃ©e et affiche le personnage Ã  la zone de spawn de la salle.
 			mainCharacter.setCoordinates(currentZone.xSpawn, currentZone.ySpawn);
-			gui.showElement(mainCharacter);
+			mainCharacter.showElement();
 			gui.showImage(currentZone.nameImage());
 			possibleExit = true;
+			initialize();
 		}
 	}
+	//Méthode permettant d'afficher les différents élements sur la carte (KeyElement & Npc).
+	private void initialize() {
+		if (currentZone.description == "Cours Exterieur" && mainCharacter.matouRiddle == true) {
+			matou.showElement();
+			matou.showMessage();
+		}
+		if (currentZone.description == "Cours de Sport")
+			mainCharacter.matouRiddle = false;
+		else if (currentZone.description == "Cours Exterieur" && mainCharacter.matouRiddle == false) {
+			matou.setCoordinates(679, 520);
+			matou.showElement();
+		}
+		if (currentZone.description == "Cours Interieur" && mainCharacter.cigs ==false) {
+			key.showElement();
+			sac.addElement(key);
+			mainCharacter.cigs=true;}
+	}
 
-	
 	private void showSac() {
 		String msg = this.sac.toString();
 		gui.show(msg);
@@ -219,7 +241,7 @@ public class Game implements java.io.Serializable {
 					if (timerCounter >= list.size()) {
 						timerCounter = 0;
 						this.cancel();
-						gui.show("La solution a fini de s'executer !");
+						gui.show("La solution a fini de s'executer !\n");
 					}
 
 				}
