@@ -2,10 +2,10 @@ package game;
 
 import java.util.ArrayList;
 
-public class SacADos {
+public class Backpack {
 	private ArrayList<Element> contenu;
 	
-	public SacADos() {
+	public Backpack() {
 		this.contenu = new ArrayList<Element>();
 	}
 
