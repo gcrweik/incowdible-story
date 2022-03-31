@@ -21,7 +21,7 @@ public class Game implements java.io.Serializable {
 	private boolean possibleExit;
 	private int timerCounter;
 
-	private SacADos sac = new SacADos();
+	private Backpack sac = new Backpack();
 
 
 	private File f = new File("solutions/solution1.txt");
@@ -194,7 +194,6 @@ public class Game implements java.io.Serializable {
 		String msg = this.sac.toString();
 		gui.show(msg);
 	}
-
 
 	/**
 	 * Une methode qui permet d'executer un fichier texte avec la suite des

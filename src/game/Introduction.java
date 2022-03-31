@@ -87,4 +87,13 @@ public class Introduction implements KeyListener {
 
 	}
 
+	public Music getMusic() {
+		return musicIntro;
+
+	}
+
+	public int getCounter() {
+		return this.counter;
+	}
+
 }
