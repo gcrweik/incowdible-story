@@ -14,7 +14,8 @@ public class Backpack {
 	}
 	
 	public void addElement(Element e) {
-		this.contenu.add(e);
+		if(!contenu.contains(e))
+			this.contenu.add(e);
 	}
 	
 	@Override
