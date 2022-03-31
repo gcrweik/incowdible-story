@@ -20,7 +20,9 @@ public class Game implements java.io.Serializable {
 	private Element mainCharacter = new Element(563, 139, 32, 64, "MargueriteProjet.png");
 	private boolean possibleExit;
 	private int timerCounter;
+
 	private SacADos sac = new SacADos();
+
 
 	private File f = new File("solutions/solution1.txt");
 
@@ -39,7 +41,7 @@ public class Game implements java.io.Serializable {
 		zones[1] = new Zone("Couloir", "Couloir.png", 734, 23);
 		zones[2] = new Zone("Cours Interieur", "CoursInterieur.png", 693, 139);
 		/*
-		 * zones[3] = new Zone("Cafétéria", "Cafétéria.png" ); zones[4] = new
+		 * zones[3] = new Zone("CafÃ©tÃ©ria", "CafÃ©tÃ©ria.png" ); zones[4] = new
 		 * Zone("Cours Exterieur", "CoursExterieur.png" ); zones[5] = new
 		 * Zone("Cours de Sport", "Sport.png" ); zones[6] = new Zone("Mur", "Mur.png" );
 		 * zones[7] = new Zone("Escalier", "Escalier.png"); zones[8] = new
@@ -63,7 +65,7 @@ public class Game implements java.io.Serializable {
 		 * // Les sorties d'Escalier zones[7].addExit(Exit.OUEST, zones[2]);
 		 * zones[7].addExit(Exit.NORD, zones[8]);
 		 * 
-		 * // Les sorties de Cafétéria zones[3].addExit(Exit.OUEST, zones[2]);
+		 * // Les sorties de CafÃ©tÃ©ria zones[3].addExit(Exit.OUEST, zones[2]);
 		 * 
 		 * // Les sorties de Cours Exterieur zones[4].addExit(Exit.EST, zones[2]);
 		 * zones[4].addExit(Exit.SUD, zones[5]);
@@ -146,10 +148,12 @@ public class Game implements java.io.Serializable {
 				break;
 			}
 
+
 		case "SA":
 		case "SAC":
 			showSac();
 			break;
+
 		default:
 			gui.show("Commande inconnue");
 			break;
@@ -159,7 +163,7 @@ public class Game implements java.io.Serializable {
 	private void showHelp() {
 		gui.show("Etes-vous perdu ?");
 		gui.show();
-		gui.show("Les commandes autorisées sont :");
+		gui.show("Les commandes autorisÃ©es sont :");
 		gui.show();
 		gui.show(Command.allDescriptions().toString());
 		gui.show();
@@ -177,18 +181,20 @@ public class Game implements java.io.Serializable {
 			currentZone = newZone;
 			gui.show(currentZone.longDescription());
 			gui.show();
-			// Crée et affiche le personnage à la zone de spawn de la salle.
+			// CrÃ©e et affiche le personnage Ã  la zone de spawn de la salle.
 			mainCharacter.setCoordinates(currentZone.xSpawn, currentZone.ySpawn);
 			gui.showElement(mainCharacter);
 			gui.showImage(currentZone.nameImage());
 			possibleExit = true;
 		}
 	}
+
 	
 	private void showSac() {
 		String msg = this.sac.toString();
 		gui.show(msg);
 	}
+
 
 	/**
 	 * Une methode qui permet d'executer un fichier texte avec la suite des
@@ -231,7 +237,7 @@ public class Game implements java.io.Serializable {
 	 * Une methode qui permet d'ajouter l'inverse de la sortie prise par la personne
 	 * dans une liste.
 	 * 
-	 * @param direction La sortie à inverser.
+	 * @param direction La sortie Ã  inverser.
 	 * @return String vide.
 	 */
 	private String reverse(String direction) {
@@ -259,7 +265,7 @@ public class Game implements java.io.Serializable {
 	}
 
 	/**
-	 * Une methode qui permet de recuperer la derniere salle visité par le joueur.
+	 * Une methode qui permet de recuperer la derniere salle visitÃ© par le joueur.
 	 * 
 	 * @return Le nom de la derniere salle.
 	 */

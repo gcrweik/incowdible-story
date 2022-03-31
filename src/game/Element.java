@@ -13,7 +13,9 @@ public class Element implements java.io.Serializable {
 	int imageHeight;
 	int imageWidth;
 	String imageName;
+
 	String name;
+
 	public List<String> lastZones = new ArrayList<String>();
 
 	public Element(int x, int y, int imageWidth, int imageHeight, String imageName) {
@@ -28,6 +30,7 @@ public class Element implements java.io.Serializable {
 	public Element(int x, int y, int imageWidth, int imageHeight, String imageName, String n) {
 		this(x, y, imageWidth, imageHeight, imageName);
 		this.name = n;
+
 	}
 
 	public void setCoordinates(int x, int y) {
@@ -39,4 +42,5 @@ public class Element implements java.io.Serializable {
 	public String toString() {
 		return this.imageName;
 	}
+
 }
