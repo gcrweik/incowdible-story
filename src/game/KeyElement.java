@@ -4,6 +4,10 @@ import java.util.Random;
 
 public class KeyElement extends Element {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Random rand = new Random();
 	int randomNumber = rand.nextInt(2 - 1 + 1) + 1;
 	

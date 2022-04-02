@@ -2,6 +2,10 @@ package game;
 
 public class MainCharacter extends Element {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public boolean matouRiddle;
 	public boolean cigs;
 	

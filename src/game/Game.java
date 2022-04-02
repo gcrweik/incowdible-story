@@ -2,15 +2,11 @@ package game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 public class Game implements java.io.Serializable {
 
