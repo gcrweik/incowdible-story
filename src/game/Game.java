@@ -2,11 +2,15 @@ package game;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class Game implements java.io.Serializable {
 
@@ -99,7 +103,7 @@ public class Game implements java.io.Serializable {
 		gui.show("Appuyez sur la touche 'Escape' pour ouvrir le menu. ");
 		gui.show();
 		showLocation();
-		mainCharacter.showElement();
+		gui.showElement(mainCharacter);
 		gui.showImage(currentZone.nameImage());
 
 	}
@@ -188,26 +192,29 @@ public class Game implements java.io.Serializable {
 			gui.show();
 			// CrÃ©e et affiche le personnage Ã  la zone de spawn de la salle.
 			mainCharacter.setCoordinates(currentZone.xSpawn, currentZone.ySpawn);
-			mainCharacter.showElement();
+			gui.showElement(mainCharacter);
+			initialize();// doit etre ici pour ne pas que les éléments soit au dernier plan
 			gui.showImage(currentZone.nameImage());
+			
 			possibleExit = true;
-			initialize();
+			
 		}
 	}
 	//Méthode permettant d'afficher les différents élements sur la carte (KeyElement & Npc).
 	private void initialize() {
 		if (currentZone.description == "Cours Exterieur" && mainCharacter.matouRiddle == true) {
-			matou.showElement();
-			matou.showMessage();
+			gui.showElement(matou);
+			gui.show("Matou est laaa!\n");
+			
 		}
 		if (currentZone.description == "Cours de Sport")
 			mainCharacter.matouRiddle = false;
 		else if (currentZone.description == "Cours Exterieur" && mainCharacter.matouRiddle == false) {
 			matou.setCoordinates(679, 520);
-			matou.showElement();
+			gui.showElement(matou);
 		}
 		if (currentZone.description == "Cours Interieur" && mainCharacter.cigs ==false) {
-			key.showElement();
+			gui.showElement(key);
 			sac.addElement(key);
 			mainCharacter.cigs=true;}
 	}
@@ -216,6 +223,7 @@ public class Game implements java.io.Serializable {
 		String msg = this.sac.toString();
 		gui.show(msg);
 	}
+
 
 	/**
 	 * Une methode qui permet d'executer un fichier texte avec la suite des
@@ -236,6 +244,7 @@ public class Game implements java.io.Serializable {
 
 				public void run() {
 					String currentLine = list.get(timerCounter);
+					System.out.println(currentLine);
 					goTo(currentLine);
 					timerCounter++;
 					if (timerCounter >= list.size()) {

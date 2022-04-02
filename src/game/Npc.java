@@ -12,8 +12,5 @@ public class Npc extends Element {
 	}
 
 	
-	public void showMessage() {
-		GUI.show("Hi");
-	}
 
 }

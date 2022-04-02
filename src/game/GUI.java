@@ -21,7 +21,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 	private JPanel guiPanel = new JPanel();
 	private JTextField textInput = new JTextField(34);
 	private static JTextArea chat = new JTextArea();
-	public static JLabel image = new JLabel();
+	public JLabel image = new JLabel();
 	private InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in game.
 	static ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
 																								// MessageDialog
@@ -32,7 +32,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 		createGUI();
 	}
 
-	public static void show(String s) {
+	public void show(String s) {
 		chat.append(s);
 		chat.setCaretPosition(chat.getDocument().getLength());
 	}
@@ -70,6 +70,21 @@ public class GUI implements ActionListener, java.io.Serializable {
 				}
 			});
 		}
+	}
+	
+	// Methode permettant de créer puis afficher l'elements aux coordonées donné.
+	public JLabel showElement(Element e) {
+		JLabel objectLabel = new JLabel();
+		objectLabel.setBounds(e.x, e.y, e.imageWidth, e.imageHeight);
+
+		URL imageURL = this.getClass().getClassLoader().getResource("game/images/" + e.imageName);
+		if (imageURL != null) {
+			objectLabel.setIcon(new ImageIcon(imageURL));
+			image.add(objectLabel);
+			return objectLabel;
+		} else
+			System.out.println("Une erreur est arrivée");
+		return null;
 	}
 
 	
