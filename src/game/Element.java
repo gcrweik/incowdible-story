@@ -19,7 +19,7 @@ public class Element implements java.io.Serializable {
 	String imageName;
 
 	String name;
-
+	
 	public List<String> lastZones = new ArrayList<String>();
 
 	//Constructeur permettant de créer un élément ayant des coordonnées.
@@ -44,19 +44,6 @@ public class Element implements java.io.Serializable {
 	}
 
 	
-	// Methode permettant de créer puis afficher l'elements aux coordonées donné.
-		public JLabel showElement() {
-			JLabel objectLabel = new JLabel();
-			objectLabel.setBounds(x, y, imageWidth, imageHeight);
 
-			URL imageURL = this.getClass().getClassLoader().getResource("game/images/" + imageName);
-			if (imageURL != null) {
-				objectLabel.setIcon(new ImageIcon(imageURL));
-				GUI.image.add(objectLabel);
-				return objectLabel;
-			} else
-				System.out.println("Une erreur est arrivée");
-			return null;
-		}
 
 }
