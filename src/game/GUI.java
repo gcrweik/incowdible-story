@@ -20,7 +20,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 	private static JFrame guiFrame;
 	private JPanel guiPanel = new JPanel();
 	private JTextField textInput = new JTextField(34);
-	private static JTextArea chat = new JTextArea();
+	private JTextArea chat = new JTextArea();
 	public JLabel image = new JLabel();
 	private InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in game.
 	static ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
@@ -81,12 +81,21 @@ public class GUI implements ActionListener, java.io.Serializable {
 		if (imageURL != null) {
 			objectLabel.setIcon(new ImageIcon(imageURL));
 			image.add(objectLabel);
+			image.repaint();
 			return objectLabel;
 		} else
 			System.out.println("Une erreur est arrivée");
 		return null;
 	}
-
+	//Methode permettant de replacer le personnage principal e aux coordonnées donnés
+	public void replaceMainCharacter(MainCharacter e, int x, int y) {
+		//Enleve tout ce qu'il y a sur l'image
+		image.removeAll();
+		e.setCoordinates(x, y);
+		showElement(e);
+		game.initialize();
+		show(game.currentZone.longDescription());
+	}
 	
 
 	public void enable(boolean ok) {

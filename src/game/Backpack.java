@@ -2,7 +2,11 @@ package game;
 
 import java.util.ArrayList;
 
-public class Backpack {
+public class Backpack implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Element> contenu;
 	
 	public Backpack() {
