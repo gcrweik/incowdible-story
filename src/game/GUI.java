@@ -22,11 +22,11 @@ public class GUI implements ActionListener, java.io.Serializable {
 	private JTextField textInput = new JTextField(34);
 	private JTextArea chat = new JTextArea();
 	public JLabel image = new JLabel();
-	private InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in game.
+	private InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in
+																							// game.
 	static ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
 																								// MessageDialog
-	
-	
+
 	public GUI(Game j) {
 		game = j;
 		createGUI();
@@ -71,7 +71,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 			});
 		}
 	}
-	
+
 	// Methode permettant de créer puis afficher l'elements aux coordonées donné.
 	public JLabel showElement(Element e) {
 		JLabel objectLabel = new JLabel();
@@ -87,6 +87,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 			System.out.println("Une erreur est arrivée");
 		return null;
 	}
+
 	//Methode permettant de replacer le personnage principal e aux coordonnées donnés
 	public void replaceMainCharacter(MainCharacter e, int x, int y) {
 		//Enleve tout ce qu'il y a sur l'image
@@ -97,6 +98,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 		show(game.currentZone.longDescription());
 	}
 	
+
 
 	public void enable(boolean ok) {
 		textInput.setEditable(ok);
