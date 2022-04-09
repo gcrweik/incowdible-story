@@ -16,10 +16,16 @@ public class Game implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	public GUI gui;
 	private Zone[] zones = new Zone[9];
-	private Zone currentZone;
+	Zone currentZone;
 	private MainCharacter mainCharacter = new MainCharacter(563, 139, 32, 64, "MargueriteProjet.png");
-	private KeyElement key = new KeyElement(0, 0, 32, 32, "check_icon.png", "key"); //à modifier par la bonne image/nom
+	private KeyElement key = new KeyElement(0, 0, 21, 21, "key.png", "Clé");
+	private KeyElement cigs = new KeyElement(0, 0, 12, 17, "cigs.png", "Paquet de cigarettes");
+	private KeyElement pliers = new KeyElement(583, 260, 15, 20, "pliers.png", "Sécateur");
+	private KeyElement shovel = new KeyElement(517, 368, 37, 45, "shovel.png", "Pelle");
 	private Npc matou = new Npc(755, 503, 32, 64, "MatouProjet.png");
+	private Npc joe = new Npc(609, 219, 32, 64, "OldJoeProjet.png");
+	private Npc billy = new Npc(795, 193, 32, 64, "BillyProjet.png");
+	private Npc jack = new Npc(595, 337, 32, 64, "JackProjet.png");
 	private boolean possibleExit;
 	private int timerCounter;
 
@@ -51,6 +57,7 @@ public class Game implements java.io.Serializable {
 
 		// La sortie de Cellule
 		zones[0].addExit(Exit.SUD, zones[1]);
+		zones[0].addAction(Action.BILLY);
 
 		// Les sorties de Couloir
 		zones[1].addExit(Exit.NORD, zones[0]);
@@ -61,6 +68,8 @@ public class Game implements java.io.Serializable {
 		zones[2].addExit(Exit.NORD_EST, zones[7]);
 		zones[2].addExit(Exit.EST, zones[3]);
 		zones[2].addExit(Exit.OUEST, zones[4]);
+		zones[2].addAction(Action.P1);
+		zones[2].addAction(Action.P2);
 
 		// Les sorties d'Escalier
 		zones[7].addExit(Exit.OUEST, zones[2]);
@@ -68,14 +77,17 @@ public class Game implements java.io.Serializable {
 
 		// Les sorties de Cafétéria
 		zones[3].addExit(Exit.OUEST, zones[2]);
+		zones[3].addAction(Action.JOE);
 
 		// Les sorties de Cours Exterieur
 		zones[4].addExit(Exit.EST, zones[2]);
 		zones[4].addExit(Exit.SUD, zones[5]);
+		zones[4].addAction(Action.MATOU);
 
 		// Les sorties de Cours de Sport
 		zones[5].addExit(Exit.NORD, zones[4]);
 		zones[5].addExit(Exit.SUD, zones[6]);
+		zones[5].addAction(Action.JACK);
 
 		// Les sorties de Mur
 		zones[6].addExit(Exit.NORD, zones[5]);
@@ -89,6 +101,8 @@ public class Game implements java.io.Serializable {
 	private void showLocation() {
 		gui.show(currentZone.longDescription());
 		gui.show();
+		gui.show(currentZone.longDescriptionAction());
+		gui.show();
 	}
 
 	private void showWelcomeMessage() {
@@ -100,7 +114,10 @@ public class Game implements java.io.Serializable {
 		gui.show();
 		showLocation();
 		gui.showElement(mainCharacter);
+		initialize();
 		gui.showImage(currentZone.nameImage());
+
+		cigs.randomSetCoordinates();
 
 	}
 
@@ -150,7 +167,8 @@ public class Game implements java.io.Serializable {
 				executeSolution(f);
 				break;
 			} else {
-				gui.show("Pour executer cette commande il faut etre dans la Cellule!");
+				gui.show("\nPour executer cette commande il faut etre dans la Cellule!");
+				gui.show();
 				break;
 			}
 
@@ -158,9 +176,76 @@ public class Game implements java.io.Serializable {
 		case "SAC":
 			showSac();
 			break;
+		case "JOE":
+			if (currentZone == zones[3] && mainCharacter.x != 643) {
+				gui.replaceMainCharacter(mainCharacter, 643, 234);
 
+			} else if (currentZone == zones[3] && mainCharacter.x == 643) {
+				gui.show("\nVous êtes déjà entrain de parler avec Joe.");
+				gui.show();
+			}
+			break;
+		case "BILLY":
+			if (currentZone == zones[0] && mainCharacter.x != 719) {
+				gui.replaceMainCharacter(mainCharacter, 719, 193);
+
+			} else if (currentZone == zones[0] && mainCharacter.x == 719) {
+				gui.show("\nVous êtes déjà entrain de parler avec Billy.");
+				gui.show();
+			}
+			break;
+		case "JACK":
+			if (currentZone == zones[5] && mainCharacter.x != 639) {
+				gui.replaceMainCharacter(mainCharacter, 639, 345);
+
+			} else if (currentZone == zones[5] && mainCharacter.x == 639) {
+				gui.show("\nVous êtes déjà entrain de parler avec Jack.");
+				gui.show();
+			}
+			break;
+		case "MATOU":
+			if (currentZone == zones[4] && mainCharacter.x != 803) {
+				gui.replaceMainCharacter(mainCharacter, 803, 528);
+
+			} else if (currentZone == zones[4] && mainCharacter.x == 803) {
+				gui.show("\nVous êtes déjà entrain de parler avec Matou.");
+				gui.show();
+			}
+			break;
+		case "P1":
+			if (currentZone == zones[2] && KeyElement.randomNumber == 2 && mainCharacter.x != 599) {
+				sac.addElement(cigs);
+				mainCharacter.cigs = true;
+				gui.replaceMainCharacter(mainCharacter, 599, 288);
+				gui.show("\nVous venez de récuperer un paquet de cigarettes!");
+				gui.show();
+
+			} else if (currentZone == zones[2] && mainCharacter.x == 599) {
+				gui.show("\nVous êtes déjà entrain de fouiller ce pot.");
+				gui.show();
+			} else
+				gui.show("\nVous n'avez rien trouvez!");
+				gui.show();
+				gui.replaceMainCharacter(mainCharacter, 599, 288);
+			break;
+		case "P2":
+			if (currentZone == zones[2] && KeyElement.randomNumber == 1 && mainCharacter.x != 1091) {
+				sac.addElement(cigs);
+				mainCharacter.cigs = true;
+				gui.replaceMainCharacter(mainCharacter, 1091, 72);
+				gui.show("\nVous venez de récuperer un paquet de cigarettes!");
+				gui.show();
+			} else if (currentZone == zones[2] && mainCharacter.x == 1091) {
+				gui.show("\nVous êtes déjà entrain de fouiller ce pot.");
+				gui.show();
+			} else
+				gui.show("\nVous n'avez rien trouvez!");
+				gui.show();
+				gui.replaceMainCharacter(mainCharacter, 1091, 72);
+			break;
 		default:
 			gui.show("Commande inconnue");
+			gui.show();
 			break;
 		}
 	}
@@ -186,40 +271,58 @@ public class Game implements java.io.Serializable {
 			currentZone = newZone;
 			gui.show(currentZone.longDescription());
 			gui.show();
+			if(!currentZone.actions.isEmpty()) {
+			gui.show(currentZone.longDescriptionAction());
+			gui.show();}
 			// CrÃ©e et affiche le personnage Ã  la zone de spawn de la salle.
 			mainCharacter.setCoordinates(currentZone.xSpawn, currentZone.ySpawn);
 			gui.showElement(mainCharacter);
 			initialize();// doit etre ici pour ne pas que les éléments soit au dernier plan
 			gui.showImage(currentZone.nameImage());
-			
+
 			possibleExit = true;
-			
+
 		}
 	}
-	//Méthode permettant d'afficher les différents élements sur la carte (KeyElement & Npc).
-	private void initialize() {
-		if (currentZone.description == "Cours Exterieur" && mainCharacter.matouRiddle == true) {
+
+	// Méthode permettant d'afficher les différents élements sur la carte
+	// (KeyElement & Npc).
+	public void initialize() {
+		if (currentZone == zones[4] && mainCharacter.matouRiddle == true) {
 			gui.showElement(matou);
-			gui.show("Matou est laaa!\n");
-			
+			gui.show("Matou est laaa!");
+			gui.show();
+
 		}
-		if (currentZone.description == "Cours de Sport")
+		if (currentZone == zones[5]) {
 			mainCharacter.matouRiddle = false;
-		else if (currentZone.description == "Cours Exterieur" && mainCharacter.matouRiddle == false) {
+		} else if (currentZone == zones[4] && mainCharacter.matouRiddle == false) {
 			matou.setCoordinates(679, 520);
 			gui.showElement(matou);
 		}
-		if (currentZone.description == "Cours Interieur" && mainCharacter.cigs ==false) {
-			gui.showElement(key);
-			sac.addElement(key);
-			mainCharacter.cigs=true;}
+		if (currentZone == zones[2] && mainCharacter.cigs == false) {
+			gui.showElement(cigs);
+		}
+		if (currentZone == zones[0]) {
+			gui.showElement(billy);
+		}
+		if (currentZone == zones[3]) {
+			gui.showElement(pliers);
+			gui.showElement(joe);
+
+		}
+		if (currentZone== zones[5]) {
+			gui.showElement(shovel);
+			gui.showElement(jack);
+		}
+
 	}
 
 	private void showSac() {
 		String msg = this.sac.toString();
 		gui.show(msg);
+		gui.show();
 	}
-
 
 	/**
 	 * Une methode qui permet d'executer un fichier texte avec la suite des

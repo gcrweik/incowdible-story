@@ -81,11 +81,24 @@ public class GUI implements ActionListener, java.io.Serializable {
 		if (imageURL != null) {
 			objectLabel.setIcon(new ImageIcon(imageURL));
 			image.add(objectLabel);
+			image.repaint();
 			return objectLabel;
 		} else
 			System.out.println("Une erreur est arrivée");
 		return null;
 	}
+
+	//Methode permettant de replacer le personnage principal e aux coordonnées donnés
+	public void replaceMainCharacter(MainCharacter e, int x, int y) {
+		//Enleve tout ce qu'il y a sur l'image
+		image.removeAll();
+		e.setCoordinates(x, y);
+		showElement(e);
+		game.initialize();
+		show(game.currentZone.longDescription());
+	}
+	
+
 
 	public void enable(boolean ok) {
 		textInput.setEditable(ok);

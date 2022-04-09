@@ -8,7 +8,9 @@ public enum Command {
 	SUD("S", "S (Aller à la sortie Sud)"), EST("E", "E (Aller à la sortie Est)"),
 	OUEST("O", "O (Aller à la sortie Ouest)"), AIDE("?", "? (Aide)"), QUITTER("Q", "Q (Quitter)"),
 	RETOUR("R", "R (Retourner en arriere)"), TERMINER("T", "T (Soluce automatique)"),
-	SAC("SA", "SA (Voir les elements dans le sac à dos)");
+	SAC("SA", "SA (Voir les elements dans le sac à dos)"), BILLY("BILLY", "BILLY (Parler à Billy)"),
+	MATOU("MATOU", "MATOU (Parler à Matou)"), JOE("JOE", "JOE (Parler à Joe)"), JACK("JACK", "JACK (Parler à Jack)"),
+	P1("P1", "P1 (Chercher dans le premier pot"), P2("P2", "P2 (Chercher dans le deuxieme pot");
 
 	private String abreviation;
 	private String description;
