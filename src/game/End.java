@@ -15,12 +15,20 @@ public class End implements KeyListener {
 
 	private JFrame endFrame = new JFrame("The Incowdible Story");
 	private JPanel endPanel = new JPanel();
-	private Music musicEnd = new Music("EndMusic");
+	private Music musicEnd;
+	private JLabel endScene;
 
-	public End() {
+	public End(String sceneChoice) throws IllegalArgumentException {
 
-		// Creation de la scene
-		JLabel endScene = new JLabel(new ImageIcon(getClass().getResource("images/Scene_End.gif")));
+		if (sceneChoice == "GoodEnding") {
+			musicEnd = new Music("EndMusic");
+			endScene = new JLabel(new ImageIcon(getClass().getResource("images/GoodEnding.gif")));
+		} else if (sceneChoice == "BadEnding") {
+			musicEnd = new Music("FailMusic");
+			endScene = new JLabel(new ImageIcon(getClass().getResource("images/BadEnding.gif")));
+		} else {
+			throw new IllegalArgumentException("GoodEnding or BadEnding");
+		}
 
 		// Ajout de scenes dans le JPanel
 		endPanel.add(endScene);
@@ -39,7 +47,11 @@ public class End implements KeyListener {
 
 		// Reglage de la JFrame
 		musicEnd.playMusic(); // Commence de jouer le son en boucle
-		endFrame.setSize(new Dimension(750, 600));
+		if (sceneChoice == "GoodEnding") {
+			endFrame.setSize(new Dimension(750, 600));
+		} else {
+			endFrame.setSize(new Dimension(800, 630));
+		}
 		endFrame.setResizable(false);
 		endFrame.setLocationRelativeTo(null);
 		endFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

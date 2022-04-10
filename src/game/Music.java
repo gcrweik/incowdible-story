@@ -38,12 +38,14 @@ public class Music {
 			Music.clip.open(audioInput);
 			Music.clip.loop(Clip.LOOP_CONTINUOUSLY);
 			control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			if (this.songName == "IntroMusic") {
+			if (this.songName == "IntroMusic" || this.songName == "EndMusic" || this.songName == "FailMusic") {
 				control.setValue(0); // Pour que le volume d'introduction soit toujous le meme;
 			} else {
 				control.setValue(SoundMenu.loadMusicOptions());
 			}
+
 		} catch (LineUnavailableException e) {
+
 			// Lien indisponible
 			e.printStackTrace();
 		} catch (UnsupportedAudioFileException e) {
