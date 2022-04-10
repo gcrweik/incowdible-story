@@ -22,10 +22,10 @@ public class Game implements java.io.Serializable {
 	private KeyElement cigs = new KeyElement(0, 0, 12, 17, "cigs.png", "Paquet de cigarettes");
 	private KeyElement pliers = new KeyElement(583, 260, 15, 20, "pliers.png", "Sécateur");
 	private KeyElement shovel = new KeyElement(517, 368, 37, 45, "shovel.png", "Pelle");
-	private Npc matou = new Npc(755, 503, 32, 64, "MatouProjet.png");
-	private Npc joe = new Npc(609, 219, 32, 64, "OldJoeProjet.png");
-	private Npc billy = new Npc(795, 193, 32, 64, "BillyProjet.png");
-	private Npc jack = new Npc(595, 337, 32, 64, "JackProjet.png");
+	private Npc matou = new Npc(755, 503, 32, 64, "MatouProjet.png", "Matou");
+	private Npc joe = new Npc(609, 219, 32, 64, "OldJoeProjet.png", "Joe");
+	private Npc billy = new Npc(795, 193, 32, 64, "BillyProjet.png", "Billy");
+	private Npc jack = new Npc(595, 337, 32, 64, "JackProjet.png", "Jack");
 	private boolean possibleExit;
 	private int timerCounter;
 
@@ -47,7 +47,6 @@ public class Game implements java.io.Serializable {
 		zones[0] = new Zone("La Cellule", "Cellule.png", 712, 497);
 		zones[1] = new Zone("Couloir", "Couloir.png", 734, 23);
 		zones[2] = new Zone("Cours Interieur", "CoursInterieur.png", 693, 139);
-
 		zones[3] = new Zone("Cafétéria", "Cafétéria.png", 588, 42);
 		zones[4] = new Zone("Cours Exterieur", "CoursExterieur.png", 1111, 218);
 		zones[5] = new Zone("Cours de Sport", "Sport.png", 771, 36);
@@ -58,6 +57,7 @@ public class Game implements java.io.Serializable {
 		// La sortie de Cellule
 		zones[0].addExit(Exit.SUD, zones[1]);
 		zones[0].addAction(Action.BILLY);
+		zones[0].addAction(Action.PARLER);
 
 		// Les sorties de Couloir
 		zones[1].addExit(Exit.NORD, zones[0]);
@@ -190,8 +190,9 @@ public class Game implements java.io.Serializable {
 				gui.replaceMainCharacter(mainCharacter, 719, 193);
 
 			} else if (currentZone == zones[0] && mainCharacter.x == 719) {
-				gui.show("\nVous êtes déjà entrain de parler avec Billy.");
+				gui.show("Vous êtes déjà entrain de parler avec Billy.");
 				gui.show();
+
 			}
 			break;
 		case "JACK":
@@ -223,10 +224,11 @@ public class Game implements java.io.Serializable {
 			} else if (currentZone == zones[2] && mainCharacter.x == 599) {
 				gui.show("\nVous êtes déjà entrain de fouiller ce pot.");
 				gui.show();
-			} else
+			} else {
 				gui.show("\nVous n'avez rien trouvez!");
 				gui.show();
 				gui.replaceMainCharacter(mainCharacter, 599, 288);
+			}
 			break;
 		case "P2":
 			if (currentZone == zones[2] && KeyElement.randomNumber == 1 && mainCharacter.x != 1091) {
@@ -238,10 +240,25 @@ public class Game implements java.io.Serializable {
 			} else if (currentZone == zones[2] && mainCharacter.x == 1091) {
 				gui.show("\nVous êtes déjà entrain de fouiller ce pot.");
 				gui.show();
-			} else
+			} else {
 				gui.show("\nVous n'avez rien trouvez!");
 				gui.show();
 				gui.replaceMainCharacter(mainCharacter, 1091, 72);
+			}
+			break;
+		case "PARLER":
+
+			if (currentZone == zones[0] && mainCharacter.x != 719) {
+				gui.show("Approchez-vous de Billy d'abord!");
+				gui.show();
+			} else if (currentZone == zones[0] && mainCharacter.x == 719) {
+				try {
+					executeDialog(billy);
+					gui.show();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
 			break;
 		default:
 			gui.show("Commande inconnue");
@@ -271,9 +288,10 @@ public class Game implements java.io.Serializable {
 			currentZone = newZone;
 			gui.show(currentZone.longDescription());
 			gui.show();
-			if(!currentZone.actions.isEmpty()) {
-			gui.show(currentZone.longDescriptionAction());
-			gui.show();}
+			if (!currentZone.actions.isEmpty()) {
+				gui.show(currentZone.longDescriptionAction());
+				gui.show();
+			}
 			// CrÃ©e et affiche le personnage Ã  la zone de spawn de la salle.
 			mainCharacter.setCoordinates(currentZone.xSpawn, currentZone.ySpawn);
 			gui.showElement(mainCharacter);
@@ -311,7 +329,7 @@ public class Game implements java.io.Serializable {
 			gui.showElement(joe);
 
 		}
-		if (currentZone== zones[5]) {
+		if (currentZone == zones[5]) {
 			gui.showElement(shovel);
 			gui.showElement(jack);
 		}
@@ -344,7 +362,26 @@ public class Game implements java.io.Serializable {
 				public void run() {
 					String currentLine = list.get(timerCounter);
 					System.out.println(currentLine);
-					goTo(currentLine);
+					switch (currentLine) {
+					case "Billy":
+						gui.replaceMainCharacter(mainCharacter, 719, 193);
+						break;
+					case "Joe":
+						gui.replaceMainCharacter(mainCharacter, 643, 234);
+						break;
+					case "Jack":
+						gui.replaceMainCharacter(mainCharacter, 639, 345);
+						break;
+					case "Matou":
+						gui.replaceMainCharacter(mainCharacter, 803, 528);
+						break;
+					case "Parler":
+						gui.show("Marguerite a eu un dialog.\n");
+						break;
+					default:
+						goTo(currentLine);
+						break;
+					}
 					timerCounter++;
 					if (timerCounter >= list.size()) {
 						timerCounter = 0;
@@ -355,7 +392,7 @@ public class Game implements java.io.Serializable {
 				}
 			};
 			Timer timer = new Timer("Timer");
-			timer.schedule(task, 1000, 1000);
+			timer.schedule(task, 1000, 2000);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -406,6 +443,41 @@ public class Game implements java.io.Serializable {
 			return lastCommand;
 		}
 		return "\n Il n'y a plus de retour possible.";
+
+	}
+
+	/**
+	 * Une methode qui permet d'executer un dialogue du npc
+	 * 
+	 * @param npc Npc qui parle.
+	 * @throws FileNotFoundException
+	 */
+	private void executeDialog(Npc npc) throws FileNotFoundException {
+		TimerTask task = new TimerTask() {
+
+			public void run() {
+
+				if (npc.getName() == "Billy") {
+					gui.show(npc.dialogBilly());
+				} else if (npc.getName() == "Matou") {
+
+				} else if (npc.getName() == "Joe") {
+
+				} else if (npc.getName() == "Jack") {
+
+				}
+				timerCounter++;
+				npc.dialogCounter++;
+				if (timerCounter > npc.getNpcDialogs().size()) {
+					timerCounter = 0;
+					npc.dialogCounter++;
+					this.cancel();
+				}
+
+			}
+		};
+		Timer timer = new Timer("Timer");
+		timer.schedule(task, 1000, 3000);
 
 	}
 

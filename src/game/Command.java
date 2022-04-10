@@ -10,7 +10,8 @@ public enum Command {
 	RETOUR("R", "R (Retourner en arriere)"), TERMINER("T", "T (Soluce automatique)"),
 	SAC("SA", "SA (Voir les elements dans le sac à dos)"), BILLY("BILLY", "BILLY (Parler à Billy)"),
 	MATOU("MATOU", "MATOU (Parler à Matou)"), JOE("JOE", "JOE (Parler à Joe)"), JACK("JACK", "JACK (Parler à Jack)"),
-	P1("P1", "P1 (Chercher dans le premier pot"), P2("P2", "P2 (Chercher dans le deuxieme pot");
+	P1("P1", "P1 (Chercher dans le premier pot"), P2("P2", "P2 (Chercher dans le deuxieme pot"),
+	PARLER("PARLER", "PARLER(Parler au personnage)");
 
 	private String abreviation;
 	private String description;

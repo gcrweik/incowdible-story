@@ -3,7 +3,7 @@ package game;
 import java.util.Random;
 
 public class KeyElement extends Element {
-	
+
 	/**
 	 * 
 	 */
@@ -11,15 +11,14 @@ public class KeyElement extends Element {
 	static Random rand = new Random();
 	static int randomNumber = rand.nextInt(2 - 1 + 1) + 1;
 
-	
 	public KeyElement(int x, int y, int imageWidth, int imageHeight, String imageName, String n) {
 		super(x, y, imageWidth, imageHeight, imageName, n);
 	}
-	
+
 	public String toString() {
 		return this.name;
 	}
-	
+
 	public void randomSetCoordinates() {
 		switch (randomNumber) {
 		case 1:
@@ -30,5 +29,5 @@ public class KeyElement extends Element {
 			break;
 		}
 	}
-	
+
 }
