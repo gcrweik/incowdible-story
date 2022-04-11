@@ -199,7 +199,7 @@ public class Game implements java.io.Serializable {
 				break;
 			}
 			if (currentZone == zones[4] && mainCharacter.matouRiddle == true) {
-				gui.show("Matou ne vous laisse pas passer!\n");
+				gui.show("Matou ne semble pas vouloir vous laissez passer!\n");
 				break;
 			} else if (currentZone == zones[4] && mainCharacter.matouRiddle == false) {
 				goTo("SUD");
@@ -416,6 +416,9 @@ public class Game implements java.io.Serializable {
 					mainCharacter.matouRiddle = false;
 					matou.setDialogState(3);
 					executeDialog(matou);
+					gui.image.removeAll();
+					gui.showElement(mainCharacter);
+					initialize();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
