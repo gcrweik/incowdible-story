@@ -29,7 +29,7 @@ public class Game implements java.io.Serializable {
 	private boolean possibleExit;
 	private int timerCounter;
 
-	private Backpack sac = new Backpack();
+	private Backpack backpack = new Backpack();
 
 	private File f = new File("solutions/solution1.txt");
 
@@ -57,7 +57,6 @@ public class Game implements java.io.Serializable {
 		// La sortie de Cellule
 		zones[0].addExit(Exit.SUD, zones[1]);
 		zones[0].addAction(Action.BILLY);
-		zones[0].addAction(Action.PARLER);
 
 		// Les sorties de Couloir
 		zones[1].addExit(Exit.NORD, zones[0]);
@@ -88,12 +87,19 @@ public class Game implements java.io.Serializable {
 		zones[5].addExit(Exit.NORD, zones[4]);
 		zones[5].addExit(Exit.SUD, zones[6]);
 		zones[5].addAction(Action.JACK);
+		zones[5].addAction(Action.COUPER);
 
 		// Les sorties de Mur
 		zones[6].addExit(Exit.NORD, zones[5]);
+		zones[6].addAction(Action.I);
+		zones[6].addAction(Action.II);
+		zones[6].addAction(Action.III);
+		zones[6].addAction(Action.IV);
+		zones[6].addAction(Action.PRENDRE);
 
 		// Les sorties de Bureau de Directeur
 		zones[8].addExit(Exit.OUEST, zones[7]);
+		zones[8].addAction(Action.UTILISER);
 
 		currentZone = zones[0];
 	}
@@ -101,8 +107,14 @@ public class Game implements java.io.Serializable {
 	private void showLocation() {
 		gui.show(currentZone.longDescription());
 		gui.show();
-		gui.show(currentZone.longDescriptionAction());
-		gui.show();
+		if (!currentZone.actions.isEmpty()) {
+			gui.show(currentZone.longDescriptionAction());
+			gui.show();
+		}
+		if (!currentZone.answers.isEmpty()) {
+			gui.show(currentZone.longDescriptionAnswer());
+			gui.show();
+		}
 	}
 
 	private void showWelcomeMessage() {
@@ -116,7 +128,6 @@ public class Game implements java.io.Serializable {
 		gui.showElement(mainCharacter);
 		initialize();
 		gui.showImage(currentZone.nameImage());
-
 		cigs.randomSetCoordinates();
 
 	}
@@ -128,39 +139,125 @@ public class Game implements java.io.Serializable {
 		case "AIDE":
 			showHelp();
 			break;
+
 		case "N":
 		case "NORD":
+			if (currentZone == zones[5]) {
+				zones[5].removeAction(Action.PARLER);
+				zones[5].removeAction(Action.COUPER);
+				zones[5].removeAction(Action.JACK);
+				zones[5].removeAction(Action.PRENDRE);
+				zones[5].addAction(Action.JACK);
+				zones[5].addAction(Action.COUPER);
+			}
+			if (currentZone == zones[2]) {
+				zones[2].removeAction(Action.P1);
+				zones[2].removeAction(Action.P2);
+				zones[2].removeAction(Action.PRENDRE);
+				zones[2].addAction(Action.P1);
+				zones[2].addAction(Action.P2);
+			}
+			if (currentZone == zones[1]) {
+				zones[0].addAction(Action.BILLY);
+				zones[0].removeAction(Action.PARLER);
+			}
 			goTo("NORD");
 			reverse(readingCommand);
 			break;
+
 		case "NE":
 		case "NORD_EST":
+			if (currentZone == zones[2]) {
+				zones[2].removeAction(Action.P1);
+				zones[2].removeAction(Action.P2);
+				zones[2].removeAction(Action.PRENDRE);
+				zones[2].addAction(Action.P1);
+				zones[2].addAction(Action.P2);
+			}
 			goTo("NORD_EST");
 			reverse(readingCommand);
 			break;
+
 		case "S":
 		case "SUD":
+			if (currentZone == zones[0] && mainCharacter.billyMet == false) {
+				gui.show("J'ai d'abord envie de discuter avec mon voisin.\n");
+				break;
+			} else if (currentZone == zones[0] && mainCharacter.billyMet == true) {
+				goTo("SUD");
+				reverse(readingCommand);
+				break;
+			}
+			if (currentZone == zones[4] && mainCharacter.matouRiddle == false) {
+				zones[4].removeAnswer(Answer.JOLIE);
+				zones[4].removeAnswer(Answer.NEUVE);
+				zones[4].removeAnswer(Answer.REPUGNANTE);
+				zones[4].removeAction(Action.PARLER);
+				zones[4].addAction(Action.MATOU);
+				goTo("SUD");
+				reverse(readingCommand);
+				break;
+			}
+			if (currentZone == zones[4] && mainCharacter.matouRiddle == true) {
+				gui.show("Matou ne vous laisse pas passer!\n");
+				break;
+			} else if (currentZone == zones[4] && mainCharacter.matouRiddle == false) {
+				goTo("SUD");
+				reverse(readingCommand);
+				break;
+			}
 			goTo("SUD");
 			reverse(readingCommand);
 			break;
+
 		case "E":
 		case "EST":
+			if (currentZone == zones[4]) {
+				zones[4].removeAction(Action.PARLER);
+				zones[4].removeAnswer(Answer.JOLIE);
+				zones[4].removeAnswer(Answer.NEUVE);
+				zones[4].removeAnswer(Answer.REPUGNANTE);
+				zones[4].addAction(Action.MATOU);
+			}
+			if (currentZone == zones[2]) {
+				zones[2].removeAction(Action.P1);
+				zones[2].removeAction(Action.P2);
+				zones[2].removeAction(Action.PRENDRE);
+				zones[2].addAction(Action.P1);
+				zones[2].addAction(Action.P2);
+			}
 			goTo("EST");
 			reverse(readingCommand);
 			break;
+
 		case "O":
 		case "OUEST":
+			if (currentZone == zones[2]) {
+				zones[2].removeAction(Action.P1);
+				zones[2].removeAction(Action.P2);
+				zones[2].removeAction(Action.PRENDRE);
+				zones[2].addAction(Action.P1);
+				zones[2].addAction(Action.P2);
+			}
+			if (currentZone == zones[3]) {
+				zones[3].removeAction(Action.PARLER);
+				zones[3].removeAction(Action.PRENDRE);
+				zones[3].addAction(Action.JOE);
+			}
 			goTo("OUEST");
 			reverse(readingCommand);
 			break;
+
 		case "Q":
 		case "QUITTER":
 			finish();
 			break;
+
 		case "R":
 		case "RETOUR":
 			goTo(returnTo());
 			break;
+
 		case "T":
 		case "TERMINER":
 			if (currentZone == zones[0]) {
@@ -174,103 +271,169 @@ public class Game implements java.io.Serializable {
 
 		case "SA":
 		case "SAC":
-			showSac();
+			showBackpack();
 			break;
+
 		case "JOE":
+			zones[3].removeAction(Action.JOE);
 			if (currentZone == zones[3] && mainCharacter.x != 643) {
+				zones[3].addAction(Action.PARLER);
+				zones[3].addAction(Action.PRENDRE);
 				gui.replaceMainCharacter(mainCharacter, 643, 234);
-
-			} else if (currentZone == zones[3] && mainCharacter.x == 643) {
-				gui.show("\nVous êtes déjà entrain de parler avec Joe.");
-				gui.show();
 			}
 			break;
+
 		case "BILLY":
+			zones[0].removeAction(Action.BILLY);
 			if (currentZone == zones[0] && mainCharacter.x != 719) {
+				zones[0].addAction(Action.PARLER);
 				gui.replaceMainCharacter(mainCharacter, 719, 193);
-
-			} else if (currentZone == zones[0] && mainCharacter.x == 719) {
-				gui.show("Vous êtes déjà entrain de parler avec Billy.");
-				gui.show();
-
 			}
 			break;
+
 		case "JACK":
+			zones[5].removeAction(Action.JACK);
 			if (currentZone == zones[5] && mainCharacter.x != 639) {
+				zones[5].addAction(Action.PARLER);
+				zones[5].addAction(Action.PRENDRE);
 				gui.replaceMainCharacter(mainCharacter, 639, 345);
 
-			} else if (currentZone == zones[5] && mainCharacter.x == 639) {
-				gui.show("\nVous êtes déjà entrain de parler avec Jack.");
-				gui.show();
 			}
 			break;
+
 		case "MATOU":
-			if (currentZone == zones[4] && mainCharacter.x != 803) {
-				gui.replaceMainCharacter(mainCharacter, 803, 528);
+			zones[4].removeAction(Action.MATOU);
+			if (currentZone == zones[4] && mainCharacter.matouRiddle == false && mainCharacter.x != 682) {
+				zones[4].addAction(Action.PARLER);
+				gui.replaceMainCharacter(mainCharacter, 682, 465);
 
-			} else if (currentZone == zones[4] && mainCharacter.x == 803) {
-				gui.show("\nVous êtes déjà entrain de parler avec Matou.");
-				gui.show();
 			}
+			if (currentZone == zones[4] && mainCharacter.matouRiddle == true && mainCharacter.x != 755) {
+				zones[4].addAction(Action.PARLER);
+				gui.replaceMainCharacter(mainCharacter, 755, 440);
+
+			}
+
 			break;
+
 		case "P1":
-			if (currentZone == zones[2] && KeyElement.randomNumber == 2 && mainCharacter.x != 599) {
-				sac.addElement(cigs);
-				mainCharacter.cigs = true;
-				gui.replaceMainCharacter(mainCharacter, 599, 288);
-				gui.show("\nVous venez de récuperer un paquet de cigarettes!");
-				gui.show();
-
-			} else if (currentZone == zones[2] && mainCharacter.x == 599) {
-				gui.show("\nVous êtes déjà entrain de fouiller ce pot.");
-				gui.show();
-			} else {
-				gui.show("\nVous n'avez rien trouvez!");
-				gui.show();
+			zones[2].addAction(Action.PRENDRE);
+			zones[2].addAction(Action.P2);
+			zones[2].removeAction(Action.P1);
+			if (currentZone == zones[2] && mainCharacter.x != 599) {
 				gui.replaceMainCharacter(mainCharacter, 599, 288);
 			}
 			break;
+
 		case "P2":
-			if (currentZone == zones[2] && KeyElement.randomNumber == 1 && mainCharacter.x != 1091) {
-				sac.addElement(cigs);
-				mainCharacter.cigs = true;
-				gui.replaceMainCharacter(mainCharacter, 1091, 72);
-				gui.show("\nVous venez de récuperer un paquet de cigarettes!");
-				gui.show();
-			} else if (currentZone == zones[2] && mainCharacter.x == 1091) {
-				gui.show("\nVous êtes déjà entrain de fouiller ce pot.");
-				gui.show();
-			} else {
-				gui.show("\nVous n'avez rien trouvez!");
-				gui.show();
+			zones[2].addAction(Action.PRENDRE);
+			zones[2].addAction(Action.P1);
+			zones[2].removeAction(Action.P2);
+			if (currentZone == zones[2] && mainCharacter.x != 1091) {
 				gui.replaceMainCharacter(mainCharacter, 1091, 72);
 			}
 			break;
-		case "PARLER":
 
-			if (currentZone == zones[0] && mainCharacter.x != 719) {
-				gui.show("Approchez-vous de Billy d'abord!");
-				gui.show();
-			} else if (currentZone == zones[0] && mainCharacter.x == 719) {
+		case "PARLER":
+			// Parler à Billy
+			if (currentZone == zones[0] && mainCharacter.x == 719 && currentZone.containsActions(Action.PARLER)) {
 				try {
+					mainCharacter.billyMet = true;
 					executeDialog(billy);
 					gui.show();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
 			}
+			// Parler à Joe
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)) {
+				try {
+					executeDialog(joe);
+					gui.show();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			// Parler à Matou
+			// Position 1
+
+			if (currentZone == zones[4] && mainCharacter.x == 755 && currentZone.containsActions(Action.PARLER)) {
+				try {
+					executeDialog(matou);
+					gui.show();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			// Position 2
+			if (currentZone == zones[4] && mainCharacter.x == 682 && currentZone.containsActions(Action.PARLER)) {
+
+				try {
+
+					executeDialog(matou);
+					gui.show();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+
 			break;
+
+		case "PRENDRE":
+			if (currentZone == zones[2] && cigs.randomNumber == 1 && mainCharacter.x == 1091
+					&& backpack.cigs == false) {
+				backpack.addElement(cigs);
+				backpack.cigs = true;
+				gui.replaceMainCharacter(mainCharacter, 1091, 72);
+				gui.show("Vous venez de récuperer un paquet de cigarettes!\n");
+			} else if (currentZone == zones[2] && cigs.randomNumber == 2 && mainCharacter.x == 599
+					&& backpack.cigs == false) {
+				backpack.addElement(cigs);
+				backpack.cigs = true;
+				gui.replaceMainCharacter(mainCharacter, 599, 288);
+				gui.show("Vous venez de récuperer un paquet de cigarettes!\n");
+			} else {
+				gui.show("Il n'y a rien à ramasser !\n");
+			}
+
+			break;
+
+		case "REPUGNANTE":
+		case "NEUVE":
+			if (currentZone == zones[4] && mainCharacter.matouRiddle == true && mainCharacter.x == 755) {
+				try {
+					matou.setDialogState(2);
+					executeDialog(matou);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			break;
+
+		case "JOLIE":
+			if (currentZone == zones[4] && mainCharacter.matouRiddle == true && mainCharacter.x == 755) {
+				try {
+					mainCharacter.matouRiddle = false;
+					matou.setDialogState(3);
+					executeDialog(matou);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			break;
+
 		default:
 			gui.show("Commande inconnue");
 			gui.show();
 			break;
 		}
+
 	}
 
 	private void showHelp() {
 		gui.show("Etes-vous perdu ?");
 		gui.show();
-		gui.show("Les commandes autorisÃ©es sont :");
+		gui.show("Les commandes autorisees sont :");
 		gui.show();
 		gui.show(Command.allDescriptions().toString());
 		gui.show();
@@ -292,7 +455,11 @@ public class Game implements java.io.Serializable {
 				gui.show(currentZone.longDescriptionAction());
 				gui.show();
 			}
-			// CrÃ©e et affiche le personnage Ã  la zone de spawn de la salle.
+			if (!currentZone.answers.isEmpty()) {
+				gui.show(currentZone.longDescriptionAnswer());
+				gui.show();
+			}
+			// Créee et affiche le personnage à la zone de spawn de la salle.
 			mainCharacter.setCoordinates(currentZone.xSpawn, currentZone.ySpawn);
 			gui.showElement(mainCharacter);
 			initialize();// doit etre ici pour ne pas que les éléments soit au dernier plan
@@ -308,17 +475,14 @@ public class Game implements java.io.Serializable {
 	public void initialize() {
 		if (currentZone == zones[4] && mainCharacter.matouRiddle == true) {
 			gui.showElement(matou);
-			gui.show("Matou est laaa!");
 			gui.show();
-
 		}
-		if (currentZone == zones[5]) {
-			mainCharacter.matouRiddle = false;
-		} else if (currentZone == zones[4] && mainCharacter.matouRiddle == false) {
+		if (currentZone == zones[4] && mainCharacter.matouRiddle == false) {
 			matou.setCoordinates(679, 520);
 			gui.showElement(matou);
+
 		}
-		if (currentZone == zones[2] && mainCharacter.cigs == false) {
+		if (currentZone == zones[2] && backpack.cigs == false) {
 			gui.showElement(cigs);
 		}
 		if (currentZone == zones[0]) {
@@ -336,8 +500,8 @@ public class Game implements java.io.Serializable {
 
 	}
 
-	private void showSac() {
-		String msg = this.sac.toString();
+	private void showBackpack() {
+		String msg = this.backpack.toString();
 		gui.show(msg);
 		gui.show();
 	}
@@ -453,29 +617,72 @@ public class Game implements java.io.Serializable {
 	 * @throws FileNotFoundException
 	 */
 	private void executeDialog(Npc npc) throws FileNotFoundException {
+
 		TimerTask task = new TimerTask() {
 
 			public void run() {
 
-				if (npc.getName() == "Billy") {
+				if (npc.getName().equals("Billy")) {
 					gui.show(npc.dialogBilly());
-				} else if (npc.getName() == "Matou") {
-
-				} else if (npc.getName() == "Joe") {
-
-				} else if (npc.getName() == "Jack") {
+				} else if (npc.getName().equals("Matou")) {
+					gui.show(npc.dialogMatou());
+				} else if (npc.getName().equals("Joe")) {
+					gui.show(npc.dialogJoe());
+				} else if (npc.getName().equals("Jack")) {
 
 				}
 				timerCounter++;
 				npc.dialogCounter++;
 				if (timerCounter > npc.getNpcDialogs().size()) {
 					timerCounter = 0;
-					npc.dialogCounter++;
+					npc.dialogCounter = 0;
+					gui.show();
+
+					if (npc.getName().equals("Billy")) {
+						billy.setDialogState(1);
+					}
+					if (npc.getName().equals("Joe")) {
+						joe.setDialogState(1);
+					}
+					if (npc.getName().equals("Matou")) {
+						// Si on choici "Neuve","Repugnante" dans le dialog avec Matou
+						if (matou.getDialogState() == 2) {
+							GUI.musicGame.stopMusic();
+							GUI.disposeGUIFrame();
+							@SuppressWarnings("unused")
+							End end = new End("BadEnding");
+						} else if (matou.getDialogState() == 3) {
+							matou.setDialogState(4);
+							zones[4].removeAnswer(Answer.JOLIE);
+							zones[4].removeAnswer(Answer.NEUVE);
+							zones[4].removeAnswer(Answer.REPUGNANTE);
+							zones[4].removeAction(Action.PARLER);
+							zones[4].addAction(Action.MATOU);
+
+						} else if (matou.getDialogState() == 4) {
+							zones[4].removeAnswer(Answer.JOLIE);
+							zones[4].removeAnswer(Answer.NEUVE);
+							zones[4].removeAnswer(Answer.REPUGNANTE);
+						} else {
+
+							matou.setDialogState(1);
+							zones[4].addAnswer(Answer.NEUVE);
+							zones[4].addAnswer(Answer.REPUGNANTE);
+							zones[4].addAnswer(Answer.JOLIE);
+						}
+					}
+
+					if (npc.getName().equals("Jack")) {
+						jack.setDialogState(1);
+					}
+					showLocation();
 					this.cancel();
+
 				}
 
 			}
 		};
+
 		Timer timer = new Timer("Timer");
 		timer.schedule(task, 1000, 3000);
 

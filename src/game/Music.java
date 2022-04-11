@@ -11,7 +11,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Music {
-	private static Clip clip; // Pour le son
+	static Clip clip; // Pour le son
 	static float currentVolume; // Volume de la musique actuel.
 	static FloatControl control;
 	static long pauseTime; // Le moment quand l'utilisateur a arreté la musique.
@@ -79,6 +79,11 @@ public class Music {
 	public static void pauseMusic() {
 		pauseTime = clip.getMicrosecondPosition();
 		clip.stop();
+	}
+
+	public static void specialContinueMusic() {
+		Music.clip.setMicrosecondPosition(Music.clip.getMicrosecondPosition());
+		Music.clip.start();
 	}
 
 	public String toString() {

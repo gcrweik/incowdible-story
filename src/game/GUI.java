@@ -26,6 +26,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 																							// game.
 	static ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
 																								// MessageDialog
+	static Music musicGame = new Music("GameMusic");
 
 	public GUI(Game j) {
 		game = j;
@@ -82,6 +83,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 			objectLabel.setIcon(new ImageIcon(imageURL));
 			image.add(objectLabel);
 			image.repaint();
+			image.revalidate();
 			return objectLabel;
 		} else
 			System.out.println("Une erreur est arrivée");
@@ -155,6 +157,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 		textInput.requestFocus();
 
 		// Parametrage de l'ecran.
+		musicGame.playMusic();
 		guiFrame.setSize(1920, 800);
 		guiFrame.setVisible(true);
 		textInput.requestFocusInWindow();
