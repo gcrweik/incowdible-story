@@ -109,7 +109,6 @@ public class SoundMenu implements ActionListener, ChangeListener, java.io.Serial
 			oos.flush();
 			oos.close();
 			System.out.println("User Options Saved");
-
 		} catch (Exception e) {
 			System.out.println("Serialisation error!\n" + e.getClass() + ": " + e.getMessage() + "\n");
 
@@ -135,6 +134,10 @@ public class SoundMenu implements ActionListener, ChangeListener, java.io.Serial
 			Music.control.setValue(0);// En cas de l'absence de la sauvegarde on met le volume par defaut.
 			System.out.println("Serialization error! Cant load data. \n ");
 			System.out.println(e.getClass() + e.getMessage() + "\n");
+		}
+		if (savedVolume == -20) {
+			Music.pauseMusic();
+			return savedVolume;
 		}
 		return savedVolume;
 	}
@@ -164,12 +167,15 @@ public class SoundMenu implements ActionListener, ChangeListener, java.io.Serial
 		Music.currentVolume = volumeSlider.getValue();
 		System.out.println(Music.currentVolume);
 		if (Music.currentVolume == -20.0f) {
-			Music.currentVolume = -80.0f;
+			Music.pauseMusic();
 			Music.control.setValue(Music.currentVolume);
 			savedVolume = -20;
 		} else {
+			Music.specialContinueMusic();
 			Music.control.setValue(Music.currentVolume);
 			savedVolume = (int) Music.currentVolume;
 		}
+
 	}
+
 }

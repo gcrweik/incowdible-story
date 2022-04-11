@@ -116,6 +116,7 @@ public class MenuInGame implements ActionListener, KeyListener {
 			// A développer
 		}
 		if (e.getSource() == btnMenu) {
+			GUI.musicGame.stopMusic();
 			miniMenu.dispose(); // Ferme la JFrame.
 			GUI.disposeGUIFrame();
 			@SuppressWarnings("unused")

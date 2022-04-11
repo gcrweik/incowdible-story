@@ -2,16 +2,23 @@ package game;
 
 import java.util.ArrayList;
 
-
 public class Backpack implements java.io.Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public boolean cigs;
+	public boolean key;
+	public boolean pliers;
+	public boolean shovel;
 	private ArrayList<Element> contenu;
 
 	public Backpack() {
 		this.contenu = new ArrayList<Element>();
+		this.cigs = false;
+		this.key = false;
+		this.pliers = false;
+		this.shovel = false;
 	}
 
 	public ArrayList<Element> getContenu() {
