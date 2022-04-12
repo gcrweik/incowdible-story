@@ -98,7 +98,7 @@ public class Npc extends Element {
 		if (dialogStateMatou == 0) {
 			matouDialogs.put(0, dialogOwner + "*Caresse sa matraque sensuellement de ses pattes*\n");
 			matouDialogs.put(1, dialogOwner + "*Lève la tête et vous regarde*\n");
-			matouDialogs.put(2, dialogOwner + "Oh ! t'es la nouvelle detenue, Lucie m'a parlé d'toi.\n "
+			matouDialogs.put(2, dialogOwner + "Oh ! t'es la nouvelle detenue, Lucie m'a parlé d'toi.\n"
 					/*+ " Lucie m'a parlé...\n"*/);
 			matouDialogs.put(3, dialogOwner + "Et c'est où qu'tu vas comme ça?\n");
 			matouDialogs.put(4, dialogOwner + "*Caresse la lettre 'L' sur sa matraque*\n");
@@ -136,12 +136,20 @@ public class Npc extends Element {
 		}
 		if (dialogStateMatou == 4) {
 			matouDialogs.clear();
-			matouDialogs.put(0, dialogOwner + "J'ai assez perdu d'temps avec toi, laisse-moi profiter d'ma Lucie! \n");
+			matouDialogs.put(0, dialogOwner + "J'ai assez perdu d'temps avec toi, laisse-moi profiter d'ma Lucie!\n");
 			phrase = matouDialogs.get(dialogCounter);
 			return phrase;
 		}
 		return null;
 
+	}
+	
+	public String dialogJack() {
+		if(dialogStateJack == 0) {
+			jackDialogs.put(1, dialogOwner +"Allez.. tiens t'as mérité ça.");
+			jackDialogs.put(2, dialogOwner +"D'ailleurs, si ça t'interesse Joe à un sécateur.");
+		}
+		return null;
 	}
 
 	public String getName() {
