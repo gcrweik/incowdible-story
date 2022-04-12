@@ -29,6 +29,10 @@ public class Backpack implements java.io.Serializable {
 		if (!contenu.contains(e))
 			this.contenu.add(e);
 	}
+	
+	public void removeElement(Element e) {
+		if(contenu.contains(e)) this.contenu.remove(e);
+	}
 
 	@Override
 	public String toString() {
