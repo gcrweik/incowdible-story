@@ -393,16 +393,16 @@ public class Game implements java.io.Serializable {
 				gui.replaceMainCharacter(mainCharacter, 599, 288);
 				gui.show("Vous venez de récuperer un paquet de cigarettes!\n");
 			}
-			
-			if(currentZone == zones[5] && backpack.shovel == false) {
+
+			if (currentZone == zones[5] && backpack.shovel == false && mainCharacter.jackRiddle == false) {
 				backpack.removeElement(cigs);
+				backpack.cigs = false;
 				jack.setDialogState(1);
 				backpack.addElement(shovel);
 				backpack.shovel = true;
 				initialize();
 				gui.show("Vous venez de récuperer une pelle!\n");
-			}
-			else {
+			} else {
 				gui.show("Il n'y a rien à ramasser !\n");
 			}
 			break;
@@ -432,8 +432,6 @@ public class Game implements java.io.Serializable {
 			}
 			break;
 
-
-
 		default:
 			gui.show("Commande inconnue");
 			gui.show();
@@ -459,7 +457,7 @@ public class Game implements java.io.Serializable {
 			possibleExit = false;
 		} else {
 			// Supprime l'ancien personnage
-			//gui.image.removeAll(); A supprimer?
+			// gui.image.removeAll(); A supprimer?
 			currentZone = newZone;
 			gui.show(currentZone.longDescription());
 			gui.show();
@@ -473,7 +471,7 @@ public class Game implements java.io.Serializable {
 			}
 			// Créee et affiche le personnage à la zone de spawn de la salle.
 			mainCharacter.setCoordinates(currentZone.xSpawn, currentZone.ySpawn);
-			//gui.showElement(mainCharacter); A supprimer?
+			// gui.showElement(mainCharacter); A supprimer?
 			initialize();// doit etre ici pour ne pas que les éléments soit au dernier plan
 			gui.showImage(currentZone.nameImage());
 
@@ -485,8 +483,8 @@ public class Game implements java.io.Serializable {
 	// Méthode permettant d'afficher les différents élements sur la carte
 	// (KeyElement & Npc).
 	public void initialize() {
-		gui.image.removeAll();//changement ici
-		gui.showElement(mainCharacter);//et ici
+		gui.image.removeAll();// changement ici
+		gui.showElement(mainCharacter);// et ici
 		if (currentZone == zones[4] && mainCharacter.matouRiddle == true) {
 			gui.showElement(matou);
 			gui.show();
@@ -510,8 +508,7 @@ public class Game implements java.io.Serializable {
 		if (currentZone == zones[5] && backpack.shovel == false) {
 			gui.showElement(shovel);
 			gui.showElement(jack);
-		}
-		else if (currentZone == zones[5] && backpack.shovel == true) {
+		} else if (currentZone == zones[5] && backpack.shovel == true) {
 			gui.showElement(jack);
 		}
 
