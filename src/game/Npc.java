@@ -31,8 +31,8 @@ public class Npc extends Element {
 		dialogOwner = "💬Billy: ";
 		if (dialogStateBilly == 0) {
 			billyDialogs.put(0, dialogOwner + "Hey, toi... viens par ici...\n");
-			billyDialogs.put(1, dialogOwner + "T'es la nouvelle, c'est ca? Moi c'est billy!\n");
-			billyDialogs.put(2, dialogOwner+ "... \n");
+			billyDialogs.put(1, dialogOwner + "T'es la nouvelle, c'est ca? Moi c'est Billy!\n");
+			billyDialogs.put(2, dialogOwner + "... \n");
 			billyDialogs.put(3, dialogOwner + "Pas très bavarde à ce que je vois...\n");
 			billyDialogs.put(4, dialogOwner + "Mais ca m'arrange, comme ça j'ai pas à m'arreter\n pour t'ecouter.\n");
 			billyDialogs.put(5, dialogOwner + "Aloooooors...par où commencer...\n");
@@ -42,7 +42,7 @@ public class Npc extends Element {
 							+ "c’est lui qui a bâti cette prison de ses propres mains.\n");
 
 			billyDialogs.put(7,
-					dialogOwner + "Jack the  Smuggler, peu importe ce que tu cherches, il te le trouvera !\n");
+					dialogOwner + "Jack the Smuggler, peu importe ce que tu cherches, il te le trouvera !\n");
 
 			billyDialogs.put(8, dialogOwner
 					+ "Matou le Maton, le seul maton de cette prison, mais je pense que c’est parce que\n"
@@ -99,13 +99,12 @@ public class Npc extends Element {
 			matouDialogs.put(0, dialogOwner + "*Caresse sa matraque sensuellement de ses pattes*\n");
 			matouDialogs.put(1, dialogOwner + "*Lève la tête et vous regarde*\n");
 			matouDialogs.put(2, dialogOwner + "Oh ! t'es la nouvelle detenue, Lucie m'a parlé d'toi.\n"
-					/*+ " Lucie m'a parlé...\n"*/);
+			/* + " Lucie m'a parlé...\n" */);
 			matouDialogs.put(3, dialogOwner + "Et c'est où qu'tu vas comme ça?\n");
 			matouDialogs.put(4, dialogOwner + "*Caresse la lettre 'L' sur sa matraque*\n");
 			matouDialogs.put(5, dialogOwner + "Ducoup tu veux faire un tour dans la salle de sport c'est ca?\n");
 			matouDialogs.put(6, dialogOwner + "Ma p'tite Lucie et moi adorons les enigmes\n");
-			matouDialogs.put(7,
-					dialogOwner + "J'te laisse passer qu'si tu reponds bien,\n");
+			matouDialogs.put(7, dialogOwner + "J'te laisse passer qu'si tu reponds bien,\n");
 			matouDialogs.put(8,
 					dialogOwner + "Tu t'trompes et... tu vas connaître la puissance d'ma charmante Lucie.\n");
 			matouDialogs.put(9, dialogOwner + "Alors dis-moi, comment qu'elle est ma Lucie?\n");
@@ -143,11 +142,15 @@ public class Npc extends Element {
 		return null;
 
 	}
-	
+
 	public String dialogJack() {
-		if(dialogStateJack == 0) {
-			jackDialogs.put(1, dialogOwner +"Allez.. tiens t'as mérité ça.");
-			jackDialogs.put(2, dialogOwner +"D'ailleurs, si ça t'interesse Joe à un sécateur.");
+		if (dialogStateJack == 0) {
+			jackDialogs.put(0, dialogOwner + "Allez.. tiens t'as mérité ça.");
+			jackDialogs.put(1, dialogOwner + "D'ailleurs, si ça t'interesse Joe à un sécateur.");
+		}
+		if (dialogStateJack == 1) {
+			jackDialogs.put(0, dialogOwner + "Allez.. tiens t'as mérité ça.");
+			jackDialogs.put(1, dialogOwner + "D'ailleurs, si ça t'interesse Joe à un sécateur.");
 		}
 		return null;
 	}
