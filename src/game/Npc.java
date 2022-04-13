@@ -68,7 +68,7 @@ public class Npc extends Element {
 
 	public String dialogJoe() {
 		dialogOwner = "💬Joe: ";
-		String sp = spaceAdder(4);
+		String sp = spaceAdder(5);
 		if (dialogStateJoe == 0) {
 			joeDialogs.put(0, dialogOwner + "*Dors debout, canne à la main.*\n");
 			joeDialogs.put(1, dialogOwner + "Zzzzzzzz...\n");
@@ -93,10 +93,101 @@ public class Npc extends Element {
 		}
 		if (dialogStateJoe == 2) {
 			joeDialogs.clear();
-			joeDialogs.put(0, dialogOwner + "Zzzzzzzzzzzzzzzz\n");
+			joeDialogs.put(0, dialogOwner + "Zzzzzzzzzzzzzzzz...\n");
+			joeDialogs.put(1, dialogOwner + "Qui me reveille encore...Ah c'est toi...\n");
+			joeDialogs.put(2,
+					dialogOwner + "En voyant ton regard plus determinées que jamais en pourait croire que t'as\n" + sp
+							+ "reussi de passer à travers Matou avec sa 'Lucie' ainsi que\n" + sp
+							+ "Jack et sa addiction au cigarettes.\n");
+			joeDialogs.put(3, dialogOwner + "Bon... vu que j'ai envie dormir allons droit au but\n");
+			joeDialogs.put(4, dialogOwner + "Je vais te poser deux questions...et si tu reponds correctement au deux\n"
+					+ sp + "le sécateur est à toi ainsi qu'un petit 'indice'.\n");
+			joeDialogs.put(5, dialogOwner + "*Joe rigole pour la premiere fois*\n");
+			joeDialogs.put(6, dialogOwner + "T'as le droit, en tout, au deux erreurs, si tu fais la troisieme...\n" + sp
+					+ "j'appele Matou et c'est fini pour toi !\n");
+			joeDialogs.put(7, dialogOwner + "Je prends ta silence pour un oui, donc écoute attentivement.\n");
+
 			phrase = joeDialogs.get(dialogCounter);
 			return phrase;
 		}
+		if (dialogStateJoe == 3) {
+			joeDialogs.clear();
+			joeDialogs.put(0, dialogOwner + "Combien de chaises ya t'il dans la salle de sport?\n");
+
+			phrase = joeDialogs.get(dialogCounter);
+			return phrase;
+		}
+		if (dialogStateJoe == 4) {
+			joeDialogs.clear();
+			joeDialogs.put(0, dialogOwner + "Faux ! Une premiere erreur sur deux !\n");
+			joeDialogs.put(1, dialogOwner + "Essaye encore !\n");
+
+			phrase = joeDialogs.get(dialogCounter);
+			return phrase;
+		}
+
+		if (dialogStateJoe == 5) {
+			joeDialogs.clear();
+			joeDialogs.put(0, dialogOwner + "Faux ! T'as plus le droit à l'erreur !\n");
+			joeDialogs.put(1, dialogOwner + "Choisi bien ta reponse...\n");
+
+			phrase = joeDialogs.get(dialogCounter);
+			return phrase;
+		}
+
+		if (dialogStateJoe == 6) {
+			joeDialogs.clear();
+			joeDialogs.put(0, dialogOwner + "Exactement!\n");
+			joeDialogs.put(1, dialogOwner + "Prochaine question.\n");
+
+			phrase = joeDialogs.get(dialogCounter);
+			return phrase;
+		}
+
+		if (dialogStateJoe == 7) {
+			joeDialogs.clear();
+			joeDialogs.put(0, dialogOwner + "Combien il ya de barbecues dans la cours exterieure?\n");
+
+			phrase = joeDialogs.get(dialogCounter);
+			return phrase;
+		}
+
+		if (dialogStateJoe == 8) {
+			joeDialogs.clear();
+			joeDialogs.put(0, dialogOwner + "Tu viens de te tromper une troisieme fois...\n");
+			joeDialogs.put(1, dialogOwner + "MATOUUUUUU !!!\n");
+			joeDialogs.put(2, dialogOwner + "Elle essaye de s'echapper !!\n");
+
+			phrase = joeDialogs.get(dialogCounter);
+			return phrase;
+		}
+		if (dialogStateJoe == 9) {
+			joeDialogs.clear();
+			joeDialogs.put(0, dialogOwner + "C'est totalement ca !\n");
+			joeDialogs.put(1, dialogOwner + "T'as merité ce secateur ainsi qu'un petit indice...\n");
+			joeDialogs.put(2,
+					dialogOwner + "Si en utilisant ton cadeau de la part du Jack tu trouves une clé dans un trou...\n");
+			joeDialogs.put(3, dialogOwner + "Hesite pas de sauter droit dedans...\n" + sp
+					+ "ca doit surement mener quelque part...\n");
+			joeDialogs.put(4, dialogOwner + "*Il rigole encore*\n");
+			joeDialogs.put(5, dialogOwner + "Aller... Marguerite...bon courage à toi...\n");
+			joeDialogs.put(6, dialogOwner + "*Il repart dans son sommeil*\n");
+			joeDialogs.put(7, "*Comment connait-il votre prenom?*\n");
+
+			phrase = joeDialogs.get(dialogCounter);
+			return phrase;
+		}
+
+		if (dialogStateJoe == 10) {
+			joeDialogs.clear();
+			joeDialogs.put(0, dialogOwner + "Zzzzzz....\n");
+			joeDialogs.put(1, dialogOwner + "...Oh Geraldine...que tu me manques\n");
+			joeDialogs.put(2, dialogOwner + "Zzzzzz....\n");
+
+			phrase = joeDialogs.get(dialogCounter);
+			return phrase;
+		}
+
 		return null;
 
 	}
