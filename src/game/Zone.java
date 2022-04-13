@@ -51,6 +51,10 @@ public class Zone implements java.io.Serializable {
 		return actions.containsKey(action.name()) && this.equals(actions.get(action.name()));
 	}
 
+	public boolean containsAnswers(Answer answer) {
+		return answers.containsKey(answer.name()) && this.equals(answers.get(answer.name()));
+	}
+
 	public String nameImage() {
 		return nameImage;
 	}

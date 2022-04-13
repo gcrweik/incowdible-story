@@ -28,6 +28,7 @@ public class Game implements java.io.Serializable {
 	private Npc jack = new Npc(595, 337, 32, 64, "JackProjet.png", "Jack");
 	private boolean possibleExit;
 	private int timerCounter;
+	private boolean noShowLocation;
 
 	private Backpack backpack = new Backpack();
 
@@ -138,6 +139,7 @@ public class Game implements java.io.Serializable {
 			showHelp();
 			break;
 
+		// Aller en Nord
 		case "N":
 		case "NORD":
 			if (currentZone == zones[5]) {
@@ -163,6 +165,7 @@ public class Game implements java.io.Serializable {
 			reverse(readingCommand);
 			break;
 
+		// Aller en Nord-Est
 		case "NE":
 		case "NORD_EST":
 			if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
@@ -176,6 +179,7 @@ public class Game implements java.io.Serializable {
 			reverse(readingCommand);
 			break;
 
+		// Aller en Sud
 		case "S":
 		case "SUD":
 			/*
@@ -208,6 +212,7 @@ public class Game implements java.io.Serializable {
 			reverse(readingCommand);
 			break;
 
+		// Aller en Est
 		case "E":
 		case "EST":
 			if (currentZone == zones[4]) {
@@ -235,6 +240,7 @@ public class Game implements java.io.Serializable {
 			reverse(readingCommand);
 			break;
 
+		// Aller en Ouest
 		case "O":
 		case "OUEST":
 			if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
@@ -253,16 +259,19 @@ public class Game implements java.io.Serializable {
 			reverse(readingCommand);
 			break;
 
+		// Quitter le jeu
 		case "Q":
 		case "QUITTER":
 			finish();
 			break;
 
+		// Revenir en arriere
 		case "R":
 		case "RETOUR":
 			goTo(returnTo());
 			break;
 
+		// Executer la solution
 		case "T":
 		case "TERMINER":
 			if (currentZone == zones[0]) {
@@ -274,20 +283,21 @@ public class Game implements java.io.Serializable {
 				break;
 			}
 
+			// Regarder le contenu du sac
 		case "SA":
 		case "SAC":
 			showBackpack();
 			break;
-
+		// S'approcher de Joe
 		case "JOE":
 			zones[3].removeAction(Action.JOE);
 			if (currentZone == zones[3] && mainCharacter.x != 643) {
 				zones[3].addAction(Action.PARLER);
-				zones[3].addAction(Action.PRENDRE);
 				gui.replaceMainCharacter(mainCharacter, 643, 234);
 			}
 			break;
 
+		// S'approcher de Billy
 		case "BILLY":
 			zones[0].removeAction(Action.BILLY);
 			if (currentZone == zones[0] && mainCharacter.x != 719) {
@@ -296,6 +306,7 @@ public class Game implements java.io.Serializable {
 			}
 			break;
 
+		// S'approcher de Jack
 		case "JACK":
 			zones[5].removeAction(Action.JACK);
 			if (currentZone == zones[5] && mainCharacter.x != 639) {
@@ -305,6 +316,7 @@ public class Game implements java.io.Serializable {
 			}
 			break;
 
+		// S'approcher de Matou
 		case "MATOU":
 			zones[4].removeAction(Action.MATOU);
 			if (currentZone == zones[4] && mainCharacter.matouRiddle == false && mainCharacter.x != 682) {
@@ -320,6 +332,7 @@ public class Game implements java.io.Serializable {
 
 			break;
 
+		// Pot de fleurs 1
 		case "P1":
 			if (mainCharacter.jackMet == true) {
 				zones[2].addAction(Action.PRENDRE);
@@ -330,6 +343,7 @@ public class Game implements java.io.Serializable {
 				}
 				break;
 			}
+			// Pot de fleurs 2
 		case "P2":
 			if (mainCharacter.jackMet == true) {
 				zones[2].addAction(Action.PRENDRE);
@@ -340,8 +354,10 @@ public class Game implements java.io.Serializable {
 				}
 			}
 			break;
+
+		// Parler au personnages
 		case "PARLER":
-			// Parler à Billy
+			// ---Parler à Billy---
 			if (currentZone == zones[0] && mainCharacter.x == 719 && currentZone.containsActions(Action.PARLER)) {
 				try {
 					mainCharacter.billyMet = true;
@@ -351,8 +367,11 @@ public class Game implements java.io.Serializable {
 					e.printStackTrace();
 				}
 			}
-			// Parler à Joe
-			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)) {
+			// ---Parler à Joe---
+			// Avant la debut de quete de Jack
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)
+					&& mainCharacter.matouRiddle == true && mainCharacter.jackRiddle == true
+					&& backpack.shovel == false) {
 				try {
 					executeDialog(joe);
 					gui.show();
@@ -360,8 +379,46 @@ public class Game implements java.io.Serializable {
 					e.printStackTrace();
 				}
 			}
-			// Parler à Matou
-			// Position 1
+			// Apres la fin de quete de Jack
+			// Premiere question(debut)
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)
+					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
+					&& backpack.shovel == true && mainCharacter.firstStageJoe == false) {
+				try {
+					joe.setDialogState(2);
+					executeDialog(joe);
+					gui.show();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+
+			}
+			// Premiere question(boucle sur la question)
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)
+					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
+					&& backpack.shovel == true && mainCharacter.firstStageJoe == true
+					&& mainCharacter.secondStageJoe == false) {
+				try {
+					executeDialog(joe);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				gui.show();
+			}
+			// Deuxieme question
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)
+					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
+					&& backpack.shovel == true && mainCharacter.firstStageJoe == true
+					&& mainCharacter.secondStageJoe == true) {
+				try {
+					executeDialog(joe);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				gui.show();
+			}
+			// ---Parler à Matou---
+			// Quand il bloque le passage
 
 			if (currentZone == zones[4] && mainCharacter.x == 755 && currentZone.containsActions(Action.PARLER)) {
 				try {
@@ -371,7 +428,7 @@ public class Game implements java.io.Serializable {
 					e.printStackTrace();
 				}
 			}
-			// Position 2
+			// Quand il ne bloque plus le passage
 			if (currentZone == zones[4] && mainCharacter.x == 682 && currentZone.containsActions(Action.PARLER)) {
 				try {
 
@@ -426,7 +483,7 @@ public class Game implements java.io.Serializable {
 
 			// Prendre les cigarettes
 			if (currentZone == zones[2] && cigs.randomNumber == 1 && mainCharacter.x == 1091 && backpack.cigs == false
-					&& mainCharacter.jackMet == true) {
+					&& mainCharacter.jackMet == true && currentZone.containsActions(Action.PRENDRE)) {
 				backpack.addElement(cigs);
 				backpack.cigs = true;
 				gui.replaceMainCharacter(mainCharacter, 1091, 72);
@@ -443,7 +500,7 @@ public class Game implements java.io.Serializable {
 
 			// Prendre la pelle
 			if (currentZone == zones[5] && backpack.shovel == false && mainCharacter.jackRiddle == false
-					&& mainCharacter.jackMet == true) {
+					&& mainCharacter.jackMet == true && currentZone.containsActions(Action.PRENDRE)) {
 				zones[5].removeAction(Action.PRENDRE);
 				backpack.addElement(shovel);
 				backpack.shovel = true;
@@ -451,12 +508,22 @@ public class Game implements java.io.Serializable {
 				gui.show("Vous venez de récuperer une pelle!\n");
 				showLocation();
 				break;
-			} else {
-				gui.show("Il n'y a rien à ramasser !\n");
+			}
 
+			// Prendre le secateur
+			if (currentZone == zones[3] && backpack.shovel == true && backpack.pliers == false
+					&& mainCharacter.joeRiddle == false && currentZone.containsActions(Action.PRENDRE)) {
+				zones[3].removeAction(Action.PRENDRE);
+				backpack.addElement(pliers);
+				backpack.pliers = true;
+				initialize();
+				gui.show("Vous venez de récuperer un secateur!\n");
+				showLocation();
+				break;
 			}
 			break;
 
+		// Reponses "REPUGNANTE" et "NEUVE" pour Matou
 		case "REPUGNANTE":
 		case "NEUVE":
 			if (currentZone == zones[4] && mainCharacter.matouRiddle == true && mainCharacter.x == 755) {
@@ -469,6 +536,7 @@ public class Game implements java.io.Serializable {
 			}
 			break;
 
+		// Reponse "JOLIE" pour Matou
 		case "JOLIE":
 			if (currentZone == zones[4] && mainCharacter.matouRiddle == true && mainCharacter.x == 755) {
 				try {
@@ -486,6 +554,106 @@ public class Game implements java.io.Serializable {
 			gui.show("Commande inconnue");
 			gui.show();
 			break;
+
+		// Reponses "TROIS" et "QUATRE" pour Joe
+		case "TROIS":
+		case "QUATRE":
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsAnswers(Answer.TROIS)
+					&& currentZone.containsAnswers(Answer.QUATRE) && mainCharacter.matouRiddle == false
+					&& mainCharacter.jackRiddle == false && backpack.shovel == true
+					&& mainCharacter.firstStageJoe == true && mainCharacter.secondStageJoe == false) {
+				if (mainCharacter.joePenalty == 0) {
+					try {
+						noShowLocation = true;
+						mainCharacter.joePenalty++;
+						joe.setDialogState(4);
+						executeDialog(joe);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+				} else if (mainCharacter.joePenalty == 1) {
+					try {
+						mainCharacter.joePenalty++;
+						joe.setDialogState(5);
+						executeDialog(joe);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+				} else if (mainCharacter.joePenalty == 2) {
+					try {
+						joe.setDialogState(8);
+						executeDialog(joe);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			break;
+
+		// Reponse "CINQ" pour Joe
+		case "CINQ":
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsAnswers(Answer.CINQ)
+					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
+					&& backpack.shovel == true && mainCharacter.firstStageJoe == true
+					&& mainCharacter.secondStageJoe == false) {
+				try {
+					mainCharacter.secondStageJoe = true;
+					joe.setDialogState(6);
+					executeDialog(joe);
+					break;
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			break;
+
+		case "UN":
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsAnswers(Answer.UN)
+					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
+					&& backpack.shovel == true && mainCharacter.firstStageJoe == true
+					&& mainCharacter.secondStageJoe == true) {
+				if (mainCharacter.joePenalty == 0) {
+					try {
+						noShowLocation = true;
+						mainCharacter.joePenalty++;
+						joe.setDialogState(4);
+						executeDialog(joe);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+				} else if (mainCharacter.joePenalty == 1) {
+					try {
+						mainCharacter.joePenalty++;
+						joe.setDialogState(5);
+						executeDialog(joe);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+				} else if (mainCharacter.joePenalty == 2) {
+					try {
+						joe.setDialogState(8);
+						executeDialog(joe);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			break;
+
+		case "DEUX":
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsAnswers(Answer.UN)
+					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
+					&& backpack.shovel == true && mainCharacter.firstStageJoe == true
+					&& mainCharacter.secondStageJoe == true) {
+				try {
+					joe.setDialogState(9);
+					executeDialog(joe);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			break;
+
 		}
 
 	}
@@ -549,8 +717,11 @@ public class Game implements java.io.Serializable {
 		if (currentZone == zones[0]) {
 			gui.showElement(billy);
 		}
-		if (currentZone == zones[3]) {
+		if (currentZone == zones[3] && backpack.pliers == false) {
 			gui.showElement(pliers);
+			gui.showElement(joe);
+
+		} else if (currentZone == zones[3] && backpack.pliers == true) {
 			gui.showElement(joe);
 
 		}
@@ -704,8 +875,102 @@ public class Game implements java.io.Serializable {
 					if (npc.getName().equals("Billy")) {
 						billy.setDialogState(1);
 					}
+					// Si le dialogue de Joe vient d'etre executer
 					if (npc.getName().equals("Joe")) {
-						joe.setDialogState(1);
+						if (joe.getDialogState() == 2) {
+							mainCharacter.firstStageJoe = true;
+							joe.setDialogState(3);
+
+							// Poser sa premiere question
+						} else if (joe.getDialogState() == 3) {
+							noShowLocation = false;
+							zones[3].addAnswer(Answer.TROIS);
+							zones[3].addAnswer(Answer.QUATRE);
+							zones[3].addAnswer(Answer.CINQ);
+
+							// Erreur pendant la premiere question
+						} else if (joe.getDialogState() == 4 && mainCharacter.firstStageJoe == true) {
+							noShowLocation = true;
+							// Erreur question deux
+							if (joe.getDialogState() == 4 && mainCharacter.firstStageJoe == true
+									&& mainCharacter.secondStageJoe == true) {
+								try {
+
+									joe.setDialogState(7);
+									executeDialog(joe);
+								} catch (FileNotFoundException e) {
+									e.printStackTrace();
+								}
+								// Erreur question une
+							} else {
+								try {
+									joe.setDialogState(3);
+									executeDialog(joe);
+								} catch (FileNotFoundException e) {
+									e.printStackTrace();
+								}
+
+							}
+							// Erreur pendant la premiere et la deuxieme questions
+						} else if (joe.getDialogState() == 5 && mainCharacter.firstStageJoe == true) {
+							noShowLocation = true;
+							// Erreur question deux
+							if (joe.getDialogState() == 5 && mainCharacter.firstStageJoe == true
+									&& mainCharacter.secondStageJoe == true) {
+								try {
+
+									joe.setDialogState(7);
+									executeDialog(joe);
+								} catch (FileNotFoundException e) {
+									e.printStackTrace();
+								}
+								// Erreur question une
+							} else {
+								try {
+
+									joe.setDialogState(3);
+									executeDialog(joe);
+								} catch (FileNotFoundException e) {
+									e.printStackTrace();
+								}
+
+							}
+							// Felicitation pour la reponse correcte, prochaine question
+						} else if (joe.getDialogState() == 6) {
+
+							try {
+								zones[3].removeAnswer(Answer.CINQ);
+								zones[3].removeAnswer(Answer.TROIS);
+								zones[3].removeAnswer(Answer.QUATRE);
+								noShowLocation = true;
+								joe.setDialogState(7);
+								executeDialog(joe);
+							} catch (FileNotFoundException e) {
+								e.printStackTrace();
+							}
+							// Deuxieme question
+						} else if (joe.getDialogState() == 7) {
+							noShowLocation = false;
+							zones[3].addAnswer(Answer.UN);
+							zones[3].addAnswer(Answer.DEUX);
+
+							// 3 reponses incorrecte
+						} else if (joe.getDialogState() == 8) {
+							GUI.musicGame.stopMusic();
+							GUI.disposeGUIFrame();
+							@SuppressWarnings("unused")
+							End end = new End("BadEnding");
+							// La fin de quete de Joe
+						} else if (joe.getDialogState() == 9) {
+							mainCharacter.joeRiddle = false;
+							zones[3].removeAnswer(Answer.UN);
+							zones[3].removeAnswer(Answer.DEUX);
+							zones[3].addAction(Action.PRENDRE);
+							joe.setDialogState(10);
+						} else if (joe.getDialogState() == 0) {
+							joe.setDialogState(1);
+						}
+
 					}
 					if (npc.getName().equals("Matou")) {
 						// Si on choici "Neuve","Repugnante" dans le dialog avec Matou
@@ -734,8 +999,9 @@ public class Game implements java.io.Serializable {
 							zones[4].addAnswer(Answer.JOLIE);
 						}
 					}
-
+					// Si le dialogue de Jack vient d'etre executer
 					if (npc.getName().equals("Jack")) {
+						// Fin de quete de Jack
 						if (jack.getDialogState() == 2) {
 							mainCharacter.jackRiddle = false;
 							zones[5].addAction(Action.PRENDRE);
@@ -745,7 +1011,10 @@ public class Game implements java.io.Serializable {
 						}
 
 					}
-					showLocation();
+					if (noShowLocation != true) {
+						showLocation();
+
+					}
 					this.cancel();
 
 				}

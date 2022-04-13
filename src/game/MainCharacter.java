@@ -10,9 +10,15 @@ public class MainCharacter extends Element {
 	public boolean joeMet; // Bloque la porte de la Cours Exterieur.
 	public boolean jackMet; // Bloque la possibilité de ramasser les cigarettes.
 
-	public boolean matouRiddle; // Reponse donnée: JOLIE
-	public boolean jackRiddle; // Les cigarettes trouvées
+	public boolean matouRiddle; // Reponse donnée: JOLIE.
+	public boolean jackRiddle; // Les cigarettes trouvées.
 	public boolean joeRiddle; // Reponse correctes au deux enigmes.
+
+	public boolean isInDialog; // Le personnage est en discussion.
+
+	public boolean firstStageJoe; // Premiere de deux question de Joe à ete posé 
+	public boolean secondStageJoe; // Deuxieme question de Joe à ete posé
+	public int joePenalty; // Nombre de fautes en repondant à Joe.
 
 	public MainCharacter(int x, int y, int imageWidth, int imageHeight, String imageName) {
 		super(x, y, imageWidth, imageHeight, imageName);
@@ -20,9 +26,15 @@ public class MainCharacter extends Element {
 		joeMet = false;
 		jackMet = false;
 
-		matouRiddle = true;
-		jackRiddle = true;
+		matouRiddle = false; // A rechanger
+		jackRiddle = false; // A rechanger
 		joeRiddle = true;
+
+		isInDialog = false;
+
+		firstStageJoe = false;
+		secondStageJoe = false;
+		joePenalty = 0;
 	}
 
 }

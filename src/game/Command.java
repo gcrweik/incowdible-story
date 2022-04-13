@@ -9,12 +9,16 @@ public enum Command {
 	OUEST("O", "O (Aller à la sortie Ouest)\n"), AIDE("?", "? (Aide)\n"), QUITTER("Q", "Q (Quitter)\n"),
 	RETOUR("R", "R (Retourner en arriere)\n"), TERMINER("T", "T (Soluce automatique)\n"),
 	SAC("SA", "SA (Voir les elements dans le sac à dos)\n"), BILLY("BILLY", "BILLY (Parler à Billy)\n"),
-	MATOU("MATOU", "MATOU (Parler à Matou)\n"), JOE("JOE", "JOE (Parler à Joe)\n"), JACK("JACK", "JACK (Parler à Jack)\n"),
-	P1("P1", "P1 (Chercher dans le premier pot)\n"), P2("P2", "P2 (Chercher dans le deuxieme pot)\n"),
-	PARLER("PARLER", "PARLER (Parler au personnage)\n"), PRENDRE("PRENDRE", "PRENDRE (Prendre un objet)\n"),
-	COUPER("COUPER", "COUPER (Couper le grillage)\n"), NEUVE("NEUVE", "NEUVE(Repondre que la matraque est neuve)\n"),
+	MATOU("MATOU", "MATOU (Parler à Matou)\n"), JOE("JOE", "JOE (Parler à Joe)\n"),
+	JACK("JACK", "JACK (Parler à Jack)\n"), P1("P1", "P1 (Chercher dans le premier pot)\n"),
+	P2("P2", "P2 (Chercher dans le deuxieme pot)\n"), PARLER("PARLER", "PARLER (Parler au personnage)\n"),
+	PRENDRE("PRENDRE", "PRENDRE (Prendre un objet)\n"), COUPER("COUPER", "COUPER (Couper le grillage)\n"),
+	NEUVE("NEUVE", "NEUVE(Repondre que la matraque est neuve)\n"),
 	REPUGNANTE("REPUGNANTE", "REPUGNANTE(Repondre que la matraque est repugnante)\n"),
-	JOLIE("JOLIE", "JOLIE(Repondre que la matraque est jolie)\n");
+	JOLIE("JOLIE", "JOLIE(Repondre que la matraque est jolie)\n"), UN("UN", "UN(Permet de repondre 'UN' à Joe)"),
+	DEUX("DEUX", "DEUX(Permet de repondre 'DEUX' à Joe)"), TROIS("TROIS", "TROIS(Permet de repondre 'TROIS' à Joe)"),
+	QUATRE("QUATRE", "QUATRE(Permet de repondre 'QUATRE' à Joe)"),
+	CINQ("CINQ", "CINQ(Permet de repondre 'CINQ' à Joe)");
 
 	private String abreviation;
 	private String description;
