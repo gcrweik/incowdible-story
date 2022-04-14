@@ -16,14 +16,14 @@ public enum Command {
 	GRILLAGE("GRILLAGE", "GRILLAGE(Permet de s'approcher du grillage)"),
 	COUPER("COUPER", "COUPER (Couper le grillage)\n"), NEUVE("NEUVE", "NEUVE (Repondre que la matraque est neuve)\n"),
 	REPUGNANTE("REPUGNANTE", "REPUGNANTE (Repondre que la matraque est repugnante)\n"),
-	JOLIE("JOLIE", "JOLIE (Repondre que la matraque est jolie)\n"), UN("UN", "UN (Permet de repondre 'UN' à Joe)\n"),
-	DEUX("DEUX", "DEUX (Permet de repondre 'DEUX' à Joe)\n"),
-	TROIS("TROIS", "TROIS (Permet de repondre 'TROIS' à Joe)\n"),
-	QUATRE("QUATRE", "QUATRE (Permet de repondre 'QUATRE' à Joe)\n"),
-	CINQ("CINQ", "CINQ (Permet de repondre 'CINQ' à Joe)\n"), T1("T1", "T1 (Permet de creuser le premier trou)\n"),
-	T2("T2", "T2 (Permet de creuser le deuxieme trou)\n"), T3("T3", "T3 (Permet de creuser le troisieme trou)\n"),
-	T4("T4", "T4 (Permet de creuser le quatrieme trou)\n"),
-	SAUTER("SAUTER", "SAUTER (Permet de sauter dans un trou ou autre)\n"), FUIR("FUIR", "FUIR (Fuir la prison)");
+	JOLIE("JOLIE", "JOLIE (Repondre que la matraque est jolie)\n"), UN("UN", "UN (Repondre 'UN' à Joe)\n"),
+	DEUX("DEUX", "DEUX (Repondre 'DEUX' à Joe)\n"),
+	TROIS("TROIS", "TROIS (Repondre 'TROIS' à Joe)\n"),
+	QUATRE("QUATRE", "QUATRE (Repondre 'QUATRE' à Joe)\n"),
+	CINQ("CINQ", "CINQ (Repondre 'CINQ' à Joe)\n"), T1("T1", "T1 (Creuser le premier trou)\n"),
+	T2("T2", "T2 (Creuser le deuxieme trou)\n"), T3("T3", "T3 (Creuser le troisieme trou)\n"),
+	T4("T4", "T4 (Creuser le quatrieme trou)\n"),
+	SAUTER("SAUTER", "SAUTER (Sauter dans un trou ou autre)\n"), FUIR("FUIR", "FUIR (Fuir la prison)");
 
 	private String abreviation;
 	private String description;

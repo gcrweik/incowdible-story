@@ -766,10 +766,10 @@ public class Game implements java.io.Serializable {
 					zones[6].addAction(Action.PRENDRE);
 					zones[6].removeAction(Action.T1);
 					key.setCoordinates(664, 367);
-					gui.show("Vous trouvez une clé ! Mais que ouvre-t-elle?\n");
-					gui.show("Vous vous rappelez de ce qu'il a dit Old Joe...\n");
-					gui.show("Allez vous prendre la clé et sauté dans le trou?\n");
-					gui.show("Ou vous allez continuez de creuser ?\n");
+					gui.show("Vous avez trouvé une clé! Mais que peut elle donc bien ouvrir?\n");
+					gui.show("*Vous vous rappelez de ce qu'a dit Old Joe...*\n");
+					gui.show("Allez vous prendre la clé et sauter dans ce trou?\n");
+					gui.show("Ou allez vous continuer de creuser ?\n");
 					gui.replaceMainCharacter(mainCharacter, 692, 311);
 
 				}
@@ -783,9 +783,9 @@ public class Game implements java.io.Serializable {
 					zones[6].removeAction(Action.T3);
 					zones[6].removeAction(Action.T4);
 					key.setCoordinates(664, 367);
-					gui.show("Vous trouvez une clé ! Mais que ouvre-t-elle?\n");
-					gui.show("Vous vous rappelez de ce qu'il a dit Old Joe...\n");
-					gui.show("Vous n'aves plus de temps, vous devez sauter dans le trou...\n");
+					gui.show("Vous avez trouvé une clé! Mais que peut elle donc bien ouvrir?\n");
+					gui.show("*Vous vous rappelez de ce qu'a dit Old Joe...*\n");
+					gui.show("Vous n'avez plus le temps, vous devez sauter dans le trou...\n");
 					gui.replaceMainCharacter(mainCharacter, 692, 311);
 
 				}
@@ -796,7 +796,7 @@ public class Game implements java.io.Serializable {
 					mainCharacter.holeLimit++;
 					zones[6].removeAction(Action.T1);
 					gui.show(
-							"Vous n'arrivez pas à creuser ici, vous avez du temps juste pour choisir un autre trou !\n");
+							"Il n'y a rien à cet emplacement, il ne vous reste assez de temps que pour creuser un seul trou!\n");
 					gui.replaceMainCharacter(mainCharacter, 692, 311);
 
 				}
@@ -831,9 +831,9 @@ public class Game implements java.io.Serializable {
 					zones[6].removeAction(Action.PRENDRE);
 					zones[6].removeAction(Action.SAUTER);
 					zones[6].addAction(Action.FUIR);
-					gui.show("Vous en etes en liberté ! Votre famille vous attends.\n");
-					gui.show("Vous jetez un dernier regards sur la prison avec ses habitans uniques...\n");
-					gui.show("...et continuez votre chemin dans la foret pour ne plus jamais revenir.\n");
+					gui.show("Vous êtes enfin libre! Il ne vous reste plus qu'à fuir, votre famille vous attends.\n");
+					gui.show("Vous jetez un dernier regards vers la prison en pensant aux rencontre que vous avez faites...\n");
+					gui.show("...et continuez votre chemin sans une once de regret.\n");
 					gui.replaceMainCharacter(mainCharacter, 767, 531);
 
 				}
@@ -844,7 +844,7 @@ public class Game implements java.io.Serializable {
 					mainCharacter.holeLimit++;
 					zones[6].removeAction(Action.T2);
 					gui.show(
-							"Vous n'arrivez pas à creuser ici, vous avez du temps juste pour choisir un autre trou !\n");
+							"Il n'y a rien à cet emplacement, il ne vous reste assez de temps que pour creuser un seul trou!\n");
 					gui.replaceMainCharacter(mainCharacter, 744, 311);
 
 				}
@@ -876,10 +876,10 @@ public class Game implements java.io.Serializable {
 					zones[6].addAction(Action.PRENDRE);
 					zones[6].removeAction(Action.T3);
 					key.setCoordinates(840, 356);
-					gui.show("Vous trouvez une clé ! Mais que ouvre-t-elle?\n");
-					gui.show("Vous vous rappelez de ce qu'il a dit Old Joe...\n");
-					gui.show("Allez vous prendre la clé et sauté dans le trou?\n");
-					gui.show("Ou vous allez continuez de creuser ?\n");
+					gui.show("Vous avez trouvé une clé! Mais que peut elle donc bien ouvrir?\n");
+					gui.show("*Vous vous rappelez de ce qu'a dit Old Joe...*\n");
+					gui.show("Allez vous prendre la clé et sauter dans ce trou?\n");
+					gui.show("Ou allez vous continuer de creuser ?\n");
 					gui.replaceMainCharacter(mainCharacter, 796, 311);
 
 				}
@@ -907,7 +907,7 @@ public class Game implements java.io.Serializable {
 					mainCharacter.holeLimit++;
 					zones[6].removeAction(Action.T3);
 					gui.show(
-							"Vous n'arrivez pas à creuser ici, vous avez du temps juste pour choisir un autre trou !\n");
+							"Il n'y a rien à cet emplacement, il ne vous reste assez de temps que pour creuser un seul trou!\n");
 					gui.replaceMainCharacter(mainCharacter, 796, 311);
 
 				}
@@ -941,10 +941,9 @@ public class Game implements java.io.Serializable {
 					zones[6].removeAction(Action.PRENDRE);
 					zones[6].removeAction(Action.SAUTER);
 					zones[6].addAction(Action.FUIR);
-					gui.show("Vous etes en liberté ! Votre famille vous attends.\n");
-					gui.show(
-							"Marquerite jete un dernier regard sur la prison avec ses habitans uniques et mysterieux...\n");
-					gui.show("...et continue son chemin dans la foret pour ne plus jamais revenir.\n");
+					gui.show("Vous êtes enfin libre! Il ne vous reste plus qu'à fuir, votre famille vous attends.\n");
+					gui.show("Vous jetez un dernier regards vers la prison en pensant aux rencontre que vous avez faites...\n");
+					gui.show("...et continuez votre chemin sans une once de regret.\n");
 					gui.replaceMainCharacter(mainCharacter, 767, 531);
 				}
 
@@ -955,7 +954,7 @@ public class Game implements java.io.Serializable {
 					mainCharacter.holeLimit++;
 					zones[6].removeAction(Action.T4);
 					gui.show(
-							"Vous n'arrivez pas à creuser ici, vous avez du temps juste pour choisir un autre trou !\n");
+							"Il n'y a rien à cet emplacement, il ne vous reste assez de temps que pour creuser un seul trou!\n");
 					gui.replaceMainCharacter(mainCharacter, 854, 311);
 
 				}
@@ -987,10 +986,10 @@ public class Game implements java.io.Serializable {
 				zones[2].removeAction(Action.SAUTER);
 				initialize();
 				teleport(2);
-				gui.show("Vous sautez dans le tunnel, et apres 5 minutes dedans et quelque coup de pelles...\n");
-				gui.show("Vous vous retrouvez de nouveau en prison !!! Old Joe vous a trahi !\n");
-				gui.show("En panique vous jettez un coup d'oeil et votre regard tombe sur...une porte !!!\n");
-				gui.show("La clé ! La porte ! Vous vous jetez vers la porte avec l'espoir.\n");
+				gui.show("Vous sautez dans le tunnel et apres quelques coups de pelles...\n");
+				gui.show("Vous vous retrouvez dans la cours interieur !!! Joe vous a trahi..\n");
+				gui.show("Paniqué, vous voyez une porte au Nord_Est!!!\n");
+				gui.show("L'énigme.. La clé.. La porte.. Vous courez vers la porte avec espoir.\n");
 				showLocation();
 			}
 			if (currentZone == zones[8] && mainCharacter.alarmUp == true && currentZone.containsActions(Action.SAUTER)
@@ -1010,11 +1009,11 @@ public class Game implements java.io.Serializable {
 				backpack.removeElement(key);
 				backpack.key = false;
 				initialize();
-				gui.show("En ouvrant la porte, vous avez cassé la clé !\n");
-				gui.show("Vous jeter la clé sur un banc et c'est la que vous remarquez... une trappe !!!!\n");
-				gui.show("Qui sait ce qui vous attends en bas ? Y'a qu'un seul moyen de le savoir...\n");
-				gui.show("Sans regarder derriere elle, Marguerite ouvre la trappe et se prepare pour le saut...\n");
-				gui.show("Qui sait, peut-etre ce n'est qu'un debut d'une nouvelle histoire?\n");
+				gui.show("En ouvrant la porte, vous cassez la clé !\n");
+				gui.show("Vous la jeté sur un banc et vous remarquez.. Une trappe !!!!\n");
+				gui.show("Qui sait ce qui vous attends en bas ? Il n'y a qu'un seul moyen de le savoir..\n");
+				gui.show("Sans regarder derriere vous, vous ouvrez la trappe et sautez.\n");
+				gui.show("Qui sait, peut-etre n'est-ce que le debut d'une nouvelle aventure?\n");
 				gui.replaceMainCharacter(mainCharacter, 951, 229);
 			}
 			break;
@@ -1221,7 +1220,7 @@ public class Game implements java.io.Serializable {
 						gui.replaceMainCharacter(mainCharacter, 803, 528);
 						break;
 					case "Parler":
-						gui.show("Marguerite a eu un dialog.\n");
+						gui.show("Vous venez de discuter avec lui.\n");
 						break;
 					default:
 						goTo(currentLine);
@@ -1281,7 +1280,7 @@ public class Game implements java.io.Serializable {
 	 * @return Le nom de la derniere salle.
 	 */
 	private String returnTo() {
-		if (mainCharacter.lastZones.size() > 0) {
+		if (mainCharacter.lastZones.size() > 0 && mainCharacter.alarmUp == false) {
 			String lastCommand = mainCharacter.lastZones.get(mainCharacter.lastZones.size() - 1);
 			mainCharacter.lastZones.remove(mainCharacter.lastZones.size() - 1);
 

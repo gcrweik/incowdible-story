@@ -192,7 +192,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 				JOptionPane.showMessageDialog(MenuInGame.miniMenu, "Save has been created!", "Created",
 						JOptionPane.INFORMATION_MESSAGE, checkIcon);
 			} else {
-				JOptionPane.showMessageDialog(MenuInGame.miniMenu, "Slot with this name exists already! ",
+				JOptionPane.showMessageDialog(MenuInGame.miniMenu, "Slot with this name already exists! ",
 						"Already Exists", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (Exception e) {
