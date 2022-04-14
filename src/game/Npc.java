@@ -31,7 +31,7 @@ public class Npc extends Element {
 		dialogOwner = "💬Billy: ";
 		String sp = spaceAdder(3);
 		if (dialogStateBilly == 0) {
-			billyDialogs.put(0, dialogOwner + "Hey, toi... viens par ici...\n");
+			billyDialogs.put(0, dialogOwner + "Hey, toi.. viens par ici..\n");
 			billyDialogs.put(1, dialogOwner + "T'es la nouvelle, c'est ca? Moi c'est Billy!\n");
 			billyDialogs.put(2, dialogOwner + "... \n");
 			billyDialogs.put(3, dialogOwner + "Pas très bavarde à ce que je vois...\n");
@@ -48,7 +48,7 @@ public class Npc extends Element {
 
 			billyDialogs.put(9, dialogOwner
 					+ "Matou le Maton, le seul maton de cette prison, mais je pense que c’est parce que\n" + sp
-					+ "les dévelo... , hmmm, les directeurs de la prison,  n’ont pas eu le temps d’en employer d’autres, bref ,\n"
+					+ "les dévelo... ,*toussote* hum hum, les directeurs de la prison,  n’ont pas eu le temps d’en employer d’autres, bref ,\n"
 					+ sp + "si Matou te pose une question sur sa matraque réponds lui simplement, “Jolie” ...”\n");
 			billyDialogs.put(10,
 					dialogOwner + "Maintenant bouge d'ici et va voir Old Joe, avant que Matou nous voit discuter!\n");
@@ -76,11 +76,11 @@ public class Npc extends Element {
 			joeDialogs.put(3, dialogOwner + "Ah non... mais qui es-tu?\n");
 			joeDialogs.put(4,
 					dialogOwner + "Quoi que, t'embêtes pas à me repondre, je vais pas m'en rappeler de toute facon\n");
-			joeDialogs.put(5, dialogOwner + "Hmmmmm..... je connais ce regard... le regard de quelqu'un\n" + sp
-					+ "qui veut etre libre.\n");
-			joeDialogs.put(6, dialogOwner + "Tu sais quoi? Je te conseille à aller voir Jack à la salle de sport.\n");
-			joeDialogs.put(7, dialogOwner + "Qui sait ce qui l'a à 't'offrir'. Mais fait trés attention à Matou...\n");
-			joeDialogs.put(8, dialogOwner + "Reviens me voir plus tard, si je suis reveillé...\n");
+			joeDialogs.put(5, dialogOwner + "Hmmmmm... je connais ce regard.. le regard de quelqu'un\n" + sp
+					+ "qui rêve de liberté!\n");
+			joeDialogs.put(6, dialogOwner + "Vas voir Jack à la salle de sport.\n");
+			joeDialogs.put(7, dialogOwner + "Qui sait ce qu'il a à 't'offrir'. Mais fait attention à Matou..\n");
+			joeDialogs.put(8, dialogOwner + "Reviens me voir plus tard, si je suis reveillé.\n");
 			joeDialogs.put(9, dialogOwner + "Zzzzzzzzzz...\n");
 			phrase = joeDialogs.get(dialogCounter);
 			return phrase;
@@ -94,32 +94,32 @@ public class Npc extends Element {
 		if (dialogStateJoe == 2) {
 			joeDialogs.clear();
 			joeDialogs.put(0, dialogOwner + "Zzzzzzzzzzzzzzzz...\n");
-			joeDialogs.put(1, dialogOwner + "Qui me reveille encore...Ah c'est toi...\n");
+			joeDialogs.put(1, dialogOwner + "Qui ose déranger mon sommeil? Oh, C'est toi.\n");
 			joeDialogs.put(2,
-					dialogOwner + "En voyant ton regard plus determinées que jamais en pourait croire que t'as\n" + sp
-							+ "reussi de passer à travers Matou avec sa 'Lucie' ainsi que\n" + sp
-							+ "Jack et sa addiction au cigarettes.\n");
-			joeDialogs.put(3, dialogOwner + "Bon... vu que j'ai envie dormir allons droit au but\n");
-			joeDialogs.put(4, dialogOwner + "Je vais te poser deux questions...et si tu reponds correctement au deux\n"
-					+ sp + "le sécateur est à toi ainsi qu'un petit 'indice'.\n");
+					dialogOwner + "A te voir, on dirait que..\n" + sp
+							+ "Que tu as reussi a passer à travers Matou et sa 'Lucie' ainsi que\n" + sp
+							+ "Jack et son addiction aux cigarettes.\n");
+			joeDialogs.put(3, dialogOwner + "Bon... vu que j'ai envie de dormir, allons droit au but.\n");
+			joeDialogs.put(4, dialogOwner + "Je vais te poser deux questions.. et.. si tu reponds correctement au deux\n"
+					+ sp + "mon sécateur sera à toi ainsi qu'un petit 'indice'!\n");
 			joeDialogs.put(5, dialogOwner + "*Joe rigole pour la premiere fois*\n");
-			joeDialogs.put(6, dialogOwner + "T'as le droit, en tout, au deux erreurs, si tu fais la troisieme...\n" + sp
-					+ "j'appele Matou et c'est fini pour toi !\n");
-			joeDialogs.put(7, dialogOwner + "Je prends ta silence pour un oui, donc écoute attentivement.\n");
+			joeDialogs.put(6, dialogOwner + "T'as le droit, a deux erreurs, à la troisieme...\n" + sp
+					+ "J'appele Matou! et s'en est fini de toi!\n");
+			joeDialogs.put(7, dialogOwner + "Je prends ton silence pour un oui, donc écoute attentivement.\n");
 
 			phrase = joeDialogs.get(dialogCounter);
 			return phrase;
 		}
 		if (dialogStateJoe == 3) {
 			joeDialogs.clear();
-			joeDialogs.put(0, dialogOwner + "Combien de chaises ya t'il dans la salle de sport?\n");
+			joeDialogs.put(0, dialogOwner + "Combien de chaises y-a-t'il dans la salle de sport?\n");
 
 			phrase = joeDialogs.get(dialogCounter);
 			return phrase;
 		}
 		if (dialogStateJoe == 4) {
 			joeDialogs.clear();
-			joeDialogs.put(0, dialogOwner + "Faux ! Une premiere erreur sur deux !\n");
+			joeDialogs.put(0, dialogOwner + "Faux ! C'est ta première erreur.. !\n");
 			joeDialogs.put(1, dialogOwner + "Essaye encore !\n");
 
 			phrase = joeDialogs.get(dialogCounter);
@@ -146,7 +146,7 @@ public class Npc extends Element {
 
 		if (dialogStateJoe == 7) {
 			joeDialogs.clear();
-			joeDialogs.put(0, dialogOwner + "Combien il ya de barbecues dans la cours exterieure?\n");
+			joeDialogs.put(0, dialogOwner + "Combien y-a-t il de barbecues dans la cours exterieure?\n");
 
 			phrase = joeDialogs.get(dialogCounter);
 			return phrase;
@@ -163,16 +163,16 @@ public class Npc extends Element {
 		}
 		if (dialogStateJoe == 9) {
 			joeDialogs.clear();
-			joeDialogs.put(0, dialogOwner + "C'est totalement ca !\n");
-			joeDialogs.put(1, dialogOwner + "T'as merité ce secateur ainsi qu'un petit indice...\n");
+			joeDialogs.put(0, dialogOwner + "C'est exactement ça !\n");
+			joeDialogs.put(1, dialogOwner + "T'as merité ce secateur ainsi que ce petit indice...\n");
 			joeDialogs.put(2,
-					dialogOwner + "Si en utilisant ton cadeau de la part du Jack tu trouves une clé dans un trou...\n");
-			joeDialogs.put(3, dialogOwner + "Hesite pas de sauter droit dedans...\n" + sp
-					+ "ca doit surement mener quelque part...\n");
+					dialogOwner + "Si tu trouves une clé dans un trou..\n");
+			joeDialogs.put(3, dialogOwner + "N'hesite pas d'y sauter,\n" + sp
+					+ "ca te rameneras surement quelque part..\n");
 			joeDialogs.put(4, dialogOwner + "*Il rigole encore*\n");
-			joeDialogs.put(5, dialogOwner + "Aller... Marguerite...bon courage à toi...\n");
-			joeDialogs.put(6, dialogOwner + "*Il repart dans son sommeil*\n");
-			joeDialogs.put(7, "*Comment connait-il votre prenom?*\n");
+			joeDialogs.put(5, dialogOwner + "Aller, aller Marguerite.. bon courage à toi..\n");
+			joeDialogs.put(6, dialogOwner + "*Il se rendort*\n");
+			joeDialogs.put(7, "*Mais comment connait-il donc votre prenom?*\n");
 
 			phrase = joeDialogs.get(dialogCounter);
 			return phrase;
@@ -181,7 +181,7 @@ public class Npc extends Element {
 		if (dialogStateJoe == 10) {
 			joeDialogs.clear();
 			joeDialogs.put(0, dialogOwner + "Zzzzzz....\n");
-			joeDialogs.put(1, dialogOwner + "...Oh Geraldine...que tu me manques\n");
+			joeDialogs.put(1, dialogOwner + "Geraldine... que tu me manques..\n");
 			joeDialogs.put(2, dialogOwner + "Zzzzzz....\n");
 
 			phrase = joeDialogs.get(dialogCounter);
@@ -246,18 +246,18 @@ public class Npc extends Element {
 		dialogOwner = "💬Jack: ";
 		String sp = spaceAdder(5);
 		if (dialogStateJack == 0) {
-			jackDialogs.put(0, dialogOwner + "Eh...pssssst...\n");
-			jackDialogs.put(1, dialogOwner + "Tu cherches du.... fromage?\n");
-			jackDialogs.put(2, dialogOwner + "*Son nez entier commence de bouger d'excitation*\n");
+			jackDialogs.put(0, dialogOwner + "Hey.. pssssst.. hey!\n");
+			jackDialogs.put(1, dialogOwner + "Tu veux du fromage?\n");
+			jackDialogs.put(2, dialogOwner + "*Son nez bouge d'excitation*\n");
 			jackDialogs.put(3, dialogOwner + ".....\n");
 			jackDialogs.put(4, dialogOwner + "Non? C'est dommage...\n");
-			jackDialogs.put(5, dialogOwner + "*Il est visiblement deçu*\n");
+			jackDialogs.put(5, dialogOwner + "C'est pourtant de la bonne, tout droit venu du Maroc..\n");
 			jackDialogs.put(6, dialogOwner + "Laisse moi deviner, c'est Old Joe qui t'envoie?\n");
 			jackDialogs.put(7, dialogOwner + "*Remarque le regarde que vous jetez sur sa pelle*\n");
 			jackDialogs.put(8, dialogOwner + "Tu la veux? Hmmmm....\n");
 			jackDialogs.put(9,
-					dialogOwner + "Soit tu me ramene du fromage sooooooit...\n" + sp + "un paquet de cigarettes !\n");
-			jackDialogs.put(10, dialogOwner + "Et traine pas trop sinon dis au revoir à la pelle hehe !\n");
+					dialogOwner + "Ramene moi du fromage ouuu...\n" + sp + "un paquet de cigarettes !\n");
+			jackDialogs.put(10, dialogOwner + "Et traine pas trop sinon tu peux dire au revoir à la pelle hehe !\n");
 
 			phrase = jackDialogs.get(dialogCounter);
 			return phrase;
@@ -279,7 +279,7 @@ public class Npc extends Element {
 			jackDialogs.put(1, dialogOwner + "*Allume une cigarette directement et tire dessus*\n");
 			jackDialogs.put(2, dialogOwner + "*Son nez s'agite de plaisir*\n");
 			jackDialogs.put(3, dialogOwner + "Allez... tiens, t'as mérité ça.\n");
-			jackDialogs.put(4, dialogOwner + "Tu peux prends la pelle. Maintenant j'ai mieux....les cigarettes...\n");
+			jackDialogs.put(4, dialogOwner + "Tu peux prendre ma pelle. Maintenant j'ai bien mieux, les cigarettes... !\n");
 			jackDialogs.put(5, dialogOwner + "D'ailleurs, si ça t'interesse Joe à un sécateur.\n");
 			jackDialogs.put(6, dialogOwner + "Je dis ca, je dis rien.\n");
 
