@@ -17,7 +17,7 @@ public class Backpack implements java.io.Serializable {
 		this.contenu = new ArrayList<Element>();
 		this.cigs = false;
 		this.key = false;
-		this.pliers = false;
+		this.pliers = true; // A rechanger
 		this.shovel = true; // A rechanger
 	}
 

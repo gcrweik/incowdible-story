@@ -98,10 +98,14 @@ public class GUI implements ActionListener, java.io.Serializable {
 		e.setCoordinates(x, y);
 		showElement(e);
 		game.initialize();
-		show(game.currentZone.longDescription());
-		show();
-		show(game.currentZone.longDescriptionAction());
-		show();
+		if (!game.currentZone.exits.isEmpty()) {
+			show(game.currentZone.longDescription());
+			show();
+		}
+		if (!game.currentZone.actions.isEmpty()) {
+			show(game.currentZone.longDescriptionAction());
+			show();
+		}
 	}
 
 	public void enable(boolean ok) {
