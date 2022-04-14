@@ -18,10 +18,16 @@ public class Game implements java.io.Serializable {
 	private Zone[] zones = new Zone[9];
 	Zone currentZone;
 	private MainCharacter mainCharacter = new MainCharacter(563, 139, 32, 64, "MargueriteProjet.png");
-	private KeyElement key = new KeyElement(0, 0, 21, 21, "key.png", "Cl�");
+	private KeyElement key = new KeyElement(0, 0, 21, 21, "key.png", "Clé");
 	private KeyElement cigs = new KeyElement(0, 0, 12, 17, "cigs.png", "Paquet de cigarettes");
-	private KeyElement pliers = new KeyElement(583, 260, 15, 20, "pliers.png", "S�cateur");
+	private KeyElement pliers = new KeyElement(583, 260, 15, 20, "pliers.png", "Sécateur");
 	private KeyElement shovel = new KeyElement(517, 368, 37, 45, "shovel.png", "Pelle");
+	private KeyElement holeGround1 = new KeyElement(687, 357, 39, 38, "hole_ground.png", "Trou1");
+	private KeyElement holeGround2 = new KeyElement(740, 357, 39, 38, "hole_ground.png", "Trou2");
+	private KeyElement holeGround3 = new KeyElement(795, 357, 39, 38, "hole_ground.png", "Trou3");
+	private KeyElement holeGround4 = new KeyElement(849, 357, 39, 38, "hole_ground.png", "Trou4");
+	private KeyElement holeFloor = new KeyElement(884, 144, 76, 37, "hole_floor.png", "Trou5");
+	private KeyElement trapDoor = new KeyElement(991, 232, 36, 36, "trapdoor.png", "Trapdoor");
 	private Npc matou = new Npc(755, 503, 32, 64, "MatouProjet.png", "Matou");
 	private Npc joe = new Npc(609, 219, 32, 64, "OldJoeProjet.png", "Joe");
 	private Npc billy = new Npc(795, 193, 32, 64, "BillyProjet.png", "Billy");
@@ -42,16 +48,19 @@ public class Game implements java.io.Serializable {
 	public void setGUI(GUI g) {
 		gui = g;
 		showWelcomeMessage();
+
+		System.out.println(key.getRandomInt()); // A supprimer
 	}
 
 	private void createMap() {
+
 		zones[0] = new Zone("La Cellule", "Cellule.png", 712, 497);
 		zones[1] = new Zone("Couloir", "Couloir.png", 734, 23);
 		zones[2] = new Zone("Cours Interieur", "CoursInterieur.png", 693, 139);
-		zones[3] = new Zone("Caf�t�ria", "Caf�t�ria.png", 588, 42);
+		zones[3] = new Zone("Cafétéria", "Cafétéria.png", 588, 42);
 		zones[4] = new Zone("Cours Exterieur", "CoursExterieur.png", 1111, 218);
 		zones[5] = new Zone("Cours de Sport", "Sport.png", 771, 36);
-		zones[6] = new Zone("Mur", "Mur.png", 766, 296);
+		zones[6] = new Zone("Mur", "Mur.png", 765, 301);
 		zones[7] = new Zone("Escalier", "Escalier.png", 706, 428);
 		zones[8] = new Zone("Bureau de Directeur", "Bureau.png", 656, 299);
 
@@ -73,7 +82,7 @@ public class Game implements java.io.Serializable {
 		zones[7].addExit(Exit.OUEST, zones[2]);
 		zones[7].addExit(Exit.NORD, zones[8]);
 
-		// Les sorties de Caf�t�ria
+		// Les sorties de Cafétéria
 		zones[3].addExit(Exit.OUEST, zones[2]);
 		zones[3].addAction(Action.JOE);
 
@@ -84,28 +93,26 @@ public class Game implements java.io.Serializable {
 
 		// Les sorties de Cours de Sport
 		zones[5].addExit(Exit.NORD, zones[4]);
-		zones[5].addExit(Exit.SUD, zones[6]);
 		zones[5].addAction(Action.JACK);
-		zones[5].addAction(Action.COUPER);
+		zones[5].addAction(Action.GRILLAGE);
 
 		// Les sorties de Mur
-		zones[6].addExit(Exit.NORD, zones[5]);
-		zones[6].addAction(Action.I);
-		zones[6].addAction(Action.II);
-		zones[6].addAction(Action.III);
-		zones[6].addAction(Action.IV);
-		zones[6].addAction(Action.PRENDRE);
+		zones[6].addAction(Action.T1);
+		zones[6].addAction(Action.T2);
+		zones[6].addAction(Action.T3);
+		zones[6].addAction(Action.T4);
 
 		// Les sorties de Bureau de Directeur
 		zones[8].addExit(Exit.OUEST, zones[7]);
-		zones[8].addAction(Action.UTILISER);
 
 		currentZone = zones[0];
 	}
 
 	private void showLocation() {
-		gui.show(currentZone.longDescription());
-		gui.show();
+		if (!currentZone.exits.isEmpty()) {
+			gui.show(currentZone.longDescription());
+			gui.show();
+		}
 		if (!currentZone.actions.isEmpty()) {
 			gui.show(currentZone.longDescriptionAction());
 			gui.show();
@@ -142,41 +149,62 @@ public class Game implements java.io.Serializable {
 		// Aller en Nord
 		case "N":
 		case "NORD":
-			if (currentZone == zones[5]) {
-				zones[5].removeAction(Action.PARLER);
-				zones[5].removeAction(Action.COUPER);
-				zones[5].removeAction(Action.JACK);
-				zones[5].removeAction(Action.PRENDRE);
-				zones[5].addAction(Action.JACK);
-				zones[5].addAction(Action.COUPER);
+			// Blocage de la sortie NORD par l'alarme
+			if (currentZone == zones[2] && mainCharacter.alarmUp == true && backpack.key == true) {
+				gui.show("Vous devez vous echappez, vous n'avez pas le temps pour se balader !\n");
+				showLocation();
+			} else {
+				if (currentZone == zones[5]) {
+					zones[5].removeAction(Action.PARLER);
+					zones[5].removeAction(Action.GRILLAGE);
+					zones[5].removeAction(Action.JACK);
+					zones[5].removeAction(Action.PRENDRE);
+					zones[5].addAction(Action.JACK);
+					zones[5].addAction(Action.GRILLAGE);
+				}
+				if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
+					zones[2].removeAction(Action.P1);
+					zones[2].removeAction(Action.P2);
+					zones[2].removeAction(Action.PRENDRE);
+					zones[2].addAction(Action.P1);
+					zones[2].addAction(Action.P2);
+				}
+				if (currentZone == zones[1]) {
+					zones[0].addAction(Action.BILLY);
+					zones[0].removeAction(Action.PARLER);
+				}
+				if (currentZone == zones[7] && mainCharacter.alarmUp == true && backpack.key == true) {
+					zones[8].addAction(Action.BUREAU);
+					gui.show("Vous avez montez les escaliers et la encore, une porte devant vous.\n");
+				}
+				goTo("NORD");
+				reverse(readingCommand);
+				break;
+
 			}
-			if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
-				zones[2].removeAction(Action.P1);
-				zones[2].removeAction(Action.P2);
-				zones[2].removeAction(Action.PRENDRE);
-				zones[2].addAction(Action.P1);
-				zones[2].addAction(Action.P2);
-			}
-			if (currentZone == zones[1]) {
-				zones[0].addAction(Action.BILLY);
-				zones[0].removeAction(Action.PARLER);
-			}
-			goTo("NORD");
-			reverse(readingCommand);
 			break;
 
 		// Aller en Nord-Est
 		case "NE":
 		case "NORD_EST":
-			if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
-				zones[2].removeAction(Action.P1);
-				zones[2].removeAction(Action.P2);
-				zones[2].removeAction(Action.PRENDRE);
-				zones[2].addAction(Action.P1);
-				zones[2].addAction(Action.P2);
+			// Blocage des Escaliers par la clé
+			if (currentZone == zones[2] && backpack.key == true && mainCharacter.alarmUp == true) {
+				if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
+					zones[2].removeAction(Action.P1);
+					zones[2].removeAction(Action.P2);
+					zones[2].removeAction(Action.PRENDRE);
+					zones[2].addAction(Action.P1);
+					zones[2].addAction(Action.P2);
+				}
+				gui.show("Vous avez ouvert la porte avec la cle ! Il faut se depecher !\n");
+				gui.show("La porte se ferme sans possibilité de la ouvrir derriere vous !\n");
+				goTo("NORD_EST");
+				reverse(readingCommand);
+				break;
+			} else if (currentZone == zones[2] && backpack.key == false && mainCharacter.alarmUp == false) {
+				gui.show("Il semble que cette porte est fermé...\n");
+				showLocation();
 			}
-			goTo("NORD_EST");
-			reverse(readingCommand);
 			break;
 
 		// Aller en Sud
@@ -215,48 +243,74 @@ public class Game implements java.io.Serializable {
 		// Aller en Est
 		case "E":
 		case "EST":
-			if (currentZone == zones[4]) {
-				zones[4].removeAction(Action.PARLER);
-				zones[4].removeAnswer(Answer.JOLIE);
-				zones[4].removeAnswer(Answer.NEUVE);
-				zones[4].removeAnswer(Answer.REPUGNANTE);
-				zones[4].addAction(Action.MATOU);
+			// Blocage de la sortie EST par l'alarme
+			if (currentZone == zones[2] && mainCharacter.alarmUp == true && backpack.key == true) {
+				gui.show("Vous devez vous echappez, vous n'avez pas le temps pour se balader !\n");
+				showLocation();
+			} else {
+
+				if (currentZone == zones[4]) {
+					zones[4].removeAction(Action.PARLER);
+					zones[4].removeAnswer(Answer.JOLIE);
+					zones[4].removeAnswer(Answer.NEUVE);
+					zones[4].removeAnswer(Answer.REPUGNANTE);
+					zones[4].addAction(Action.MATOU);
+				}
+				if (currentZone == zones[4] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
+					zones[2].removeAction(Action.P1);
+					zones[2].removeAction(Action.P2);
+					zones[2].removeAction(Action.PRENDRE);
+					zones[2].addAction(Action.P1);
+					zones[2].addAction(Action.P2);
+				}
+				if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
+					zones[2].removeAction(Action.P1);
+					zones[2].removeAction(Action.P2);
+					zones[2].removeAction(Action.PRENDRE);
+					zones[2].addAction(Action.P1);
+					zones[2].addAction(Action.P2);
+				}
+				goTo("EST");
+				reverse(readingCommand);
+				break;
+
 			}
-			if (currentZone == zones[4] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
-				zones[2].removeAction(Action.P1);
-				zones[2].removeAction(Action.P2);
-				zones[2].removeAction(Action.PRENDRE);
-				zones[2].addAction(Action.P1);
-				zones[2].addAction(Action.P2);
-			}
-			if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
-				zones[2].removeAction(Action.P1);
-				zones[2].removeAction(Action.P2);
-				zones[2].removeAction(Action.PRENDRE);
-				zones[2].addAction(Action.P1);
-				zones[2].addAction(Action.P2);
-			}
-			goTo("EST");
-			reverse(readingCommand);
 			break;
 
 		// Aller en Ouest
 		case "O":
 		case "OUEST":
-			if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
-				zones[2].removeAction(Action.P1);
-				zones[2].removeAction(Action.P2);
-				zones[2].removeAction(Action.PRENDRE);
-				zones[2].addAction(Action.P1);
-				zones[2].addAction(Action.P2);
+			// Blocage de la sortie OUEST par l'alarme
+			if (currentZone == zones[2] && mainCharacter.alarmUp == true && backpack.key == true) {
+				gui.show("Vous devez vous echappez, vous n'avez pas le temps pour se balader !\n");
+				showLocation();
+			} else {
+
+				if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
+					zones[2].removeAction(Action.P1);
+					zones[2].removeAction(Action.P2);
+					zones[2].removeAction(Action.PRENDRE);
+					zones[2].addAction(Action.P1);
+					zones[2].addAction(Action.P2);
+				}
+				if (currentZone == zones[3]) {
+					zones[3].removeAction(Action.PARLER);
+					zones[3].removeAction(Action.PRENDRE);
+					zones[3].addAction(Action.JOE);
+				}
+				if (currentZone == zones[7] && mainCharacter.alarmUp == true && backpack.key == true) {
+					gui.show("La porte est fermée !\n");
+					showLocation();
+				} else if (currentZone == zones[8] && mainCharacter.alarmUp == true && backpack.key == false) {
+					gui.show("La porte est fermée !\n");
+					showLocation();
+				} else {
+					goTo("OUEST");
+					reverse(readingCommand);
+					break;
+				}
+
 			}
-			if (currentZone == zones[3]) {
-				zones[3].removeAction(Action.PARLER);
-				zones[3].removeAction(Action.PRENDRE);
-				zones[3].addAction(Action.JOE);
-			}
-			goTo("OUEST");
-			reverse(readingCommand);
 			break;
 
 		// Quitter le jeu
@@ -309,6 +363,8 @@ public class Game implements java.io.Serializable {
 		// S'approcher de Jack
 		case "JACK":
 			zones[5].removeAction(Action.JACK);
+			zones[5].removeAction(Action.COUPER);
+			zones[5].addAction(Action.GRILLAGE);
 			if (currentZone == zones[5] && mainCharacter.x != 639) {
 				zones[5].addAction(Action.PARLER);
 				gui.replaceMainCharacter(mainCharacter, 639, 345);
@@ -357,7 +413,7 @@ public class Game implements java.io.Serializable {
 
 		// Parler au personnages
 		case "PARLER":
-			// ---Parler � Billy---
+			// ---Parler à Billy---
 			if (currentZone == zones[0] && mainCharacter.x == 719 && currentZone.containsActions(Action.PARLER)) {
 				try {
 					mainCharacter.billyMet = true;
@@ -367,7 +423,7 @@ public class Game implements java.io.Serializable {
 					e.printStackTrace();
 				}
 			}
-			// ---Parler � Joe---
+			// ---Parler à Joe---
 			// Avant la debut de quete de Jack
 			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)
 					&& mainCharacter.matouRiddle == true && mainCharacter.jackRiddle == true
@@ -417,7 +473,7 @@ public class Game implements java.io.Serializable {
 				}
 				gui.show();
 			}
-			// ---Parler � Matou---
+			// ---Parler à Matou---
 			// Quand il bloque le passage
 
 			if (currentZone == zones[4] && mainCharacter.x == 755 && currentZone.containsActions(Action.PARLER)) {
@@ -439,7 +495,7 @@ public class Game implements java.io.Serializable {
 				}
 			}
 
-			// Parler � Jack
+			// ---Parler à Jack---
 
 			// Premiere fois
 			if (currentZone == zones[5] && mainCharacter.x == 639 && currentZone.containsActions(Action.PARLER)
@@ -487,14 +543,14 @@ public class Game implements java.io.Serializable {
 				backpack.addElement(cigs);
 				backpack.cigs = true;
 				gui.replaceMainCharacter(mainCharacter, 1091, 72);
-				gui.show("Vous venez de r�cuperer un paquet de cigarettes!\n");
+				gui.show("Vous venez de récuperer un paquet de cigarettes!\n");
 				break;
 			} else if (currentZone == zones[2] && cigs.randomNumber == 2 && mainCharacter.x == 599
 					&& backpack.cigs == false && mainCharacter.jackMet == true) {
 				backpack.addElement(cigs);
 				backpack.cigs = true;
 				gui.replaceMainCharacter(mainCharacter, 599, 288);
-				gui.show("Vous venez de r�cuperer un paquet de cigarettes!\n");
+				gui.show("Vous venez de récuperer un paquet de cigarettes!\n");
 				break;
 			}
 
@@ -505,7 +561,7 @@ public class Game implements java.io.Serializable {
 				backpack.addElement(shovel);
 				backpack.shovel = true;
 				initialize();
-				gui.show("Vous venez de r�cuperer une pelle!\n");
+				gui.show("Vous venez de récuperer une pelle!\n");
 				showLocation();
 				break;
 			}
@@ -517,7 +573,20 @@ public class Game implements java.io.Serializable {
 				backpack.addElement(pliers);
 				backpack.pliers = true;
 				initialize();
-				gui.show("Vous venez de r�cuperer un secateur!\n");
+				gui.show("Vous venez de récuperer un secateur!\n");
+				showLocation();
+				break;
+			}
+
+			// Prendre le clé
+			if (currentZone == zones[6] && backpack.shovel == true && backpack.pliers == true
+					&& mainCharacter.alarmUp == true && currentZone.containsActions(Action.PRENDRE)) {
+				zones[6].removeAction(Action.PRENDRE);
+				zones[6].addAction(Action.SAUTER);
+				backpack.addElement(key);
+				backpack.key = true;
+				initialize();
+				gui.show("Vous venez de récuperer un clé!\n");
 				showLocation();
 				break;
 			}
@@ -652,6 +721,302 @@ public class Game implements java.io.Serializable {
 					e.printStackTrace();
 				}
 			}
+
+			break;
+
+		case "GRILLAGE":
+			zones[5].removeAction(Action.GRILLAGE);
+			if (currentZone == zones[5] && mainCharacter.x != 766) {
+				zones[5].addAction(Action.COUPER);
+				gui.replaceMainCharacter(mainCharacter, 766, 355);
+			}
+
+			break;
+
+		case "COUPER":
+			if (currentZone == zones[5] && mainCharacter.x == 766 && mainCharacter.matouRiddle == false
+					&& mainCharacter.jackRiddle == false && mainCharacter.joeRiddle == false && backpack.shovel == true
+					&& backpack.pliers == true && currentZone.containsActions(Action.COUPER)) {
+				zones[5].removeAction(Action.JACK);
+				zones[5].removeAction(Action.COUPER);
+				mainCharacter.alarmUp = true;
+				gui.show("Vous coupez le grillage et passez à travers !\n");
+				gui.show("🚨Une alarme vient d'etre lancer ! Ne perdez plus de temps !🚨\n");
+				gui.show("🚨Vous avez assez du temps pour en creuser deux trous !🚨\n");
+				gui.show("🚨Depechez-vous !!!🚨\n");
+				teleport(6);
+			} else {
+				gui.show("Vous n'etes pas encore pret pour realiser votre plan...\n");
+			}
+
+			break;
+
+		case "T1":
+			// La limite de 2 n'est pas depassé
+			if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeOneDone == false
+					&& mainCharacter.holeLimit < 2 && currentZone.containsActions(Action.T1)
+					&& backpack.shovel == true) {
+
+				// Clé avec le passage
+				// Encore un essaie restant
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+						&& mainCharacter.holeOneDone == false && mainCharacter.holeLimit == 0) {
+					mainCharacter.holeOneDone = true;
+					mainCharacter.holeLimit++;
+					zones[6].addAction(Action.PRENDRE);
+					zones[6].removeAction(Action.T1);
+					key.setCoordinates(664, 367);
+					gui.show("Vous trouvez une clé ! Mais que ouvre-t-elle?\n");
+					gui.show("Vous vous rappelez de ce qu'il a dit Old Joe...\n");
+					gui.show("Allez vous prendre la clé et sauté dans le trou?\n");
+					gui.show("Ou vous allez continuez de creuser ?\n");
+					gui.replaceMainCharacter(mainCharacter, 692, 311);
+
+				}
+				// Plus d'essaie restants
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+						&& mainCharacter.holeOneDone == false && mainCharacter.holeLimit == 1) {
+					mainCharacter.holeOneDone = true;
+					zones[6].addAction(Action.PRENDRE);
+					zones[6].removeAction(Action.T1);
+					zones[6].removeAction(Action.T2);
+					zones[6].removeAction(Action.T3);
+					zones[6].removeAction(Action.T4);
+					key.setCoordinates(664, 367);
+					gui.show("Vous trouvez une clé ! Mais que ouvre-t-elle?\n");
+					gui.show("Vous vous rappelez de ce qu'il a dit Old Joe...\n");
+					gui.show("Vous n'aves plus de temps, vous devez sauter dans le trou...\n");
+					gui.replaceMainCharacter(mainCharacter, 692, 311);
+
+				}
+				// Pas de sortie
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+						&& mainCharacter.holeOneDone == false) {
+					mainCharacter.holeOneDone = true;
+					mainCharacter.holeLimit++;
+					zones[6].removeAction(Action.T1);
+					gui.show(
+							"Vous n'arrivez pas à creuser ici, vous avez du temps juste pour choisir un autre trou !\n");
+					gui.replaceMainCharacter(mainCharacter, 692, 311);
+
+				}
+				// La limite de 2 est atteinte
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeOneDone == true
+						&& mainCharacter.holeLimit == 2) {
+					GUI.musicGame.stopMusic();
+					GUI.disposeGUIFrame();
+					@SuppressWarnings("unused")
+					End end = new End("BadEnding");
+
+				}
+
+			}
+			break;
+
+		case "T2":
+
+			// La limite de 2 n'est pas depassé
+			if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeTwoDone == false
+					&& mainCharacter.holeLimit < 2 && currentZone.containsActions(Action.T2)
+					&& backpack.shovel == true) {
+
+				// Sortie directe
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+						&& mainCharacter.holeTwoDone == false) {
+					mainCharacter.holeTwoDone = true;
+					zones[6].removeAction(Action.T1);
+					zones[6].removeAction(Action.T2);
+					zones[6].removeAction(Action.T3);
+					zones[6].removeAction(Action.T4);
+					zones[6].removeAction(Action.PRENDRE);
+					zones[6].removeAction(Action.SAUTER);
+					zones[6].addAction(Action.FUIR);
+					gui.show("Vous en etes en liberté ! Votre famille vous attends.\n");
+					gui.show("Vous jetez un dernier regards sur la prison avec ses habitans uniques...\n");
+					gui.show("...et continuez votre chemin dans la foret pour ne plus jamais revenir.\n");
+					gui.replaceMainCharacter(mainCharacter, 767, 531);
+
+				}
+				// Pas de sortie
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+						&& mainCharacter.holeTwoDone == false) {
+					mainCharacter.holeTwoDone = true;
+					mainCharacter.holeLimit++;
+					zones[6].removeAction(Action.T2);
+					gui.show(
+							"Vous n'arrivez pas à creuser ici, vous avez du temps juste pour choisir un autre trou !\n");
+					gui.replaceMainCharacter(mainCharacter, 744, 311);
+
+				}
+				// La limite de 2 est depassé
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeTwoDone == true
+						&& mainCharacter.holeLimit == 2) {
+					GUI.musicGame.stopMusic();
+					GUI.disposeGUIFrame();
+					@SuppressWarnings("unused")
+					End end = new End("BadEnding");
+
+				}
+
+			}
+			break;
+
+		case "T3":
+			// La limite de 2 n'est pas depassé
+			if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeThreeDone == false
+					&& mainCharacter.holeLimit < 2 && currentZone.containsActions(Action.T3)
+					&& backpack.shovel == true) {
+
+				// Clé avec le passage
+				// Encore un essaie restant
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+						&& mainCharacter.holeThreeDone == false && mainCharacter.holeLimit == 0) {
+					mainCharacter.holeThreeDone = true;
+					mainCharacter.holeLimit++;
+					zones[6].addAction(Action.PRENDRE);
+					zones[6].removeAction(Action.T3);
+					key.setCoordinates(840, 356);
+					gui.show("Vous trouvez une clé ! Mais que ouvre-t-elle?\n");
+					gui.show("Vous vous rappelez de ce qu'il a dit Old Joe...\n");
+					gui.show("Allez vous prendre la clé et sauté dans le trou?\n");
+					gui.show("Ou vous allez continuez de creuser ?\n");
+					gui.replaceMainCharacter(mainCharacter, 796, 311);
+
+				}
+				// Plus d'essaie restantss
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+						&& mainCharacter.holeThreeDone == false && mainCharacter.holeLimit == 1) {
+					mainCharacter.holeThreeDone = true;
+					zones[6].addAction(Action.PRENDRE);
+					zones[6].removeAction(Action.T1);
+					zones[6].removeAction(Action.T2);
+					zones[6].removeAction(Action.T3);
+					zones[6].removeAction(Action.T4);
+					key.setCoordinates(840, 356);
+					gui.show("Vous trouvez une clé ! Mais que ouvre-t-elle?\n");
+					gui.show("Vous vous rappelez de ce qu'il a dit Old Joe...\n");
+					gui.show("Vous n'aves plus de temps, vous devez sauter dans le trou...\n");
+					gui.replaceMainCharacter(mainCharacter, 796, 311);
+
+				}
+				// Pas de sortie
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+
+						&& mainCharacter.holeThreeDone == false) {
+					mainCharacter.holeThreeDone = true;
+					mainCharacter.holeLimit++;
+					zones[6].removeAction(Action.T3);
+					gui.show(
+							"Vous n'arrivez pas à creuser ici, vous avez du temps juste pour choisir un autre trou !\n");
+					gui.replaceMainCharacter(mainCharacter, 796, 311);
+
+				}
+				// La limite de 2 est depassé
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeThreeDone == true
+						&& mainCharacter.holeLimit == 2) {
+					GUI.musicGame.stopMusic();
+					GUI.disposeGUIFrame();
+					@SuppressWarnings("unused")
+					End end = new End("BadEnding");
+
+				}
+				break;
+
+			}
+
+		case "T4":
+			// La limite de 2 n'est pas depassé
+			if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeFourDone == false
+					&& mainCharacter.holeLimit < 2 && currentZone.containsActions(Action.T4)
+					&& backpack.shovel == true) {
+
+				// Sortie directe
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+						&& mainCharacter.holeFourDone == false) {
+					mainCharacter.holeFourDone = true;
+					zones[6].removeAction(Action.T1);
+					zones[6].removeAction(Action.T2);
+					zones[6].removeAction(Action.T3);
+					zones[6].removeAction(Action.T4);
+					zones[6].removeAction(Action.PRENDRE);
+					zones[6].removeAction(Action.SAUTER);
+					zones[6].addAction(Action.FUIR);
+					gui.show("Vous etes en liberté ! Votre famille vous attends.\n");
+					gui.show(
+							"Marquerite jete un dernier regard sur la prison avec ses habitans uniques et mysterieux...\n");
+					gui.show("...et continue son chemin dans la foret pour ne plus jamais revenir.\n");
+					gui.replaceMainCharacter(mainCharacter, 767, 531);
+				}
+
+				// Pas de sortie
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+						&& mainCharacter.holeFourDone == false) {
+					mainCharacter.holeFourDone = true;
+					mainCharacter.holeLimit++;
+					zones[6].removeAction(Action.T4);
+					gui.show(
+							"Vous n'arrivez pas à creuser ici, vous avez du temps juste pour choisir un autre trou !\n");
+					gui.replaceMainCharacter(mainCharacter, 854, 311);
+
+				}
+				// La limite de 2 est depassé
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeFourDone == true
+						&& mainCharacter.holeLimit == 2) {
+					GUI.musicGame.stopMusic();
+					GUI.disposeGUIFrame();
+					@SuppressWarnings("unused")
+					End end = new End("BadEnding");
+
+				}
+
+			}
+			break;
+
+		case "FUIR":
+			if (currentZone == zones[6] && mainCharacter.alarmUp == true && currentZone.containsActions(Action.FUIR)) {
+				GUI.musicGame.stopMusic();
+				GUI.disposeGUIFrame();
+				@SuppressWarnings("unused")
+				End end = new End("GoodEnding");
+			}
+			break;
+
+		case "SAUTER":
+			if (currentZone == zones[6] && mainCharacter.alarmUp == true && currentZone.containsActions(Action.SAUTER)
+					&& backpack.key == true) {
+				zones[2].removeAction(Action.SAUTER);
+				initialize();
+				teleport(2);
+				gui.show("Vous sautez dans le tunnel, et apres 5 minutes dedans et quelque coup de pelles...\n");
+				gui.show("Vous vous retrouvez de nouveau en prison !!! Old Joe vous a trahi !\n");
+				gui.show("En panique vous jettez un coup d'oeil et votre regard tombe sur...une porte !!!\n");
+				gui.show("La clé ! La porte ! Vous vous jetez vers la porte avec l'espoir.\n");
+				showLocation();
+			}
+			if (currentZone == zones[8] && mainCharacter.alarmUp == true && currentZone.containsActions(Action.SAUTER)
+					&& backpack.key == false) {
+				GUI.musicGame.stopMusic();
+				GUI.disposeGUIFrame();
+				@SuppressWarnings("unused")
+				End end = new End("GoodEnding");
+			}
+			break;
+
+		case "BUREAU":
+			if (currentZone == zones[8] && mainCharacter.alarmUp == true && currentZone.containsActions(Action.BUREAU)
+					&& backpack.key == true) {
+				zones[8].removeAction(Action.BUREAU);
+				zones[8].addAction(Action.SAUTER);
+				backpack.removeElement(key);
+				backpack.key = false;
+				initialize();
+				gui.show("En ouvrant la porte, vous avez cassé la clé !\n");
+				gui.show("Vous jeter la clé sur un banc et c'est la que vous remarquez... une trappe !!!!\n");
+				gui.show("Qui sait ce qui vous attends en bas ? Y'a qu'un seul moyen de le savoir...\n");
+				gui.show("Sans regarder derriere elle, Marguerite ouvre la trappe et se prepare pour le saut...\n");
+				gui.show("Qui sait, peut-etre ce n'est qu'un debut d'une nouvelle histoire?\n");
+				gui.replaceMainCharacter(mainCharacter, 951, 229);
+			}
 			break;
 
 		}
@@ -686,9 +1051,9 @@ public class Game implements java.io.Serializable {
 				gui.show(currentZone.longDescriptionAnswer());
 				gui.show();
 			}
-			// Cr�ee et affiche le personnage � la zone de spawn de la salle.
+			// Créee et affiche le personnage à la zone de spawn de la salle.
 			mainCharacter.setCoordinates(currentZone.xSpawn, currentZone.ySpawn);
-			initialize();// doit etre ici pour ne pas que les �l�ments soit au dernier plan
+			initialize();// doit etre ici pour ne pas que les éléments soit au dernier plan
 			gui.showImage(currentZone.nameImage());
 
 			possibleExit = true;
@@ -696,7 +1061,38 @@ public class Game implements java.io.Serializable {
 		}
 	}
 
-	// M�thode permettant d'afficher les diff�rents �lements sur la carte
+	/**
+	 * Une methode qui permet de teleporte le personnage dans la Cours Interieur.
+	 */
+	private void teleport(int z) {
+
+		// Supprime l'ancien personnage
+		currentZone = zones[z];
+		if (!currentZone.answers.isEmpty()) {
+			gui.show(currentZone.longDescription());
+			gui.show();
+		}
+		if (!currentZone.answers.isEmpty()) {
+			gui.show(currentZone.longDescriptionAnswer());
+			gui.show();
+		}
+		if (!currentZone.actions.isEmpty()) {
+			gui.show(currentZone.longDescriptionAction());
+			gui.show();
+		}
+		// Créee et affiche le personnage dans la Cours Interieur
+		if (currentZone == zones[2]) {
+			mainCharacter.setCoordinates(995, 129);
+			initialize();// Doit etre ici pour ne pas que les éléments soit au dernier plan
+			gui.showImage(currentZone.nameImage());
+		} else if (currentZone == zones[6]) {
+			mainCharacter.setCoordinates(currentZone.xSpawn, currentZone.ySpawn);
+			initialize();
+			gui.showImage(currentZone.nameImage());
+		}
+	}
+
+	// Méthode permettant d'afficher les différents élements sur la carte
 	// (KeyElement & Npc).
 	public void initialize() {
 		gui.image.removeAll();// changement ici
@@ -731,13 +1127,64 @@ public class Game implements java.io.Serializable {
 		} else if (currentZone == zones[5] && backpack.shovel == true) {
 			gui.showElement(jack);
 		}
+		// Trou 1
+		if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeOneDone == true
+				&& key.getRandomInt() == 1 && backpack.key == false) {
+			gui.showElement(key);
+			gui.showElement(holeGround1);
+		} else if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeOneDone == true
+				&& key.getRandomInt() == 1 && backpack.key == true) {
+			gui.showElement(holeGround1);
+
+		} else if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeOneDone == true
+				&& key.getRandomInt() == 2) {
+			gui.showElement(holeGround1);
+		}
+		// Trou 2
+		if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeTwoDone == true) {
+			gui.showElement(holeGround2);
+		}
+		// Trou 3
+		if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeThreeDone == true
+				&& key.getRandomInt() == 2 && backpack.key == false) {
+			gui.showElement(key);
+			gui.showElement(holeGround3);
+
+		} else if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeThreeDone == true
+				&& key.getRandomInt() == 2 && backpack.key == true) {
+			gui.showElement(holeGround3);
+		} else if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeThreeDone == true
+				&& key.getRandomInt() == 1) {
+			gui.showElement(holeGround3);
+		}
+
+		// Trou 4
+		if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeFourDone == true) {
+			gui.showElement(holeGround4);
+		}
+
+		// Trou Cours Interieur
+		if (currentZone == zones[2] && backpack.key == true && mainCharacter.alarmUp == true) {
+			gui.showElement(holeFloor);
+		}
+		// Trappe Bureau et Clé Cassée
+		if (currentZone == zones[8] && mainCharacter.alarmUp == true && backpack.key == false) {
+			key.setCoordinates(839, 292);
+			gui.showElement(key);
+			gui.showElement(trapDoor);
+		}
 
 	}
 
+	/**
+	 * Une methode qui affiche le contenu du sac
+	 */
 	private void showBackpack() {
 		String msg = this.backpack.toString();
 		gui.show(msg);
 		gui.show();
+		showLocation();
+
 	}
 
 	/**
@@ -801,7 +1248,7 @@ public class Game implements java.io.Serializable {
 	 * Une methode qui permet d'ajouter l'inverse de la sortie prise par la personne
 	 * dans une liste.
 	 * 
-	 * @param direction La sortie à inverser.
+	 * @param direction La sortie Ã  inverser.
 	 * @return String vide.
 	 */
 	private String reverse(String direction) {
@@ -829,7 +1276,7 @@ public class Game implements java.io.Serializable {
 	}
 
 	/**
-	 * Une methode qui permet de recuperer la derniere salle visité par le joueur.
+	 * Une methode qui permet de recuperer la derniere salle visitÃ© par le joueur.
 	 * 
 	 * @return Le nom de la derniere salle.
 	 */
@@ -888,7 +1335,7 @@ public class Game implements java.io.Serializable {
 							zones[3].addAnswer(Answer.QUATRE);
 							zones[3].addAnswer(Answer.CINQ);
 
-							// Erreur pendant la premiere question
+							// Erreurs pendant la premiere question
 						} else if (joe.getDialogState() == 4 && mainCharacter.firstStageJoe == true) {
 							noShowLocation = true;
 							// Erreur question deux
@@ -911,10 +1358,10 @@ public class Game implements java.io.Serializable {
 								}
 
 							}
-							// Erreur pendant la premiere et la deuxieme questions
+							// Erreurs pendant la premiere et la deuxieme questions
 						} else if (joe.getDialogState() == 5 && mainCharacter.firstStageJoe == true) {
 							noShowLocation = true;
-							// Erreur question deux
+							// Erreur pendant la deuxieme question
 							if (joe.getDialogState() == 5 && mainCharacter.firstStageJoe == true
 									&& mainCharacter.secondStageJoe == true) {
 								try {
@@ -924,7 +1371,7 @@ public class Game implements java.io.Serializable {
 								} catch (FileNotFoundException e) {
 									e.printStackTrace();
 								}
-								// Erreur question une
+								// Erreur pendant la premiere question
 							} else {
 								try {
 

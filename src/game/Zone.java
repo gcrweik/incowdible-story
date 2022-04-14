@@ -9,7 +9,7 @@ public class Zone implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	public String description;
 	private String nameImage;
-	private HashMap<String, Zone> exits;
+	HashMap<String, Zone> exits;
 	HashMap<String, Zone> answers;
 	HashMap<String, Zone> actions;
 	public int xSpawn;
