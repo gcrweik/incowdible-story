@@ -62,6 +62,12 @@ public class Npc extends Element {
 			phrase = billyDialogs.get(dialogCounter);
 			return phrase;
 		}
+		if (dialogStateBilly == 2) {
+			billyDialogs.clear();
+			billyDialogs.put(0, dialogOwner + "*Billy regarde ses papiers*\n");
+			phrase = billyDialogs.get(dialogCounter);
+			return phrase;
+		}
 		return null;
 
 	}

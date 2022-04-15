@@ -149,38 +149,50 @@ public class Game implements java.io.Serializable {
 		// Aller en Nord
 		case "N":
 		case "NORD":
-			// Blocage de la sortie NORD par l'alarme
-			if (currentZone == zones[2] && mainCharacter.alarmUp == true && backpack.key == true) {
-				gui.show("Vous devez vous echappez, vous n'avez pas le temps pour se balader !\n");
-				showLocation();
+			// Blocage de la sortie NORD pendant la premiere rencontre avec Jack;
+			if (currentZone == zones[5] && mainCharacter.jackBlocked == true) {
+				gui.show("Vous etes entrain de discuter avec Jack !\n");
 			} else {
-				if (currentZone == zones[5]) {
-					zones[5].removeAction(Action.PARLER);
-					zones[5].removeAction(Action.GRILLAGE);
-					zones[5].removeAction(Action.JACK);
-					zones[5].removeAction(Action.PRENDRE);
-					zones[5].addAction(Action.JACK);
-					zones[5].addAction(Action.GRILLAGE);
-				}
-				if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
-					zones[2].removeAction(Action.P1);
-					zones[2].removeAction(Action.P2);
-					zones[2].removeAction(Action.PRENDRE);
-					zones[2].addAction(Action.P1);
-					zones[2].addAction(Action.P2);
-				}
-				if (currentZone == zones[1]) {
-					zones[0].addAction(Action.BILLY);
-					zones[0].removeAction(Action.PARLER);
-				}
-				if (currentZone == zones[7] && mainCharacter.alarmUp == true && backpack.key == true) {
-					zones[8].addAction(Action.BUREAU);
-					gui.show("Vous avez montez les escaliers et la encore, une porte devant vous.\n");
-				}
-				goTo("NORD");
-				reverse(readingCommand);
-				break;
+				// Blocage de l'action Grillage pendant la deuxieme rencontre avec Jack
+				if (currentZone == zones[5] && mainCharacter.jackBlocked == true && jack.getDialogState() == 2) {
+					gui.show("Vous etes entrain de discuter avec Jack !\n");
 
+					break;
+				} else {
+					// Blocage de la sortie NORD par l'alarme
+					if (currentZone == zones[2] && mainCharacter.alarmUp == true && backpack.key == true) {
+						gui.show("Vous devez vous echappez, vous n'avez pas le temps pour se balader !\n");
+						showLocation();
+					} else {
+						if (currentZone == zones[5]) {
+							zones[5].removeAction(Action.PARLER);
+							zones[5].removeAction(Action.GRILLAGE);
+							zones[5].removeAction(Action.JACK);
+							zones[5].removeAction(Action.PRENDRE);
+							zones[5].addAction(Action.JACK);
+							zones[5].addAction(Action.GRILLAGE);
+						}
+						if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true
+								&& backpack.cigs == false) {
+							zones[2].removeAction(Action.P1);
+							zones[2].removeAction(Action.P2);
+							zones[2].removeAction(Action.PRENDRE);
+							zones[2].addAction(Action.P1);
+							zones[2].addAction(Action.P2);
+						}
+						if (currentZone == zones[1]) {
+							zones[0].addAction(Action.BILLY);
+							zones[0].removeAction(Action.PARLER);
+						}
+						if (currentZone == zones[7] && mainCharacter.alarmUp == true && backpack.key == true) {
+							zones[8].addAction(Action.BUREAU);
+							gui.show("Vous avez montez les escaliers et la encore, une porte devant vous.\n");
+						}
+						goTo("NORD");
+						reverse(readingCommand);
+						break;
+					}
+				}
 			}
 			break;
 
@@ -189,13 +201,6 @@ public class Game implements java.io.Serializable {
 		case "NORD_EST":
 			// Blocage des Escaliers par la clé
 			if (currentZone == zones[2] && backpack.key == true && mainCharacter.alarmUp == true) {
-				if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
-					zones[2].removeAction(Action.P1);
-					zones[2].removeAction(Action.P2);
-					zones[2].removeAction(Action.PRENDRE);
-					zones[2].addAction(Action.P1);
-					zones[2].addAction(Action.P2);
-				}
 				gui.show("Vous avez ouvert la porte avec la cle ! Il faut se depecher !\n");
 				gui.show("La porte se ferme sans possibilité de la ouvrir derriere vous !\n");
 				goTo("NORD_EST");
@@ -210,32 +215,41 @@ public class Game implements java.io.Serializable {
 		// Aller en Sud
 		case "S":
 		case "SUD":
-			/*
-			 * if (currentZone == zones[0] && mainCharacter.billyMet == false) {
-			 * gui.show("J'ai d'abord envie de discuter avec mon voisin.\n"); break; } else
-			 */ if (currentZone == zones[0] && mainCharacter.billyMet == false) {
-				goTo("SUD");
-				reverse(readingCommand);
+
+			if (currentZone == zones[0] && mainCharacter.billyMet == false) {
+				gui.show("J'ai d'abord envie de discuter avec mon voisin.\n");
+				break;
+			}
+			if (currentZone == zones[0] && mainCharacter.billyBlocked == true) {
+				gui.show("Vous etes entrain de discuter avec Billy !\n");
 				break;
 			}
 			if (currentZone == zones[4] && mainCharacter.matouRiddle == false) {
-				zones[4].removeAnswer(Answer.JOLIE);
-				zones[4].removeAnswer(Answer.NEUVE);
-				zones[4].removeAnswer(Answer.REPUGNANTE);
-				zones[4].removeAction(Action.PARLER);
-				zones[4].addAction(Action.MATOU);
-				goTo("SUD");
-				reverse(readingCommand);
-				break;
+
+				// Blocage de la sortie SUD pendant le dialogue de Matou
+				if (currentZone == zones[4] && mainCharacter.matouBlocked == true) {
+					gui.show("Vous etes entrain de parler à Matou!\n");
+					break;
+				} else if (currentZone == zones[4] && mainCharacter.matouBlocked == false) {
+					zones[4].removeAnswer(Answer.JOLIE);
+					zones[4].removeAnswer(Answer.NEUVE);
+					zones[4].removeAnswer(Answer.REPUGNANTE);
+					zones[4].removeAction(Action.PARLER);
+					zones[4].addAction(Action.MATOU);
+					goTo("SUD");
+					reverse(readingCommand);
+					break;
+				}
+
 			}
-			/*
-			 * if (currentZone == zones[4] && mainCharacter.matouRiddle == true) {
-			 * gui.show("Matou ne semble pas vouloir vous laissez passer!\n"); break; } else
-			 */ if (currentZone == zones[4] && mainCharacter.matouRiddle == false) {
-				goTo("SUD");
-				reverse(readingCommand);
+
+			// Blocage de la sortie SUD pendant la quete de Matou
+			if (currentZone == zones[4] && mainCharacter.matouRiddle == true) {
+				gui.show("Matou ne semble pas vouloir vous laissez passer!\n");
 				break;
+
 			}
+
 			goTo("SUD");
 			reverse(readingCommand);
 			break;
@@ -249,6 +263,17 @@ public class Game implements java.io.Serializable {
 				showLocation();
 			} else {
 
+				// Blocage de la sortie EST pendant la quete de Matou
+				if (currentZone == zones[4] && mainCharacter.matouRiddle == true) {
+					gui.show("Matou ne semble pas vouloir vous laissez partir!\n");
+					break;
+				}
+				// Blocage de la sortie EST pendant le dialogue de Matou
+				if (currentZone == zones[4] && mainCharacter.matouBlocked == true) {
+					gui.show("Matou ne semble pas vouloir vous laissez partir!\n");
+					break;
+				}
+
 				if (currentZone == zones[4]) {
 					zones[4].removeAction(Action.PARLER);
 					zones[4].removeAnswer(Answer.JOLIE);
@@ -256,14 +281,16 @@ public class Game implements java.io.Serializable {
 					zones[4].removeAnswer(Answer.REPUGNANTE);
 					zones[4].addAction(Action.MATOU);
 				}
-				if (currentZone == zones[4] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
+				if (currentZone == zones[4] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true
+						&& backpack.cigs == false) {
 					zones[2].removeAction(Action.P1);
 					zones[2].removeAction(Action.P2);
 					zones[2].removeAction(Action.PRENDRE);
 					zones[2].addAction(Action.P1);
 					zones[2].addAction(Action.P2);
 				}
-				if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
+				if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true
+						&& backpack.cigs == false) {
 					zones[2].removeAction(Action.P1);
 					zones[2].removeAction(Action.P2);
 					zones[2].removeAction(Action.PRENDRE);
@@ -280,36 +307,49 @@ public class Game implements java.io.Serializable {
 		// Aller en Ouest
 		case "O":
 		case "OUEST":
-			// Blocage de la sortie OUEST par l'alarme
-			if (currentZone == zones[2] && mainCharacter.alarmUp == true && backpack.key == true) {
-				gui.show("Vous devez vous echappez, vous n'avez pas le temps pour se balader !\n");
-				showLocation();
-			} else {
+			// Blocage de la sortie OUEST(Cours Interieur) avant la premiere rencontre avec
+			// Old Joe
+			if (currentZone == zones[2] && mainCharacter.joeMet == false) {
+				gui.show("Je devrais d'abord aller voir Old Joe.\n");
+				// Blocage de la sortie OUEST(Cafeteria) pendant la premiere et deuxieme
+				// rencontres avec Old
+				// Joe
+			} else if (currentZone == zones[3] && mainCharacter.joeBlocked == true) {
+				gui.show("Vous etes entrain de discuter avec Old Joe.\n");
 
-				if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true) {
-					zones[2].removeAction(Action.P1);
-					zones[2].removeAction(Action.P2);
-					zones[2].removeAction(Action.PRENDRE);
-					zones[2].addAction(Action.P1);
-					zones[2].addAction(Action.P2);
-				}
-				if (currentZone == zones[3]) {
-					zones[3].removeAction(Action.PARLER);
-					zones[3].removeAction(Action.PRENDRE);
-					zones[3].addAction(Action.JOE);
-				}
-				if (currentZone == zones[7] && mainCharacter.alarmUp == true && backpack.key == true) {
-					gui.show("La porte est fermée !\n");
-					showLocation();
-				} else if (currentZone == zones[8] && mainCharacter.alarmUp == true && backpack.key == false) {
-					gui.show("La porte est fermée !\n");
+			} else {
+				// Blocage de la sortie OUEST par l'alarme
+				if (currentZone == zones[2] && mainCharacter.alarmUp == true && backpack.key == true) {
+					gui.show("Vous devez vous echappez, vous n'avez pas le temps pour se balader !\n");
 					showLocation();
 				} else {
-					goTo("OUEST");
-					reverse(readingCommand);
-					break;
-				}
 
+					if (currentZone == zones[2] && mainCharacter.jackMet == true && mainCharacter.jackRiddle == true
+							&& backpack.cigs == false) {
+						zones[2].removeAction(Action.P1);
+						zones[2].removeAction(Action.P2);
+						zones[2].removeAction(Action.PRENDRE);
+						zones[2].addAction(Action.P1);
+						zones[2].addAction(Action.P2);
+					}
+					if (currentZone == zones[3]) {
+						zones[3].removeAction(Action.PARLER);
+						zones[3].removeAction(Action.PRENDRE);
+						zones[3].addAction(Action.JOE);
+					}
+					if (currentZone == zones[7] && mainCharacter.alarmUp == true && backpack.key == true) {
+						gui.show("La porte est fermée !\n");
+						showLocation();
+					} else if (currentZone == zones[8] && mainCharacter.alarmUp == true && backpack.key == false) {
+						gui.show("La porte est fermée !\n");
+						showLocation();
+					} else {
+						goTo("OUEST");
+						reverse(readingCommand);
+						break;
+					}
+
+				}
 			}
 			break;
 
@@ -346,7 +386,14 @@ public class Game implements java.io.Serializable {
 		case "JOE":
 			zones[3].removeAction(Action.JOE);
 			if (currentZone == zones[3] && mainCharacter.x != 643) {
+				// Si on a pas recuperé le secateur directement
 				zones[3].addAction(Action.PARLER);
+				if (currentZone == zones[3] && mainCharacter.x != 643 && mainCharacter.matouRiddle == false
+						&& mainCharacter.jackRiddle == false && mainCharacter.joeRiddle == false
+						&& backpack.shovel == true && mainCharacter.firstStageJoe == true
+						&& mainCharacter.secondStageJoe == true && backpack.pliers == false) {
+					zones[3].addAction(Action.PRENDRE);
+				}
 				gui.replaceMainCharacter(mainCharacter, 643, 234);
 			}
 			break;
@@ -364,9 +411,12 @@ public class Game implements java.io.Serializable {
 		case "JACK":
 			zones[5].removeAction(Action.JACK);
 			zones[5].removeAction(Action.COUPER);
-			zones[5].addAction(Action.GRILLAGE);
 			if (currentZone == zones[5] && mainCharacter.x != 639) {
+				zones[5].addAction(Action.GRILLAGE);
 				zones[5].addAction(Action.PARLER);
+				if (currentZone == zones[5] && mainCharacter.jackRiddle == false && backpack.shovel == false) {
+					zones[5].addAction(Action.PRENDRE);
+				}
 				gui.replaceMainCharacter(mainCharacter, 639, 345);
 
 			}
@@ -390,7 +440,7 @@ public class Game implements java.io.Serializable {
 
 		// Pot de fleurs 1
 		case "P1":
-			if (mainCharacter.jackMet == true) {
+			if (mainCharacter.jackMet == true && backpack.cigs == false && mainCharacter.jackRiddle == true) {
 				zones[2].addAction(Action.PRENDRE);
 				zones[2].addAction(Action.P2);
 				zones[2].removeAction(Action.P1);
@@ -401,7 +451,7 @@ public class Game implements java.io.Serializable {
 			}
 			// Pot de fleurs 2
 		case "P2":
-			if (mainCharacter.jackMet == true) {
+			if (mainCharacter.jackMet == true && backpack.cigs == false && mainCharacter.jackRiddle == true) {
 				zones[2].addAction(Action.PRENDRE);
 				zones[2].addAction(Action.P1);
 				zones[2].removeAction(Action.P2);
@@ -416,7 +466,10 @@ public class Game implements java.io.Serializable {
 			// ---Parler à Billy---
 			if (currentZone == zones[0] && mainCharacter.x == 719 && currentZone.containsActions(Action.PARLER)) {
 				try {
-					mainCharacter.billyMet = true;
+					mainCharacter.billyBlocked = true;
+					if (mainCharacter.joeMet == true) {
+						billy.setDialogState(2);
+					}
 					executeDialog(billy);
 					gui.show();
 				} catch (FileNotFoundException e) {
@@ -429,6 +482,7 @@ public class Game implements java.io.Serializable {
 					&& mainCharacter.matouRiddle == true && mainCharacter.jackRiddle == true
 					&& backpack.shovel == false) {
 				try {
+					mainCharacter.joeBlocked = true;
 					executeDialog(joe);
 					gui.show();
 				} catch (FileNotFoundException e) {
@@ -441,6 +495,7 @@ public class Game implements java.io.Serializable {
 					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
 					&& backpack.shovel == true && mainCharacter.firstStageJoe == false) {
 				try {
+					mainCharacter.joeBlocked = true;
 					joe.setDialogState(2);
 					executeDialog(joe);
 					gui.show();
@@ -448,6 +503,17 @@ public class Game implements java.io.Serializable {
 					e.printStackTrace();
 				}
 
+			}
+			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)
+					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
+					&& backpack.shovel == false && mainCharacter.firstStageJoe == false) {
+				try {
+					mainCharacter.joeBlocked = true;
+					executeDialog(joe);
+					gui.show();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 			// Premiere question(boucle sur la question)
 			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)
@@ -468,6 +534,9 @@ public class Game implements java.io.Serializable {
 					&& mainCharacter.secondStageJoe == true) {
 				try {
 					executeDialog(joe);
+					if (joe.getDialogState() == 10) {
+						mainCharacter.joeBlocked = true;
+					}
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
@@ -487,7 +556,7 @@ public class Game implements java.io.Serializable {
 			// Quand il ne bloque plus le passage
 			if (currentZone == zones[4] && mainCharacter.x == 682 && currentZone.containsActions(Action.PARLER)) {
 				try {
-
+					mainCharacter.matouBlocked = true;
 					executeDialog(matou);
 					gui.show();
 				} catch (FileNotFoundException e) {
@@ -501,7 +570,7 @@ public class Game implements java.io.Serializable {
 			if (currentZone == zones[5] && mainCharacter.x == 639 && currentZone.containsActions(Action.PARLER)
 					&& mainCharacter.jackMet == false) {
 				try {
-					mainCharacter.jackMet = true;
+					mainCharacter.jackBlocked = true;
 					executeDialog(jack);
 					gui.show();
 				} catch (FileNotFoundException e) {
@@ -511,6 +580,7 @@ public class Game implements java.io.Serializable {
 			} else if (currentZone == zones[5] && mainCharacter.x == 639 && currentZone.containsActions(Action.PARLER)
 					&& mainCharacter.jackMet == true && backpack.cigs == false) {
 				try {
+					mainCharacter.jackBlocked = true;
 					executeDialog(jack);
 					gui.show();
 				} catch (FileNotFoundException e) {
@@ -524,6 +594,7 @@ public class Game implements java.io.Serializable {
 					&& mainCharacter.jackMet == true && backpack.cigs == true) {
 				backpack.removeElement(cigs);
 				backpack.cigs = false;
+				mainCharacter.jackBlocked = true;
 				jack.setDialogState(2);
 				try {
 					executeDialog(jack);
@@ -538,19 +609,45 @@ public class Game implements java.io.Serializable {
 		case "PRENDRE":
 
 			// Prendre les cigarettes
+
+			// Premier spawn possible
 			if (currentZone == zones[2] && cigs.randomNumber == 1 && mainCharacter.x == 1091 && backpack.cigs == false
 					&& mainCharacter.jackMet == true && currentZone.containsActions(Action.PRENDRE)) {
+				zones[2].removeAction(Action.P1);
+				zones[2].removeAction(Action.P2);
+				zones[2].removeAction(Action.PRENDRE);
 				backpack.addElement(cigs);
 				backpack.cigs = true;
 				gui.replaceMainCharacter(mainCharacter, 1091, 72);
 				gui.show("Vous venez de récuperer un paquet de cigarettes!\n");
+
 				break;
+
+				// Deuxieme spawn possible
 			} else if (currentZone == zones[2] && cigs.randomNumber == 2 && mainCharacter.x == 599
-					&& backpack.cigs == false && mainCharacter.jackMet == true) {
+					&& backpack.cigs == false && mainCharacter.jackMet == true
+					&& currentZone.containsActions(Action.PRENDRE)) {
+				zones[2].removeAction(Action.P1);
+				zones[2].removeAction(Action.P2);
+				zones[2].removeAction(Action.PRENDRE);
 				backpack.addElement(cigs);
 				backpack.cigs = true;
 				gui.replaceMainCharacter(mainCharacter, 599, 288);
 				gui.show("Vous venez de récuperer un paquet de cigarettes!\n");
+
+				break;
+
+			} else if (currentZone == zones[2] && cigs.randomNumber == 1 && mainCharacter.x == 599
+					&& mainCharacter.jackMet == true && currentZone.containsActions(Action.PRENDRE)) {
+				gui.show("Il n'y a rien à ramasser !");
+
+				break;
+			}
+
+			else if (currentZone == zones[2] && cigs.randomNumber == 2 && mainCharacter.x == 1091
+					&& mainCharacter.jackMet == true && currentZone.containsActions(Action.PRENDRE)) {
+				gui.show("Il n'y a rien à ramasser !");
+
 				break;
 			}
 
@@ -609,7 +706,6 @@ public class Game implements java.io.Serializable {
 		case "JOLIE":
 			if (currentZone == zones[4] && mainCharacter.matouRiddle == true && mainCharacter.x == 755) {
 				try {
-					mainCharacter.matouRiddle = false;
 					matou.setDialogState(3);
 					executeDialog(matou);
 					initialize();
@@ -725,17 +821,29 @@ public class Game implements java.io.Serializable {
 			break;
 
 		case "GRILLAGE":
+			// Blocage de l'action Grillage pendant le dialogue avec Jack
+			if (currentZone == zones[5] && mainCharacter.jackBlocked == true) {
+				gui.show("Vous etes entrain de discuter avec Jack!\n");
+
+				break;
+			}
+			zones[5].removeAction(Action.PRENDRE);
+			zones[5].removeAction(Action.PARLER);
 			zones[5].removeAction(Action.GRILLAGE);
 			if (currentZone == zones[5] && mainCharacter.x != 766) {
 				zones[5].addAction(Action.COUPER);
+				zones[5].addAction(Action.JACK);
 				gui.replaceMainCharacter(mainCharacter, 766, 355);
 			}
 
 			break;
 
 		case "COUPER":
-			if (currentZone == zones[5] && mainCharacter.x == 766 && mainCharacter.matouRiddle == false
-					&& mainCharacter.jackRiddle == false && mainCharacter.joeRiddle == false && backpack.shovel == true
+			if (currentZone == zones[5] && mainCharacter.x == 766 && backpack.pliers == false
+					&& currentZone.containsActions(Action.COUPER)) {
+				gui.show("Vous n'etes pas encore pret pour realiser votre plan...\n");
+			} else if (currentZone == zones[5] && mainCharacter.x == 766 && mainCharacter.matouRiddle == false
+					&& mainCharacter.joeRiddle == false && mainCharacter.jackRiddle == false && backpack.shovel == true
 					&& backpack.pliers == true && currentZone.containsActions(Action.COUPER)) {
 				zones[5].removeAction(Action.JACK);
 				zones[5].removeAction(Action.COUPER);
@@ -745,8 +853,6 @@ public class Game implements java.io.Serializable {
 				gui.show("🚨Vous avez assez du temps pour en creuser deux trous !🚨\n");
 				gui.show("🚨Depechez-vous !!!🚨\n");
 				teleport(6);
-			} else {
-				gui.show("Vous n'etes pas encore pret pour realiser votre plan...\n");
 			}
 
 			break;
@@ -766,9 +872,9 @@ public class Game implements java.io.Serializable {
 					zones[6].addAction(Action.PRENDRE);
 					zones[6].removeAction(Action.T1);
 					key.setCoordinates(664, 367);
-					gui.show("Vous avez trouvé une clé! Mais que peut elle donc bien ouvrir?\n");
+					gui.show("Vous avez trouvé une clé! Mais que peut elle donc bien ouvrir ?\n");
 					gui.show("*Vous vous rappelez de ce qu'a dit Old Joe...*\n");
-					gui.show("Allez vous prendre la clé et sauter dans ce trou?\n");
+					gui.show("Allez vous prendre la clé et sauter dans ce trou ?\n");
 					gui.show("Ou allez vous continuer de creuser ?\n");
 					gui.replaceMainCharacter(mainCharacter, 692, 311);
 
@@ -832,7 +938,8 @@ public class Game implements java.io.Serializable {
 					zones[6].removeAction(Action.SAUTER);
 					zones[6].addAction(Action.FUIR);
 					gui.show("Vous êtes enfin libre! Il ne vous reste plus qu'à fuir, votre famille vous attends.\n");
-					gui.show("Vous jetez un dernier regards vers la prison en pensant aux rencontre que vous avez faites...\n");
+					gui.show(
+							"Vous jetez un dernier regards vers la prison en pensant aux rencontre que vous avez faites...\n");
 					gui.show("...et continuez votre chemin sans une once de regret.\n");
 					gui.replaceMainCharacter(mainCharacter, 767, 531);
 
@@ -876,7 +983,7 @@ public class Game implements java.io.Serializable {
 					zones[6].addAction(Action.PRENDRE);
 					zones[6].removeAction(Action.T3);
 					key.setCoordinates(840, 356);
-					gui.show("Vous avez trouvé une clé! Mais que peut elle donc bien ouvrir?\n");
+					gui.show("Vous avez trouvé une clé! Mais que peut elle donc bien ouvrir ?\n");
 					gui.show("*Vous vous rappelez de ce qu'a dit Old Joe...*\n");
 					gui.show("Allez vous prendre la clé et sauter dans ce trou?\n");
 					gui.show("Ou allez vous continuer de creuser ?\n");
@@ -942,7 +1049,8 @@ public class Game implements java.io.Serializable {
 					zones[6].removeAction(Action.SAUTER);
 					zones[6].addAction(Action.FUIR);
 					gui.show("Vous êtes enfin libre! Il ne vous reste plus qu'à fuir, votre famille vous attends.\n");
-					gui.show("Vous jetez un dernier regards vers la prison en pensant aux rencontre que vous avez faites...\n");
+					gui.show(
+							"Vous jetez un dernier regards vers la prison en pensant aux rencontre que vous avez faites...\n");
 					gui.show("...et continuez votre chemin sans une once de regret.\n");
 					gui.replaceMainCharacter(mainCharacter, 767, 531);
 				}
@@ -1318,10 +1426,13 @@ public class Game implements java.io.Serializable {
 					npc.dialogCounter = 0;
 					gui.show();
 
+					// ---Si le dialogue de Billy vient d'etre executer---
 					if (npc.getName().equals("Billy")) {
+						mainCharacter.billyMet = true;
+						mainCharacter.billyBlocked = false;
 						billy.setDialogState(1);
 					}
-					// Si le dialogue de Joe vient d'etre executer
+					// ---Si le dialogue de Joe vient d'etre executer---
 					if (npc.getName().equals("Joe")) {
 						if (joe.getDialogState() == 2) {
 							mainCharacter.firstStageJoe = true;
@@ -1409,15 +1520,23 @@ public class Game implements java.io.Serializable {
 							// La fin de quete de Joe
 						} else if (joe.getDialogState() == 9) {
 							mainCharacter.joeRiddle = false;
+							mainCharacter.joeBlocked = false;
 							zones[3].removeAnswer(Answer.UN);
 							zones[3].removeAnswer(Answer.DEUX);
 							zones[3].addAction(Action.PRENDRE);
 							joe.setDialogState(10);
 						} else if (joe.getDialogState() == 0) {
+							mainCharacter.joeMet = true;
+							mainCharacter.joeBlocked = false;
 							joe.setDialogState(1);
+						} else if (joe.getDialogState() == 1) {
+							mainCharacter.joeBlocked = false;
+						} else if (joe.getDialogState() == 10) {
+							mainCharacter.joeBlocked = false;
 						}
 
 					}
+					// ---Si le dialogue de Matou vient d'etre executer---
 					if (npc.getName().equals("Matou")) {
 						// Si on choici "Neuve","Repugnante" dans le dialog avec Matou
 						if (matou.getDialogState() == 2) {
@@ -1427,6 +1546,8 @@ public class Game implements java.io.Serializable {
 							End end = new End("BadEnding");
 						} else if (matou.getDialogState() == 3) {
 							matou.setDialogState(4);
+							mainCharacter.matouRiddle = false;
+							initialize();
 							zones[4].removeAnswer(Answer.JOLIE);
 							zones[4].removeAnswer(Answer.NEUVE);
 							zones[4].removeAnswer(Answer.REPUGNANTE);
@@ -1434,26 +1555,33 @@ public class Game implements java.io.Serializable {
 							zones[4].addAction(Action.MATOU);
 
 						} else if (matou.getDialogState() == 4) {
+							mainCharacter.matouBlocked = false;
 							zones[4].removeAnswer(Answer.JOLIE);
 							zones[4].removeAnswer(Answer.NEUVE);
 							zones[4].removeAnswer(Answer.REPUGNANTE);
 						} else {
-
 							matou.setDialogState(1);
 							zones[4].addAnswer(Answer.NEUVE);
 							zones[4].addAnswer(Answer.REPUGNANTE);
 							zones[4].addAnswer(Answer.JOLIE);
 						}
 					}
-					// Si le dialogue de Jack vient d'etre executer
+					// ---Si le dialogue de Jack vient d'etre executer---
 					if (npc.getName().equals("Jack")) {
 						// Fin de quete de Jack
 						if (jack.getDialogState() == 2) {
 							mainCharacter.jackRiddle = false;
+							mainCharacter.jackBlocked = false;
 							zones[5].addAction(Action.PRENDRE);
 							jack.setDialogState(3);
 						} else if (jack.getDialogState() == 0) {
+							mainCharacter.jackMet = true;
+							mainCharacter.jackBlocked = false;
 							jack.setDialogState(1);
+						} else if (jack.getDialogState() == 1) {
+							mainCharacter.jackBlocked = false;
+						} else if (jack.getDialogState() == 3) {
+							mainCharacter.jackBlocked = false;
 						}
 
 					}
