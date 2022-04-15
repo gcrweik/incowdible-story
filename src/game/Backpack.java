@@ -17,8 +17,8 @@ public class Backpack implements java.io.Serializable {
 		this.contenu = new ArrayList<Element>();
 		this.cigs = false;
 		this.key = false;
-		this.pliers = true; // A rechanger
-		this.shovel = true; // A rechanger
+		this.pliers = false;
+		this.shovel = false;
 	}
 
 	public ArrayList<Element> getContenu() {
@@ -29,9 +29,10 @@ public class Backpack implements java.io.Serializable {
 		if (!contenu.contains(e))
 			this.contenu.add(e);
 	}
-	
+
 	public void removeElement(Element e) {
-		if(contenu.contains(e)) this.contenu.remove(e);
+		if (contenu.contains(e))
+			this.contenu.remove(e);
 	}
 
 	@Override
