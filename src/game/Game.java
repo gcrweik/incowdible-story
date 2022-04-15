@@ -38,7 +38,8 @@ public class Game implements java.io.Serializable {
 
 	private Backpack backpack = new Backpack();
 
-	private File f = new File("solutions/solution1.txt");
+	private File file1 = new File("solutions/solution1.txt");
+	private File file2 = new File("solutions/solution2.txt");
 
 	public Game() {
 		createMap();
@@ -49,7 +50,7 @@ public class Game implements java.io.Serializable {
 		gui = g;
 		showWelcomeMessage();
 
-		System.out.println(key.getRandomInt()); // A supprimer
+		System.out.println("Variable globale random :" + cigs.getRandomInt()); // A supprimer
 	}
 
 	private void createMap() {
@@ -61,7 +62,7 @@ public class Game implements java.io.Serializable {
 		zones[4] = new Zone("Cours Exterieur", "CoursExterieur.png", 1111, 218);
 		zones[5] = new Zone("Cours de Sport", "Sport.png", 771, 36);
 		zones[6] = new Zone("Mur", "Mur.png", 765, 301);
-		zones[7] = new Zone("Escalier", "Escalier.png", 706, 428);
+		zones[7] = new Zone("Escalier", "Escalier.png", 734, 394);
 		zones[8] = new Zone("Bureau de Directeur", "Bureau.png", 656, 299);
 
 		// La sortie de Cellule
@@ -369,10 +370,19 @@ public class Game implements java.io.Serializable {
 		case "T":
 		case "TERMINER":
 			if (currentZone == zones[0]) {
-				executeSolution(f);
+				if (cigs.getRandomInt() == 1) {
+					System.out.println("Execution solution 1");
+					executeSolution(file1);
+					break;
+				}
+				if (cigs.getRandomInt() == 2) {
+					System.out.println("Execution solution 2");
+					executeSolution(file2);
+					break;
+				}
 				break;
 			} else {
-				gui.show("\nPour executer cette commande il faut etre dans la Cellule!");
+				gui.show("\nPour executer cette commande il faut etre dans la Cellule et au debut du jeu!");
 				gui.show();
 				break;
 			}
@@ -865,7 +875,7 @@ public class Game implements java.io.Serializable {
 
 				// Clé avec le passage
 				// Encore un essaie restant
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 1
 						&& mainCharacter.holeOneDone == false && mainCharacter.holeLimit == 0) {
 					mainCharacter.holeOneDone = true;
 					mainCharacter.holeLimit++;
@@ -880,7 +890,7 @@ public class Game implements java.io.Serializable {
 
 				}
 				// Plus d'essaie restants
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 1
 						&& mainCharacter.holeOneDone == false && mainCharacter.holeLimit == 1) {
 					mainCharacter.holeOneDone = true;
 					zones[6].addAction(Action.PRENDRE);
@@ -896,7 +906,7 @@ public class Game implements java.io.Serializable {
 
 				}
 				// Pas de sortie
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 2
 						&& mainCharacter.holeOneDone == false) {
 					mainCharacter.holeOneDone = true;
 					mainCharacter.holeLimit++;
@@ -927,7 +937,7 @@ public class Game implements java.io.Serializable {
 					&& backpack.shovel == true) {
 
 				// Sortie directe
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 1
 						&& mainCharacter.holeTwoDone == false) {
 					mainCharacter.holeTwoDone = true;
 					zones[6].removeAction(Action.T1);
@@ -945,7 +955,7 @@ public class Game implements java.io.Serializable {
 
 				}
 				// Pas de sortie
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 2
 						&& mainCharacter.holeTwoDone == false) {
 					mainCharacter.holeTwoDone = true;
 					mainCharacter.holeLimit++;
@@ -962,7 +972,6 @@ public class Game implements java.io.Serializable {
 					GUI.disposeGUIFrame();
 					@SuppressWarnings("unused")
 					End end = new End("BadEnding");
-
 				}
 
 			}
@@ -976,7 +985,7 @@ public class Game implements java.io.Serializable {
 
 				// Clé avec le passage
 				// Encore un essaie restant
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 2
 						&& mainCharacter.holeThreeDone == false && mainCharacter.holeLimit == 0) {
 					mainCharacter.holeThreeDone = true;
 					mainCharacter.holeLimit++;
@@ -991,7 +1000,7 @@ public class Game implements java.io.Serializable {
 
 				}
 				// Plus d'essaie restantss
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 2
 						&& mainCharacter.holeThreeDone == false && mainCharacter.holeLimit == 1) {
 					mainCharacter.holeThreeDone = true;
 					zones[6].addAction(Action.PRENDRE);
@@ -1007,7 +1016,7 @@ public class Game implements java.io.Serializable {
 
 				}
 				// Pas de sortie
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 1
 
 						&& mainCharacter.holeThreeDone == false) {
 					mainCharacter.holeThreeDone = true;
@@ -1038,7 +1047,7 @@ public class Game implements java.io.Serializable {
 					&& backpack.shovel == true) {
 
 				// Sortie directe
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 2
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 2
 						&& mainCharacter.holeFourDone == false) {
 					mainCharacter.holeFourDone = true;
 					zones[6].removeAction(Action.T1);
@@ -1056,7 +1065,7 @@ public class Game implements java.io.Serializable {
 				}
 
 				// Pas de sortie
-				if (currentZone == zones[6] && mainCharacter.alarmUp == true && key.getRandomInt() == 1
+				if (currentZone == zones[6] && mainCharacter.alarmUp == true && cigs.getRandomInt() == 1
 						&& mainCharacter.holeFourDone == false) {
 					mainCharacter.holeFourDone = true;
 					mainCharacter.holeLimit++;
@@ -1236,15 +1245,15 @@ public class Game implements java.io.Serializable {
 		}
 		// Trou 1
 		if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeOneDone == true
-				&& key.getRandomInt() == 1 && backpack.key == false) {
+				&& cigs.getRandomInt() == 1 && backpack.key == false) {
 			gui.showElement(key);
 			gui.showElement(holeGround1);
 		} else if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeOneDone == true
-				&& key.getRandomInt() == 1 && backpack.key == true) {
+				&& cigs.getRandomInt() == 1 && backpack.key == true) {
 			gui.showElement(holeGround1);
 
 		} else if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeOneDone == true
-				&& key.getRandomInt() == 2) {
+				&& cigs.getRandomInt() == 2) {
 			gui.showElement(holeGround1);
 		}
 		// Trou 2
@@ -1253,15 +1262,15 @@ public class Game implements java.io.Serializable {
 		}
 		// Trou 3
 		if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeThreeDone == true
-				&& key.getRandomInt() == 2 && backpack.key == false) {
+				&& cigs.getRandomInt() == 2 && backpack.key == false) {
 			gui.showElement(key);
 			gui.showElement(holeGround3);
 
 		} else if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeThreeDone == true
-				&& key.getRandomInt() == 2 && backpack.key == true) {
+				&& cigs.getRandomInt() == 2 && backpack.key == true) {
 			gui.showElement(holeGround3);
 		} else if (currentZone == zones[6] && mainCharacter.alarmUp == true && mainCharacter.holeThreeDone == true
-				&& key.getRandomInt() == 1) {
+				&& cigs.getRandomInt() == 1) {
 			gui.showElement(holeGround3);
 		}
 
@@ -1313,23 +1322,75 @@ public class Game implements java.io.Serializable {
 
 				public void run() {
 					String currentLine = list.get(timerCounter);
-					System.out.println(currentLine);
+
 					switch (currentLine) {
-					case "Billy":
-						gui.replaceMainCharacter(mainCharacter, 719, 193);
+					case "BILLY":
+						executeCommand("BILLY");
 						break;
-					case "Joe":
-						gui.replaceMainCharacter(mainCharacter, 643, 234);
+					case "JOE":
+						executeCommand("JOE");
+						mainCharacter.joeMet = true;
+						if (currentZone == zones[3] && backpack.shovel == true) {
+							gui.show("Vous avez repondu correctement à Joe !\n");
+						}
 						break;
-					case "Jack":
-						gui.replaceMainCharacter(mainCharacter, 639, 345);
+					case "JACK":
+						executeCommand("JACK");
+						mainCharacter.jackMet = true;
+
 						break;
-					case "Matou":
-						gui.replaceMainCharacter(mainCharacter, 803, 528);
+					case "MATOU":
+						executeCommand("MATOU");
 						break;
-					case "Parler":
+					case "P1":
+						executeCommand("P1");
+						break;
+					case "P2":
+						executeCommand("P2");
+						break;
+					case "PRENDRE":
+						executeCommand("PRENDRE");
+						if (currentZone == zones[5]) {
+							mainCharacter.jackRiddle = false;
+							backpack.addElement(shovel);
+							backpack.shovel = true;
+							initialize();
+							gui.show("Vous venez de récuperer une pelle !\n");
+							break;
+						}
+						if (currentZone == zones[3]) {
+							mainCharacter.joeRiddle = false;
+							backpack.addElement(pliers);
+							backpack.pliers = true;
+							initialize();
+							gui.show("Vous venez de récuperer un secateur !\n");
+							break;
+						}
+
+						break;
+					case "PARLER":
 						gui.show("Vous venez de discuter avec lui.\n");
 						break;
+					case "JOLIE":
+						gui.show("Vous venez de repondre correctement à Matou.\n");
+						mainCharacter.matouRiddle = false;
+						initialize();
+						break;
+					case "GRILLAGE":
+						executeCommand("GRILLAGE");
+					case "COUPER":
+						executeCommand("COUPER");
+						break;
+					case "T2":
+						executeCommand("T2");
+						break;
+					case "T4":
+						executeCommand("T4");
+						break;
+					case "FUIR":
+						executeCommand("FUIR");
+						break;
+
 					default:
 						goTo(currentLine);
 						break;

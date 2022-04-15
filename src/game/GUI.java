@@ -137,6 +137,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 		guiPanel.add(listScroller, BorderLayout.CENTER);
 		guiPanel.add(textInput, BorderLayout.SOUTH);
 
+		// A noter: Ca enleve la barre des coordonées comme effet indesirable
 		guiFrame.getContentPane().add(guiPanel, BorderLayout.CENTER);
 
 		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
