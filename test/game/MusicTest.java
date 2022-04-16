@@ -28,7 +28,7 @@ class MusicTest {
 		assertEquals(music3.toString(), "sounds/EndMusic.sav");
 		assertEquals(music4.toString(), "sounds/FailMusic.sav");
 
-		// Égalité des objets
+		// Egalite des objets
 		assertEquals(music1, new Music("IntroMusic"));
 		assertNotEquals(music3, new Music("MenuMusic"));
 		assertNotEquals(music3, new Music("MenuMusic"));

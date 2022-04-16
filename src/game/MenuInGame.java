@@ -108,7 +108,7 @@ public class MenuInGame implements ActionListener, KeyListener {
 			}
 		}
 		if (e.getSource() == btnSound) {
-			int loadedoptions = SoundMenu.loadMusicOptions(); // Charge une partie à partir de la sauvegarde
+			int loadedoptions = SoundMenu.loadMusicOptions(); // Charge une partie a partir de la sauvegarde
 			@SuppressWarnings("unused")
 			SoundMenu sound = new SoundMenu(loadedoptions);
 		}
@@ -131,7 +131,7 @@ public class MenuInGame implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// La methode pas utilisée mais n'est pas à supprimer !
+		// La methode pas utilisee mais n'est pas a supprimer !
 
 	}
 
@@ -145,7 +145,7 @@ public class MenuInGame implements ActionListener, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// La methode pas utilisée mais n'est pas à supprimer !
+		// La methode pas utilisee mais n'est pas a supprimer !
 
 	}
 

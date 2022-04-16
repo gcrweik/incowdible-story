@@ -83,7 +83,7 @@ public class SoundMenu implements ActionListener, ChangeListener, java.io.Serial
 		btnPause.addActionListener(this);
 		volumeSlider.addChangeListener(this);
 
-		// Ajout de listener qui ecoute à la fermeture.
+		// Ajout de listener qui ecoute a la fermeture.
 		soundFrame.addWindowListener(exitListener);
 
 		// Parametrage de la JFrame

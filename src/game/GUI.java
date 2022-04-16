@@ -11,37 +11,91 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 
+/**
+ * Une classe qui permet de initialiser le jeu comme le joueur le vois. Une des
+ * classes les plus importantes.
+ * 
+ * @author mohamed_hanouche
+ * @author roman_tyzio
+ * @version 1.0.0
+ *
+ */
 public class GUI implements ActionListener, java.io.Serializable {
 	/**
-	 * 
+	 * serialVersionUID pour la sauvegarde.
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Une instance de la classe Game.
+	 */
 	private static Game game;
+	/**
+	 * JFrame de la classe Game.
+	 */
 	private static JFrame guiFrame;
+	/**
+	 * JPanel de la classe Game.
+	 */
 	private JPanel guiPanel = new JPanel();
+	/**
+	 * Une zone dans laquelle on peut rentrer les commandes.
+	 */
 	private JTextField textInput = new JTextField(34);
+	/**
+	 * Le chat du jeu.
+	 */
 	private JTextArea chat = new JTextArea();
+	/**
+	 * La zone que le joueur voit.
+	 */
 	public JLabel image = new JLabel();
-	private InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW); // Pour ouvrir le menu in
-																							// game.
-	static ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
-																								// MessageDialog
+	/**
+	 * Une instance de la classe InputMap qui sert a ecouter si on appuie sur Escape
+	 * pour ouvrir le menu dans le jeu.
+	 */
+	private InputMap guiInputMap = guiPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+	/**
+	 * Une image qui remplace l'icone de MessageDialog.
+	 */
+	static ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png"));
+	/**
+	 * La musique principale du jeu.
+	 */
 	static Music musicGame = new Music("GameMusic");
 
+	/**
+	 * Une des methodes qui permettent de lancer le jeu.
+	 * 
+	 * @param j Une instance de la classe Game;
+	 */
 	public GUI(Game j) {
 		game = j;
 		createGUI();
 	}
 
+	/**
+	 * Une methode qui permet d'afficher un message dans le chat.
+	 * 
+	 * @param s Le message a afficher.
+	 */
 	public void show(String s) {
 		chat.append(s);
 		chat.setCaretPosition(chat.getDocument().getLength());
 	}
 
+	/**
+	 * Une methode qui permet de revenir a la ligne.
+	 */
 	public void show() {
 		show("\n");
 	}
 
+	/**
+	 * Une methode qui affiche les zones.
+	 * 
+	 * @param nomImage Le nom de fichier image de zone.
+	 */
 	public void showImage(String nomImage) {
 		URL imageURL = this.getClass().getClassLoader().getResource("game/images/" + nomImage);
 		if (imageURL != null) {
@@ -64,6 +118,9 @@ public class GUI implements ActionListener, java.io.Serializable {
 				public void mouseExited(MouseEvent me) {
 				}
 
+				// Permet d'afficher les coordonnees de l'endroit d'ecran ou on clique.
+				// Utilisation : connaitre les coordonnes pour placer les elements,
+				// personnages,etc. Ne fonctionne plus car -> gameFrame.setResizable(false);
 				public void mouseClicked(MouseEvent me) {
 					int x = me.getX();
 					int y = me.getY();
@@ -73,7 +130,13 @@ public class GUI implements ActionListener, java.io.Serializable {
 		}
 	}
 
-	// Methode permettant de créer puis afficher l'elements aux coordonées donné.
+	/**
+	 * Une methode permettant de creer puis afficher l'elements aux coordonees
+	 * donnees.
+	 * 
+	 * @param e L'element a afficher.
+	 * @return Nouveau JLabel.
+	 */
 	public JLabel showElement(Element e) {
 		JLabel objectLabel = new JLabel();
 		objectLabel.setBounds(e.x, e.y, e.imageWidth, e.imageHeight);
@@ -86,12 +149,18 @@ public class GUI implements ActionListener, java.io.Serializable {
 			image.revalidate();
 			return objectLabel;
 		} else
-			System.out.println("Une erreur est arrivée");
+			System.out.println("Une erreur est arrivee");
 		return null;
 	}
 
-	// Methode permettant de replacer le personnage principal e aux coordonnées
-	// donnés
+	/**
+	 * Une methode permettant de replacer le personnage principal aux coordonnees
+	 * donnees.
+	 * 
+	 * @param e Le personnage principal a deplacer.
+	 * @param x La cordoonnee x pour le deplacement.
+	 * @param y La cordoonnee y pour le deplacement.
+	 */
 	public void replaceMainCharacter(MainCharacter e, int x, int y) {
 		// Enleve tout ce qu'il y a sur l'image
 		image.removeAll();
@@ -108,12 +177,21 @@ public class GUI implements ActionListener, java.io.Serializable {
 		}
 	}
 
+	/**
+	 * Permet d'ecrire dans le champs dedie au inputs d'utilisateur, en dessous du
+	 * chat du jeu.
+	 * 
+	 * @param ok Permet d'ecrire.
+	 */
 	public void enable(boolean ok) {
 		textInput.setEditable(ok);
 		if (!ok)
 			textInput.getCaret().setBlinkRate(0);
 	}
 
+	/**
+	 * Une methode qui permet de creer le GUI du jeu.
+	 */
 	private void createGUI() {
 
 		// Instance de la JFrame
@@ -137,7 +215,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 		guiPanel.add(listScroller, BorderLayout.CENTER);
 		guiPanel.add(textInput, BorderLayout.SOUTH);
 
-		// A noter: Ca enleve la barre des coordonées comme effet indesirable
+		guiFrame.setResizable(false); // A noter: Ca enleve la barre des coordonees comme effet indesirable
 		guiFrame.getContentPane().add(guiPanel, BorderLayout.CENTER);
 
 		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -146,7 +224,7 @@ public class GUI implements ActionListener, java.io.Serializable {
 		guiInputMap.put(KeyStroke.getKeyStroke("ESCAPE"), "escape_pressed");
 		guiPanel.getActionMap().put("escape_pressed", new AbstractAction() {
 			/**
-			 * 
+			 * serialVersionUID pour la sauvegarde.
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -168,8 +246,8 @@ public class GUI implements ActionListener, java.io.Serializable {
 		textInput.requestFocusInWindow();
 	}
 
-	/*
-	 * Methode qui ferme la fenetre
+	/**
+	 * Une methode qui permet de fermer la fenetre du jeu.
 	 */
 	public static void disposeGUIFrame() {
 		guiFrame.dispose();
@@ -204,10 +282,11 @@ public class GUI implements ActionListener, java.io.Serializable {
 	}
 
 	/**
-	 * Une methode qui permet de charger une partie à partir du fichier de
+	 * Une methode qui permet de charger une partie a partir du fichier de
 	 * sauvegarde.
 	 * 
-	 * @return la partie sauvegardée.
+	 * @param loadName Le nom de la sauvegarde a charger.
+	 * @return La La partie sauvegardee.
 	 */
 	static Game loadGame(String loadName) {
 		try {
@@ -224,10 +303,17 @@ public class GUI implements ActionListener, java.io.Serializable {
 		return game;
 	}
 
+	/**
+	 * Une methode qui permet d'executer la commande.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		runCommand();
 	}
 
+	/**
+	 * Une methode qui execute la commande d'utilisateur et remet l'espace pour
+	 * rentrer les commandes vide.
+	 */
 	private void runCommand() {
 		String commandeLue = textInput.getText();
 		textInput.setText("");

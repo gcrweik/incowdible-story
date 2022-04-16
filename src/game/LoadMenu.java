@@ -26,7 +26,7 @@ public class LoadMenu implements ActionListener {
 	private JButton btnPlay = new JButton("Play");
 	private JButton btnDelete = new JButton("Delete");
 	private String[] fileNames; // Une liste de nom de sauvegardes.
-	private String[] refreshedSaves; // Une list pour refresh aprés une supression.
+	private String[] refreshedSaves; // Une list pour refresh apres une supression.
 	private File f = new File("saves/gamesaves");// Le chemin vers le dossier des sauvegardes.
 	private ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
 																									// MessageDialog
@@ -154,7 +154,7 @@ public class LoadMenu implements ActionListener {
 				Menu.musicMenu.stopMusic();
 				Menu.disposeMenuFrame();
 				loadFrame.dispose();
-				Game loadedGame = GUI.loadGame(playedSaves); // Charge une partie à partir de la sauvegarde
+				Game loadedGame = GUI.loadGame(playedSaves); // Charge une partie a partir de la sauvegarde
 				GUI gui = new GUI(loadedGame);
 				loadedGame.setGUI(gui);
 			} catch (Exception nothingChosen) {

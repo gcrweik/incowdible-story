@@ -8,55 +8,152 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Une classe qui permet d'afficher la map,le personnage,les Npc, les
+ * elements.Une des classes les plus importantes.
+ * 
+ * @author mohamed_hanouche
+ * @author roman_tyzio
+ * @version 1.0.0
+ *
+ */
 public class Game implements java.io.Serializable {
 
 	/**
-	 * 
+	 * serialVersionUID pour la sauvegarde.
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Une instance de la classe GUI.
+	 */
 	public GUI gui;
+	/**
+	 * Une list d'instances de la classe Zone.
+	 */
 	private Zone[] zones = new Zone[9];
+	/**
+	 * Une zone dans laquelle se trouve actuellement le personnage.
+	 */
 	Zone currentZone;
+	/**
+	 * Le personnge principal, Marguerite.
+	 */
 	private MainCharacter mainCharacter = new MainCharacter(563, 139, 32, 64, "MargueriteProjet.png");
+	/**
+	 * La clé qui ouvre le bureau de directeur du prison.
+	 */
 	private KeyElement key = new KeyElement(0, 0, 21, 21, "key.png", "Clé");
+	/**
+	 * Les cigarettes qu'on echange contre le pelle chez Jack.
+	 */
 	private KeyElement cigs = new KeyElement(0, 0, 12, 17, "cigs.png", "Paquet de cigarettes");
+	/**
+	 * Un secateur qu'on obtient en reussissant l'enigme de Joe.
+	 */
 	private KeyElement pliers = new KeyElement(583, 260, 15, 20, "pliers.png", "Sécateur");
+	/**
+	 * Une pelle qu'on obtient en donnant les cigarettes a Jack.
+	 */
 	private KeyElement shovel = new KeyElement(517, 368, 37, 45, "shovel.png", "Pelle");
+	/**
+	 * Le trou n1 devant le mur.
+	 */
 	private KeyElement holeGround1 = new KeyElement(687, 357, 39, 38, "hole_ground.png", "Trou1");
+	/**
+	 * Le trou n2 deavnt le mur.
+	 */
 	private KeyElement holeGround2 = new KeyElement(740, 357, 39, 38, "hole_ground.png", "Trou2");
+	/**
+	 * Le trou n3 devant le mur.
+	 */
 	private KeyElement holeGround3 = new KeyElement(795, 357, 39, 38, "hole_ground.png", "Trou3");
+	/**
+	 * Le trou n4 deavnt le mur.
+	 */
 	private KeyElement holeGround4 = new KeyElement(849, 357, 39, 38, "hole_ground.png", "Trou4");
+	/**
+	 * Le trou dans la Cours Interieur.
+	 */
 	private KeyElement holeFloor = new KeyElement(884, 144, 76, 37, "hole_floor.png", "Trou5");
+	/**
+	 * La trappe dans le bureau de directeur.
+	 */
 	private KeyElement trapDoor = new KeyElement(991, 232, 36, 36, "trapdoor.png", "Trapdoor");
+	/**
+	 * Le Npc "Matou".
+	 */
 	private Npc matou = new Npc(755, 503, 32, 64, "MatouProjet.png", "Matou");
+	/**
+	 * Le Npc "Joe" ou "Old Joe".
+	 */
 	private Npc joe = new Npc(609, 219, 32, 64, "OldJoeProjet.png", "Joe");
+	/**
+	 * Le Npc "Billy".
+	 */
 	private Npc billy = new Npc(795, 193, 32, 64, "BillyProjet.png", "Billy");
+	/**
+	 * Le Npc "Jack".
+	 */
 	private Npc jack = new Npc(595, 337, 32, 64, "JackProjet.png", "Jack");
+	/**
+	 * Indique si il existe une sortie dans la direction indique.
+	 */
 	private boolean possibleExit;
+	/**
+	 * Compteur pour les deux Timer.
+	 */
 	private int timerCounter;
+	/**
+	 * Indique si on doit afficher les resultats de la fonction showLocation();
+	 */
 	private boolean noShowLocation;
 
+	/**
+	 * Une instance de la classe Backpack.
+	 */
 	private Backpack backpack = new Backpack();
 
-	// Les deux fichiers avec les soluces basiques
+	/**
+	 * Un fichier soluce pour la fin normale si la variable aleatoire est egale a 1.
+	 */
 	private File file1 = new File("solutions/solution1.txt");
+	/**
+	 * Un fichier soluce pour la fin normale si la variable aleatoire est egale a 2.
+	 */
 	private File file2 = new File("solutions/solution2.txt");
 
-	// Les deux fichiers avec les soluces secretes
+	/**
+	 * Un fichier soluce pour la fin secrete si la variable aleatoire est egale a 1.
+	 */
 	private File secretFile1 = new File("solutions/secret_solution1.txt");
+	/**
+	 * Un fichier soluce pour la fin secrete si la variable aleatoire est egale a 2.
+	 */
 	private File secretFile2 = new File("solutions/secret_solution2.txt");
 
+	/**
+	 * Une methode qui permet de lancer l'affichage de la carte.
+	 */
 	public Game() {
 		createMap();
 		gui = null;
 	}
 
+	/**
+	 * Une methode qui permet de de definir le GUI du jeu.
+	 * 
+	 * @param g Le gui pour le jeu.
+	 */
 	public void setGUI(GUI g) {
 		gui = g;
 		showWelcomeMessage();
 
 	}
 
+	/**
+	 * Une methode qui permet d'ajouter les zones avec leurs sorties et actions.
+	 * Definie aussi la zone dans lequel le personnage apparait.
+	 */
 	private void createMap() {
 
 		zones[0] = new Zone("La Cellule", "Cellule.png", 712, 497);
@@ -113,6 +210,10 @@ public class Game implements java.io.Serializable {
 		currentZone = zones[0];
 	}
 
+	/**
+	 * Une methode qui permet de voir les sorties,actions,reponses disponibles en ce
+	 * moment.
+	 */
 	private void showLocation() {
 		if (!currentZone.exits.isEmpty()) {
 			gui.show(currentZone.longDescription());
@@ -128,6 +229,9 @@ public class Game implements java.io.Serializable {
 		}
 	}
 
+	/**
+	 * Une methode qui permet d'afficher le message de bienvenu au lancement du jeu.
+	 */
 	private void showWelcomeMessage() {
 		gui.show("Bienvenue !");
 		gui.show();
@@ -143,6 +247,14 @@ public class Game implements java.io.Serializable {
 
 	}
 
+	/**
+	 * Une methode qui permet en fonction de {@code readingCommand} executer une
+	 * commande ( une action,une reponse, etc.). C'est ici qu'on change les
+	 * variables qui permettent de faire les "quetes". Une des methodes les plus
+	 * importantes.
+	 * 
+	 * @param readingCommand Une commande entrée par le joueur ou par nous meme.
+	 */
 	public void executeCommand(String readingCommand) {
 		gui.show("> " + readingCommand + "\n");
 		switch (readingCommand.toUpperCase()) {
@@ -1159,6 +1271,9 @@ public class Game implements java.io.Serializable {
 
 	}
 
+	/**
+	 * Une methodes qui permet d'afficher toutes les commandes possibles.
+	 */
 	private void showHelp() {
 		gui.show("Etes-vous perdu ?");
 		gui.show();
@@ -1168,6 +1283,12 @@ public class Game implements java.io.Serializable {
 		gui.show();
 	}
 
+	/**
+	 * Une methode qui permet d'aller vers une nouvelle zone en focntion de
+	 * {@code direction}.
+	 * 
+	 * @param direction La direction dans laquelle on vous aller.
+	 */
 	private void goTo(String direction) {
 		Zone newZone = currentZone.getExit(direction);
 		if (newZone == null) {
@@ -1198,7 +1319,12 @@ public class Game implements java.io.Serializable {
 	}
 
 	/**
-	 * Une methode qui permet de teleporte le personnage dans la Cours Interieur.
+	 * Une methode qui permet de se teleporter a partir de la zone "Mur" vers la
+	 * zone "Cours Interieur", necessaire pour la fin secrete. Permet aussi de se
+	 * teleporter vers la zone "Mur" a partir de la zone "Cours de Sport". Le tout
+	 * en fonction de {@code z}.
+	 * 
+	 * @param z Un nombre, doit etre soit 2 soit 6 pour permettre la teleportation.
 	 */
 	private void teleport(int z) {
 
@@ -1228,8 +1354,10 @@ public class Game implements java.io.Serializable {
 		}
 	}
 
-	// Méthode permettant d'afficher les différents élements sur la carte
-	// (KeyElement & Npc).
+	/**
+	 * Methode permettant d'afficher les differents elements sur la carte
+	 * (KeyElement et Npc).
+	 */
 	public void initialize() {
 		gui.image.removeAll();// changement ici
 		gui.showElement(mainCharacter);// et ici
@@ -1313,7 +1441,7 @@ public class Game implements java.io.Serializable {
 	}
 
 	/**
-	 * Une methode qui affiche le contenu du sac
+	 * Une methode qui affiche le contenu du sac.
 	 */
 	private void showBackpack() {
 		String msg = this.backpack.toString();
@@ -1325,9 +1453,9 @@ public class Game implements java.io.Serializable {
 
 	/**
 	 * Une methode qui permet d'executer un fichier texte avec la suite des
-	 * commander pour terminer la partie.
+	 * commander pour terminer la partie(fin normale et fin secrete).
 	 * 
-	 * @param solution Le fichier d'execution.
+	 * @param solution Le fichier a executer.
 	 */
 	private void executeSolution(File solution) {
 		Scanner input;
@@ -1500,10 +1628,10 @@ public class Game implements java.io.Serializable {
 	}
 
 	/**
-	 * Une methode qui permet d'executer un dialogue du npc
+	 * Une methode qui permet d'executer un dialogue du Npc.
 	 * 
-	 * @param npc Npc qui parle.
-	 * @throws FileNotFoundException
+	 * @param npc Npc qui doit parler.
+	 * @throws FileNotFoundException Si le Npc n'existe pas.
 	 */
 	private void executeDialog(Npc npc) throws FileNotFoundException {
 
@@ -1702,6 +1830,9 @@ public class Game implements java.io.Serializable {
 
 	}
 
+	/**
+	 * Une methode qui permet de dire au-revoir au joueur et desactiver le GUI.
+	 */
 	private void finish() {
 		gui.show("Au revoir...");
 		gui.enable(false);
