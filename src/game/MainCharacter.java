@@ -31,7 +31,7 @@ public class MainCharacter extends Element {
 	public boolean holeTwoDone; // Le deuxieme trou en partant de gauche est creuse
 	public boolean holeThreeDone; // Le troisieme trou en partant de gauche est creuse
 	public boolean holeFourDone; // Le quatrieme trou en partant de gauche est creuse
-
+	
 	public int holeLimit; // Nombre de trous que le joueur a creuse
 
 	public MainCharacter(int x, int y, int imageWidth, int imageHeight, String imageName) {
