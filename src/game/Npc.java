@@ -40,7 +40,7 @@ public class Npc extends Element {
 			billyDialogs.put(5, dialogOwner + "Aloooooors...par où commencer...\n");
 			billyDialogs.put(6,
 					dialogOwner + "Les personnes que tu dois connaître et les seules qui sont ici d’ailleurs, sont:\n");
-			billyDialogs.put(7, dialogOwner + "Old Joe, c’est le plus  ancien ici, une légende raconte que\n" + sp
+			billyDialogs.put(7, dialogOwner + "Old Joe, c’est le plus ancien ici, une légende raconte que\n" + sp
 					+ "c’est lui qui a bâti cette prison de ses propres mains.\n");
 
 			billyDialogs.put(8,
@@ -48,7 +48,7 @@ public class Npc extends Element {
 
 			billyDialogs.put(9, dialogOwner
 					+ "Matou le Maton, le seul maton de cette prison, mais je pense que c’est parce que\n" + sp
-					+ "les dévelo... ,*toussote* hum hum, les directeurs de la prison,  n’ont pas eu le temps d’en employer d’autres, bref ,\n"
+					+ "les dévelo... ,*toussote* hum hum, les directeurs de la prison, n’ont pas eu le temps d’en employer d’autres, bref ,\n"
 					+ sp + "si Matou te pose une question sur sa matraque réponds lui simplement, “Jolie” ...”\n");
 			billyDialogs.put(10,
 					dialogOwner + "Maintenant bouge d'ici et va voir Old Joe, avant que Matou nous voit discuter!\n");
@@ -260,7 +260,7 @@ public class Npc extends Element {
 			jackDialogs.put(5, dialogOwner + "C'est pourtant de la bonne, tout droit venu du Maroc..\n");
 			jackDialogs.put(6, dialogOwner + "Laisse moi deviner, c'est Old Joe qui t'envoie?\n");
 			jackDialogs.put(7, dialogOwner + "*Remarque le regarde que vous jetez sur sa pelle*\n");
-			jackDialogs.put(8, dialogOwner + "Tu la veux? Hmmmm....\n");
+			jackDialogs.put(8, dialogOwner + "Tu l'as veux? Hmmmm....\n");
 			jackDialogs.put(9,
 					dialogOwner + "Ramene moi du fromage ouuu...\n" + sp + "un paquet de cigarettes !\n");
 			jackDialogs.put(10, dialogOwner + "Et traine pas trop sinon tu peux dire au revoir à la pelle hehe !\n");
@@ -282,7 +282,7 @@ public class Npc extends Element {
 		if (dialogStateJack == 2) {
 			jackDialogs.clear();
 			jackDialogs.put(0, dialogOwner + "Ohhh! Mes cigarettes !!\n");
-			jackDialogs.put(1, dialogOwner + "*Allume une cigarette directement et tire dessus*\n");
+			jackDialogs.put(1, dialogOwner + "*Allume directement une cigarette et tire dessus*\n");
 			jackDialogs.put(2, dialogOwner + "*Son nez s'agite de plaisir*\n");
 			jackDialogs.put(3, dialogOwner + "Allez... tiens, t'as mérité ça.\n");
 			jackDialogs.put(4, dialogOwner + "Tu peux prendre ma pelle. Maintenant j'ai bien mieux, les cigarettes... !\n");

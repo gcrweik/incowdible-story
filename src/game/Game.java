@@ -486,6 +486,7 @@ public class Game implements java.io.Serializable {
 		case "T":
 		case "TERMINER":
 			if (currentZone == zones[0]) {
+				gui.enable(false);
 				if (cigs.getRandomInt() == 1) {
 					executeSolution(file1);
 					break;
@@ -503,6 +504,7 @@ public class Game implements java.io.Serializable {
 
 		case "TSEC":
 		case "TERMINER_SEC":
+			gui.enable(false);
 			if (currentZone == zones[0]) {
 				if (cigs.getRandomInt() == 1) {
 					executeSolution(secretFile1);
@@ -608,6 +610,7 @@ public class Game implements java.io.Serializable {
 			// ---Parler à Billy---
 			if (currentZone == zones[0] && mainCharacter.x == 719 && currentZone.containsActions(Action.PARLER)) {
 				try {
+					gui.enable(false);
 					mainCharacter.billyBlocked = true;
 					if (mainCharacter.joeMet == true) {
 						billy.setDialogState(2);
@@ -621,9 +624,9 @@ public class Game implements java.io.Serializable {
 			// ---Parler à Joe---
 			// Avant la debut de quete de Jack
 			if (currentZone == zones[3] && mainCharacter.x == 643 && currentZone.containsActions(Action.PARLER)
-					&& mainCharacter.matouRiddle == true && mainCharacter.jackRiddle == true
-					&& backpack.shovel == false) {
+					&& mainCharacter.jackRiddle == true && backpack.shovel == false) {
 				try {
+					gui.enable(false);
 					mainCharacter.joeBlocked = true;
 					executeDialog(joe);
 					gui.show();
@@ -637,6 +640,7 @@ public class Game implements java.io.Serializable {
 					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
 					&& backpack.shovel == true && mainCharacter.firstStageJoe == false) {
 				try {
+					gui.enable(false);
 					mainCharacter.joeBlocked = true;
 					joe.setDialogState(2);
 					executeDialog(joe);
@@ -650,6 +654,7 @@ public class Game implements java.io.Serializable {
 					&& mainCharacter.matouRiddle == false && mainCharacter.jackRiddle == false
 					&& backpack.shovel == false && mainCharacter.firstStageJoe == false) {
 				try {
+					gui.enable(false);
 					mainCharacter.joeBlocked = true;
 					executeDialog(joe);
 					gui.show();
@@ -663,6 +668,7 @@ public class Game implements java.io.Serializable {
 					&& backpack.shovel == true && mainCharacter.firstStageJoe == true
 					&& mainCharacter.secondStageJoe == false) {
 				try {
+					gui.enable(false);
 					executeDialog(joe);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -675,6 +681,7 @@ public class Game implements java.io.Serializable {
 					&& backpack.shovel == true && mainCharacter.firstStageJoe == true
 					&& mainCharacter.secondStageJoe == true) {
 				try {
+					gui.enable(false);
 					executeDialog(joe);
 					if (joe.getDialogState() == 10) {
 						mainCharacter.joeBlocked = true;
@@ -689,6 +696,7 @@ public class Game implements java.io.Serializable {
 
 			if (currentZone == zones[4] && mainCharacter.x == 755 && currentZone.containsActions(Action.PARLER)) {
 				try {
+					gui.enable(false);
 					executeDialog(matou);
 					gui.show();
 				} catch (FileNotFoundException e) {
@@ -698,6 +706,7 @@ public class Game implements java.io.Serializable {
 			// Quand il ne bloque plus le passage
 			if (currentZone == zones[4] && mainCharacter.x == 682 && currentZone.containsActions(Action.PARLER)) {
 				try {
+					gui.enable(false);
 					mainCharacter.matouBlocked = true;
 					executeDialog(matou);
 					gui.show();
@@ -712,6 +721,7 @@ public class Game implements java.io.Serializable {
 			if (currentZone == zones[5] && mainCharacter.x == 639 && currentZone.containsActions(Action.PARLER)
 					&& mainCharacter.jackMet == false) {
 				try {
+					gui.enable(false);
 					mainCharacter.jackBlocked = true;
 					executeDialog(jack);
 					gui.show();
@@ -722,6 +732,7 @@ public class Game implements java.io.Serializable {
 			} else if (currentZone == zones[5] && mainCharacter.x == 639 && currentZone.containsActions(Action.PARLER)
 					&& mainCharacter.jackMet == true && backpack.cigs == false) {
 				try {
+					gui.enable(false);
 					mainCharacter.jackBlocked = true;
 					executeDialog(jack);
 					gui.show();
@@ -739,6 +750,7 @@ public class Game implements java.io.Serializable {
 				mainCharacter.jackBlocked = true;
 				jack.setDialogState(2);
 				try {
+					gui.enable(false);
 					executeDialog(jack);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -1651,6 +1663,7 @@ public class Game implements java.io.Serializable {
 				timerCounter++;
 				npc.dialogCounter++;
 				if (timerCounter > npc.getNpcDialogs().size()) {
+					gui.enable(true);
 					timerCounter = 0;
 					npc.dialogCounter = 0;
 					gui.show();
