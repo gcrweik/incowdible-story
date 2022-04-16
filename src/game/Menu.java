@@ -125,7 +125,14 @@ public class Menu implements ActionListener {
 
 		}
 		if (e.getSource() == btnControls) {
-			// A développer
+			if (ControlsMenu.controlsFrame == null || ControlsMenu.controlsFrame.getParent() == null) {
+				@SuppressWarnings("unused")
+				ControlsMenu controls = new ControlsMenu();
+			} else {
+				ControlsMenu.controlsFrame.toFront();
+				ControlsMenu.controlsFrame.repaint();
+
+			}
 		}
 		if (e.getSource() == btnExit) {
 			System.exit(0);
