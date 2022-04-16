@@ -12,14 +12,40 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Une classe qui permet d'afficher la "cinematique" au debut du jeu.
+ * 
+ * @author roman_tyzio
+ * @version 1.0.0
+ */
 public class Introduction implements KeyListener {
 
+	/**
+	 * JFrame de la classe Introduction.
+	 */
 	private JFrame introFrame = new JFrame("The Incowdible Story");
+	/**
+	 * JPanel de la classe Game.
+	 */
 	private JPanel introPanel = new JPanel();
+	/**
+	 * Un Layout qui permet de passer d'une image a l'autre, on les defini dans le
+	 * constructeur.
+	 */
 	private CardLayout card = new CardLayout();
+	/**
+	 * La musique d'introduction.
+	 */
 	private Music musicIntro = new Music("IntroMusic");
-	private int counter = 0; // Counter de scenes
+	/**
+	 * Un compteur qui permet de passer d'une scene a l'autre.
+	 */
+	private int counter = 0;
 
+	/**
+	 * Un constructeur de la classe Introduction qui permet d'afficher les images,
+	 * ainsi que de passer d'une image a l'autre.
+	 */
 	public Introduction() {
 
 		// Creation de label des scenes
@@ -87,11 +113,21 @@ public class Introduction implements KeyListener {
 
 	}
 
+	/**
+	 * Un getter de musique de l'introduction.
+	 * 
+	 * @return La musique d'introduction.
+	 */
 	public Music getMusic() {
 		return this.musicIntro;
 
 	}
 
+	/**
+	 * Un getter du compteur de scenes.
+	 * 
+	 * @return Le "numero" de la scene.
+	 */
 	public int getCounter() {
 		return this.counter;
 	}

@@ -8,15 +8,44 @@ import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
 
+/**
+ * Une classe qui permet de creer le mini menu du jeu.
+ * 
+ * @author roman_tyzio
+ * @version 1.0.0
+ *
+ */
 public class MenuInGame implements ActionListener, KeyListener {
 
+	/**
+	 * JFrame de la classe MenuInGame.
+	 */
 	static JFrame miniMenu = new JFrame("Game Options");
+
+	/**
+	 * Un bouton qui permet de sauvegarder une partie.
+	 */
 	private JButton btnSave = new JButton("Save");
+	/**
+	 * Un bouton qui permet de lancer le menu de reglage sonore.
+	 */
 	private JButton btnSound = new JButton("Sound");
+	/**
+	 * Un bouton qui permet de lancer une fenetre d'affichage des commandes.
+	 */
 	private JButton btnControls = new JButton("Controls");
+	/**
+	 * Un bouton qui permet de revenir au menu prinicipal.
+	 */
 	private JButton btnMenu = new JButton("Menu");
+	/**
+	 * Un bouton qui permet fermer le jeu.
+	 */
 	private JButton btnExit = new JButton("Exit");
 
+	/**
+	 * Un constructeur de la classe MenuInGame.
+	 */
 	public MenuInGame() {
 
 		// Image du fond du menu

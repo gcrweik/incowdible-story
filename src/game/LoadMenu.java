@@ -16,23 +16,72 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+/**
+ * Une classe qui permet d'afficher le menu avec le choix des sauvegardes, ainsi
+ * que l'option de les supprimer ou de les jouer.
+ * 
+ * @author roman_tyzio
+ * @version 1.0.0
+ */
 public class LoadMenu implements ActionListener {
 
+	/**
+	 * JFrame de la classe LoadMenu.
+	 */
 	static JFrame loadFrame = new JFrame("Choose a Save");
+	/**
+	 * JList (pour les sauvegardes) de la classe LoadMenu.
+	 */
 	private JList<String> listSaves;
+	/**
+	 * JPanel (pour la liste des sauvegardes) de la classe LoadMenu.
+	 */
 	private JPanel loadPanelList;
+	/**
+	 * JPanel (pour la liste des sauvegardes) de la classe LoadMenu.
+	 */
 	private JPanel loadPanelButton;
+	/**
+	 * JScrollPane (permet de scroller la liste) de la classe LoadMenu.
+	 */
 	private JScrollPane loadScroll;
+	/**
+	 * Un button qui permet de charger la sauvegarde choisie.
+	 */
 	private JButton btnPlay = new JButton("Play");
+	/**
+	 * Un bouton qui permet de supprimer la sauvegarde choisie.
+	 */
 	private JButton btnDelete = new JButton("Delete");
-	private String[] fileNames; // Une liste de nom de sauvegardes.
-	private String[] refreshedSaves; // Une list pour refresh apres une supression.
-	private File f = new File("saves/gamesaves");// Le chemin vers le dossier des sauvegardes.
-	private ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png")); // L'icone pour un
-																									// MessageDialog
+	/**
+	 * Une liste des noms de sauvegardes.
+	 */
+	private String[] fileNames;
+	/**
+	 * Une list pour refresh apres une supression d'une sauvegarde.
+	 */
+	private String[] refreshedSaves;
+	/**
+	 * Le chemin vers le dossier des sauvegardes.
+	 */
+	private File f = new File("saves/gamesaves");
+	/**
+	 * Une image qui remplace l'icone de MessageDialog.
+	 */
+	private ImageIcon checkIcon = new ImageIcon(GUI.class.getResource("images/check_icon.png"));
+	/**
+	 * Une couleur pour le menu.
+	 */
 	private Color blueBackground = new Color(170, 224, 242);
+	/**
+	 * Un contour pour les elements du menu.
+	 */
 	private Border elementBorder = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 
+	/**
+	 * Un constructeur qui permet creer le menu des sauvegardes et le rendre
+	 * visible.
+	 */
 	public LoadMenu() {
 
 		// Initialisation des elements
@@ -110,7 +159,9 @@ public class LoadMenu implements ActionListener {
 
 	}
 
-	// Filtrer la recherche par le format, en occurrence .sav
+	/**
+	 * Permet de filtrers la recherche par le format, en occurrence .sav
+	 */
 	FilenameFilter formatFilter = new FilenameFilter() {
 		@Override
 		public boolean accept(File f, String name) {
@@ -122,7 +173,7 @@ public class LoadMenu implements ActionListener {
 	 * Une methode qui permet d'enlever le format d'un fichier dans un String.
 	 * 
 	 * @param fileNames Le nom du fichier.
-	 * @return Retourne le fichier sans son format.
+	 * @return Retourne Le fichier sans son format.
 	 */
 	private static String removeExtension(String fileNames) {
 		fileNames = fileNames.substring(0, fileNames.lastIndexOf("."));

@@ -25,17 +25,51 @@ import javax.swing.OverlayLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * Une classe qui permet de creer un menu pour le reglage du son.
+ * 
+ * @author roman_tyzio
+ * @version 1.0.0
+ */
 public class SoundMenu implements ActionListener, ChangeListener, java.io.Serializable {
 
+	/**
+	 * serialVersionUID pour la sauvegarde.
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * JFrame de la classe SoundMenu.
+	 */
 	static JFrame soundFrame = new JFrame("Music Options");
+	/**
+	 * Un bouton qui permet de continuer a jouer de la musique.
+	 */
 	private JButton btnPlay = new JButton("Play");
+	/**
+	 * Un bouton qui permet de mettre la musique en pause.
+	 */
 	private JButton btnPause = new JButton("Pause");
-	static int savedVolume = 0; // Le volume defini par l'utilisateur.
+	/**
+	 * Le volume defini par l'utilisateur precedement.
+	 */
+	static int savedVolume = 0;
+	/**
+	 * Un JSlider qui permet de changer de volume.
+	 */
 	private JSlider volumeSlider = new JSlider(-20, 6, savedVolume);
-	private Hashtable<Integer, JLabel> soundLabels = new Hashtable<>(); // Hashtable pour les labels de JSlider.
 
+	/**
+	 * Hashtable pour les labels de JSlider.
+	 */
+	private Hashtable<Integer, JLabel> soundLabels = new Hashtable<>();
+
+	/**
+	 * Un constructeur de la classe SoundMenu qui prend en parametre le volume
+	 * precedement defini par le joueur et permet de le sauvegarder a nouveau.
+	 * 
+	 * @param sV Le volume charge depuis un fichier.
+	 */
 	public SoundMenu(int sV) {
 		SoundMenu.savedVolume = sV;
 
@@ -97,8 +131,8 @@ public class SoundMenu implements ActionListener, ChangeListener, java.io.Serial
 	}
 
 	/**
-	 * Une methode qui permet de sauvegarder le volume de musique choisi par
-	 * l'utilisateur.
+	 * Une methode qui permet de sauvegarder le volume de musique choisi par le
+	 * joueur.
 	 */
 	static void saveMusicOptions() {
 		try {
@@ -116,8 +150,8 @@ public class SoundMenu implements ActionListener, ChangeListener, java.io.Serial
 	}
 
 	/**
-	 * Une methode qui permet de reutiliser le volume de musique difini par
-	 * l'utilisateur.
+	 * Une methode qui permet de reutiliser le volume de musique difini par le
+	 * joueur.
 	 * 
 	 * @return Le volume defini par l'utilisateur.
 	 */
@@ -140,6 +174,10 @@ public class SoundMenu implements ActionListener, ChangeListener, java.io.Serial
 		return savedVolume;
 	}
 
+	/**
+	 * Une methode qui permet de sauvegarder le volume defini quand la fenetre est
+	 * fermee.
+	 */
 	WindowListener exitListener = new WindowAdapter() {
 
 		@Override

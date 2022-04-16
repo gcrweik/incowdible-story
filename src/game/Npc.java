@@ -3,30 +3,90 @@ package game;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ * Une classe qui permet de creer un Npc.
+ * 
+ * @author mohamed_hanouche
+ * @author roman_tyzio
+ * @version 1.0.0
+ *
+ */
 public class Npc extends Element {
 
 	/**
-	 * 
+	 * serialVersionUID pour la sauvegarde.
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Une map qui contient les dialogues de Billy.
+	 */
 	Map<Integer, String> billyDialogs = new HashMap<>();
+	/**
+	 * Une map qui contient les dialogues de Joe.
+	 */
 	Map<Integer, String> joeDialogs = new HashMap<>();
+	/**
+	 * Une map qui contient les dialogues de Matou.
+	 */
 	Map<Integer, String> matouDialogs = new HashMap<>();
+	/**
+	 * Une map qui contient les dialogues de Jack.
+	 */
 	Map<Integer, String> jackDialogs = new HashMap<>();
+	/**
+	 * Compteur de dialogues.
+	 */
 	int dialogCounter = 0;
+	/**
+	 * La phrase actuelle du pesonnage.
+	 */
 	private String phrase;
+	/**
+	 * Nom du Npc;
+	 */
 	private String nameNpc;
+	/**
+	 * L'etat de dialogue de Billy.
+	 */
 	private int dialogStateBilly = 0;
+	/**
+	 * L'etat de dialogue de Joe.
+	 */
 	private int dialogStateJoe = 0;
+	/**
+	 * L'etat de dialogue de Matou.
+	 */
 	private int dialogStateMatou = 0;
+	/**
+	 * L'etat de dialogue de Jack.
+	 */
 	private int dialogStateJack = 0;
+	/**
+	 * Le Npc qui parle.
+	 */
 	private String dialogOwner;
+
+	/**
+	 * Un constructeur de la classe Npc.
+	 * 
+	 * @param x           Une coordonnee x du Npc.
+	 * @param y           Une coordonnee y du Npc.
+	 * @param imageWidth  Une largeur du Npc.
+	 * @param imageHeight Une hauteur du Npc.
+	 * @param imageName   Un nom de fichier d'image.
+	 * @param nameNpc     Un nom du Npc.
+	 */
 
 	public Npc(int x, int y, int imageWidth, int imageHeight, String imageName, String nameNpc) {
 		super(x, y, imageWidth, imageHeight, imageName);
 		this.nameNpc = nameNpc;
 	}
 
+	/**
+	 * Une methode qui permet d'executer le dialogue de Billy.
+	 * 
+	 * @return La prochaine phrase de Billy.
+	 */
 	public String dialogBilly() {
 		dialogOwner = "💬Billy: ";
 		String sp = spaceAdder(3);
@@ -72,6 +132,11 @@ public class Npc extends Element {
 
 	}
 
+	/**
+	 * Une methode qui permet d'executer le dialogue de Joe.
+	 * 
+	 * @return La prochaine phrase de Joe.
+	 */
 	public String dialogJoe() {
 		dialogOwner = "💬Joe: ";
 		String sp = spaceAdder(5);
@@ -106,8 +171,9 @@ public class Npc extends Element {
 							+ "Que tu as reussi a passer à travers Matou et sa 'Lucie' ainsi que\n" + sp
 							+ "Jack et son addiction aux cigarettes.\n");
 			joeDialogs.put(3, dialogOwner + "Bon... vu que j'ai envie de dormir, allons droit au but.\n");
-			joeDialogs.put(4, dialogOwner + "Je vais te poser deux questions.. et.. si tu reponds correctement au deux\n"
-					+ sp + "mon sécateur sera à toi ainsi qu'un petit 'indice'!\n");
+			joeDialogs.put(4,
+					dialogOwner + "Je vais te poser deux questions.. et.. si tu reponds correctement au deux\n" + sp
+							+ "mon sécateur sera à toi ainsi qu'un petit 'indice'!\n");
 			joeDialogs.put(5, dialogOwner + "*Joe rigole pour la premiere fois*\n");
 			joeDialogs.put(6, dialogOwner + "T'as le droit, a deux erreurs, à la troisieme...\n" + sp
 					+ "J'appele Matou! et s'en est fini de toi!\n");
@@ -171,10 +237,9 @@ public class Npc extends Element {
 			joeDialogs.clear();
 			joeDialogs.put(0, dialogOwner + "C'est exactement ça !\n");
 			joeDialogs.put(1, dialogOwner + "T'as merité ce secateur ainsi que ce petit indice...\n");
-			joeDialogs.put(2,
-					dialogOwner + "Si tu trouves une clé dans un trou..\n");
-			joeDialogs.put(3, dialogOwner + "N'hesite pas d'y sauter,\n" + sp
-					+ "ca te rameneras surement quelque part..\n");
+			joeDialogs.put(2, dialogOwner + "Si tu trouves une clé dans un trou..\n");
+			joeDialogs.put(3,
+					dialogOwner + "N'hesite pas d'y sauter,\n" + sp + "ca te rameneras surement quelque part..\n");
 			joeDialogs.put(4, dialogOwner + "*Il rigole encore*\n");
 			joeDialogs.put(5, dialogOwner + "Aller, aller Marguerite.. bon courage à toi..\n");
 			joeDialogs.put(6, dialogOwner + "*Il se rendort*\n");
@@ -198,6 +263,11 @@ public class Npc extends Element {
 
 	}
 
+	/**
+	 * Une methode qui permet d'executer le dialogue de Matou.
+	 * 
+	 * @return La prochaine phrase de Matou.
+	 */
 	public String dialogMatou() {
 		dialogOwner = "💬Matou: ";
 		if (dialogStateMatou == 0) {
@@ -248,6 +318,11 @@ public class Npc extends Element {
 
 	}
 
+	/**
+	 * Une methode qui permet d'executer le dialogue de Jack.
+	 * 
+	 * @return La prochaine phrase de Jack.
+	 */
 	public String dialogJack() {
 		dialogOwner = "💬Jack: ";
 		String sp = spaceAdder(5);
@@ -261,8 +336,7 @@ public class Npc extends Element {
 			jackDialogs.put(6, dialogOwner + "Laisse moi deviner, c'est Old Joe qui t'envoie?\n");
 			jackDialogs.put(7, dialogOwner + "*Remarque le regarde que vous jetez sur sa pelle*\n");
 			jackDialogs.put(8, dialogOwner + "Tu la veux? Hmmmm....\n");
-			jackDialogs.put(9,
-					dialogOwner + "Ramene moi du fromage ouuu...\n" + sp + "un paquet de cigarettes !\n");
+			jackDialogs.put(9, dialogOwner + "Ramene moi du fromage ouuu...\n" + sp + "un paquet de cigarettes !\n");
 			jackDialogs.put(10, dialogOwner + "Et traine pas trop sinon tu peux dire au revoir à la pelle hehe !\n");
 
 			phrase = jackDialogs.get(dialogCounter);
@@ -285,7 +359,8 @@ public class Npc extends Element {
 			jackDialogs.put(1, dialogOwner + "*Allume une cigarette directement et tire dessus*\n");
 			jackDialogs.put(2, dialogOwner + "*Son nez s'agite de plaisir*\n");
 			jackDialogs.put(3, dialogOwner + "Allez... tiens, t'as mérité ça.\n");
-			jackDialogs.put(4, dialogOwner + "Tu peux prendre ma pelle. Maintenant j'ai bien mieux, les cigarettes... !\n");
+			jackDialogs.put(4,
+					dialogOwner + "Tu peux prendre ma pelle. Maintenant j'ai bien mieux, les cigarettes... !\n");
 			jackDialogs.put(5, dialogOwner + "D'ailleurs, si ça t'interesse Joe à un sécateur.\n");
 			jackDialogs.put(6, dialogOwner + "Je dis ca, je dis rien.\n");
 
@@ -303,10 +378,20 @@ public class Npc extends Element {
 		return null;
 	}
 
+	/**
+	 * Une methode qui retourne le nom de Npc.
+	 * 
+	 * @return Le nom du Npc.
+	 */
 	public String getName() {
 		return this.nameNpc;
 	}
 
+	/**
+	 * Une methode qui retourne une map de dialogue du Npc.
+	 * 
+	 * @return La map de dialogue du Npc.
+	 */
 	public Map<Integer, String> getNpcDialogs() {
 		if (this.getName().equals("Joe")) {
 			return this.joeDialogs;
@@ -318,6 +403,11 @@ public class Npc extends Element {
 		return billyDialogs;
 	}
 
+	/**
+	 * Une methode qui permet de changer le prochain dialogue executer.
+	 * 
+	 * @param i Le dialogue souhaité.
+	 */
 	public void setDialogState(int i) {
 		if (this.getName().equals("Billy")) {
 			dialogStateBilly = i;
@@ -331,6 +421,11 @@ public class Npc extends Element {
 
 	}
 
+	/**
+	 * Une methode qui permet d'obtenir l'etat de dialogue.
+	 * 
+	 * @return Retourne 0 si aucune condition est remplie.
+	 */
 	public int getDialogState() {
 		if (this.getName().equals("Billy")) {
 			return dialogStateBilly;
