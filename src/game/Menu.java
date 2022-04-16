@@ -115,7 +115,7 @@ public class Menu implements ActionListener {
 		}
 		if (e.getSource() == btnSound) {
 			if (SoundMenu.soundFrame == null || SoundMenu.soundFrame.getParent() == null) {
-				int loadedoptions = SoundMenu.loadMusicOptions(); // Charge une partie à partir de la sauvegarde
+				int loadedoptions = SoundMenu.loadMusicOptions(); // Charge une partie a partir de la sauvegarde
 				@SuppressWarnings("unused")
 				SoundMenu sound = new SoundMenu(loadedoptions);
 			} else {

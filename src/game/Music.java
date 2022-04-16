@@ -14,7 +14,7 @@ public class Music {
 	static Clip clip; // Pour le son
 	static float currentVolume; // Volume de la musique actuel.
 	static FloatControl control;
-	static long pauseTime; // Le moment quand l'utilisateur a arreté la musique.
+	static long pauseTime; // Le moment quand l'utilisateur a arrete la musique.
 	private String songName; // Nom du fichier.
 
 	/**
@@ -58,7 +58,7 @@ public class Music {
 	}
 
 	/**
-	 * Une methode qui permet d'arreter la musique à la fermeture de la JFrame;
+	 * Une methode qui permet d'arreter la musique a la fermeture de la JFrame;
 	 */
 	public void stopMusic() {
 		Music.clip.close();

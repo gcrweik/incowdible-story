@@ -11,15 +11,35 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Une classe qui permet l'affichage de la fenetre Controls depuis le Menu du
+ * jeu.
+ * 
+ * @author roman_tyzio
+ * @version 1.0.0
+ *
+ */
 public class ControlsMenu implements KeyListener {
 
+	/**
+	 * JFrame de la classe Controls.
+	 */
 	static JFrame controlsFrame = new JFrame("Controls");
+	/**
+	 * JPanel de la classe Controls.
+	 */
 	private JPanel controlsPanel = new JPanel();
+	/**
+	 * L'image avec les controls de la classe Controls.
+	 */
 	private JLabel controlsScene;
 
+	/**
+	 * Un constructeur qui permet d'initiliaser le menu Controls.
+	 */
 	public ControlsMenu() {
 
-		controlsScene = new JLabel(new ImageIcon(getClass().getResource("images/GoodEnding.gif")));
+		controlsScene = new JLabel(new ImageIcon(getClass().getResource("images/ControlsScene.png")));
 
 		// Ajout de scenes dans le JPanel
 		controlsPanel.add(controlsScene);
@@ -46,7 +66,7 @@ public class ControlsMenu implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// La methode pas utilisée mais n'est pas à supprimer !
+		// La methode pas utilisee mais n'est pas a supprimer !
 
 	}
 
@@ -59,7 +79,7 @@ public class ControlsMenu implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// La methode pas utilisée mais n'est pas à supprimer !
+		// La methode pas utilisee mais n'est pas a supprimer !
 
 	}
 

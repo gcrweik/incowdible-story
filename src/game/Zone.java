@@ -21,7 +21,7 @@ public class Zone implements java.io.Serializable {
 		exits = new HashMap<>();
 		actions = new HashMap<>();
 		answers = new HashMap<>();
-		// Pose les coordonnées d'arrivé du personnage dans une salle.
+		// Pose les coordonnees d'arrive du personnage dans une salle.
 		this.xSpawn = xSpawn;
 		this.ySpawn = ySpawn;
 

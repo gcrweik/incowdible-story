@@ -62,7 +62,7 @@ public class Introduction implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// La methode pas utilisée mais n'est pas à supprimer !
+		// La methode pas utilisee mais n'est pas a supprimer !
 
 	}
 
@@ -83,7 +83,7 @@ public class Introduction implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// La methode pas utilisée mais n'est pas à supprimer !
+		// La methode pas utilisee mais n'est pas a supprimer !
 
 	}
 

@@ -11,13 +11,41 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Une classe qui permet d'afficher une fenetre de la fin et revenir ensuite
+ * dans le menu principal.
+ * 
+ * @author roman_tyzio
+ * @version 1.0.0
+ */
 public class End implements KeyListener {
 
+	/**
+	 * JFrame de la classe End.
+	 */
 	private JFrame endFrame = new JFrame("The Incowdible Story");
+	/**
+	 * JPanel de la classe End.
+	 */
 	private JPanel endPanel = new JPanel();
+	/**
+	 * Musique de la fenetre de fin.
+	 */
 	private Music musicEnd;
+	/**
+	 * L'image de la fin du jeu.
+	 */
 	private JLabel endScene;
 
+	/**
+	 * Un constructeur qui permet de creer une fenetre de la fin, une bonne fin (la
+	 * vraie fin du jeu) ainsi que la mort du personnage(l'echec). C'est decide en
+	 * fonction de parametre {@code sceneChoice}.
+	 * 
+	 * @param sceneChoice Doit etre egale a soit "GoodEnding" ou "BadEnding".
+	 * @throws IllegalArgumentException Si le parametre n'est pas egale a
+	 *                                  "GoodEnding" ou "BadEnding".
+	 */
 	public End(String sceneChoice) throws IllegalArgumentException {
 
 		if (sceneChoice == "GoodEnding") {
@@ -60,7 +88,7 @@ public class End implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// La methode pas utilisée mais n'est pas à supprimer !
+		// La methode pas utilisee mais n'est pas a supprimer !
 
 	}
 
@@ -76,7 +104,7 @@ public class End implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// La methode pas utilisée mais n'est pas à supprimer !
+		// La methode pas utilisee mais n'est pas a supprimer !
 
 	}
 
