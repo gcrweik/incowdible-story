@@ -102,6 +102,7 @@ public class MainCharacter extends Element {
 	 */
 	public int holeLimit;
 
+
 	/**
 	 * Un constructeur de la classe MainCharacter.
 	 * 
