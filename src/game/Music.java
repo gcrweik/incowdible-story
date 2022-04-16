@@ -10,12 +10,35 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * Une classe qui permet de gerer la musique dans le programme.
+ * 
+ * @author roman_tyzio
+ * @version 1.0.0
+ */
 public class Music {
-	static Clip clip; // Pour le son
-	static float currentVolume; // Volume de la musique actuel.
+	/**
+	 * Une instance de la classe Clip.
+	 */
+	static Clip clip;
+	/**
+	 * Le volume de musique actuel.
+	 */
+	static float currentVolume;
+	/**
+	 * L'instance de la classe FloatControl.
+	 */
 	static FloatControl control;
-	static long pauseTime; // Le moment quand l'utilisateur a arrete la musique.
-	private String songName; // Nom du fichier.
+	/**
+	 * Le moment ou le joueur arrete la musique.
+	 */
+	static long pauseTime;
+
+	/**
+	 * Le nom du fichier musique.
+	 */
+
+	private String songName;
 
 	/**
 	 * Constructeur de la classe Music.
@@ -66,7 +89,7 @@ public class Music {
 	}
 
 	/**
-	 * Une methode qui permet de reprendre la musique au meme moment.
+	 * Une methode qui permet de reprendre la musique au moment quand elle etait .
 	 */
 	public static void continueMusic() {
 		clip.setMicrosecondPosition(pauseTime);
@@ -81,11 +104,18 @@ public class Music {
 		clip.stop();
 	}
 
+	/**
+	 * Une methode qui permet de reprendre la musique a partir de moment de la
+	 * pause.( pour le volume 0% );
+	 */
 	public static void specialContinueMusic() {
 		Music.clip.setMicrosecondPosition(Music.clip.getMicrosecondPosition());
 		Music.clip.start();
 	}
 
+	/**
+	 * Une methode qui donne le chemin vers le fichier musique.
+	 */
 	public String toString() {
 		return "sounds/" + this.songName + ".sav";
 

@@ -8,16 +8,47 @@ import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
 
+/**
+ * Une classe qui permet de creer le menu principal du jeu.
+ * 
+ * @author roman_tyzio
+ * @version 1.0.0
+ *
+ */
 public class Menu implements ActionListener {
 
+	/**
+	 * JFrame de la classe Menu.
+	 */
 	static JFrame menuFrame = new JFrame("Menu");
+	/**
+	 * Un bouton qui permet de lancer une nouvelle partie.
+	 */
 	private JButton btnStart = new JButton("New Game");
+	/**
+	 * Un bouton qui permet de lancer une sauvegarde.
+	 */
 	private JButton btnLoad = new JButton("Load");
+	/**
+	 * Un bouton qui permet de lancer le menu de reglage sonore.
+	 */
 	private JButton btnSound = new JButton("Sound");
+	/**
+	 * Un bouton qui permet de lancer une fenetre d'affichage des commandes.
+	 */
 	private JButton btnControls = new JButton("Controls");
+	/**
+	 * Un bouton qui permet fermer le jeu.
+	 */
 	private JButton btnExit = new JButton("Exit");
+	/**
+	 * La musique du menu principale.
+	 */
 	static Music musicMenu = new Music("MenuMusic");
 
+	/**
+	 * Un constructeur de la classe Menu.
+	 */
 	public Menu() {
 
 		// Image du fond du menu
@@ -95,6 +126,9 @@ public class Menu implements ActionListener {
 		menuFrame.setVisible(true);
 	}
 
+	/**
+	 * Une methode qui permet de fermer la fenetre du menu principal.
+	 */
 	public static void disposeMenuFrame() {
 		menuFrame.dispose();
 	}
@@ -140,6 +174,11 @@ public class Menu implements ActionListener {
 
 	}
 
+	/**
+	 * Un getter pour la musique du menu principal.
+	 * 
+	 * @return La musique du menu principal.
+	 */
 	public Music getMusic() {
 		return Menu.musicMenu;
 	}

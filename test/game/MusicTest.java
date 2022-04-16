@@ -6,10 +6,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Une classe test pour la classe Music.
+ * 
+ * @author roman_tyzio
+ * @version 1.0.0
+ *
+ */
 class MusicTest {
 
+	/**
+	 * Les instances de classe Music.
+	 */
 	Music music1, music2, music3, music4;
 
+	/**
+	 * Une methode setUp pour MusicTest.
+	 * 
+	 * @throws Exception En cas d'erreur.
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		music1 = new Music("IntroMusic");
@@ -18,6 +33,9 @@ class MusicTest {
 		music4 = new Music("FailMusic");
 	}
 
+	/**
+	 * Une methode qui execute des tests de MusicTest.
+	 */
 	@Test
 	@DisplayName("Music constructor test")
 	void testMusic() {
@@ -34,4 +52,3 @@ class MusicTest {
 		assertNotEquals(music3, new Music("MenuMusic"));
 	}
 }
-
