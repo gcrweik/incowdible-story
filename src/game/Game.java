@@ -38,8 +38,13 @@ public class Game implements java.io.Serializable {
 
 	private Backpack backpack = new Backpack();
 
+	// Les deux fichiers avec les soluces basiques
 	private File file1 = new File("solutions/solution1.txt");
 	private File file2 = new File("solutions/solution2.txt");
+
+	// Les deux fichiers avec les soluces secretes
+	private File secretFile1 = new File("solutions/secret_solution1.txt");
+	private File secretFile2 = new File("solutions/secret_solution2.txt");
 
 	public Game() {
 		createMap();
@@ -50,7 +55,6 @@ public class Game implements java.io.Serializable {
 		gui = g;
 		showWelcomeMessage();
 
-		System.out.println("Variable globale random :" + cigs.getRandomInt()); // A supprimer
 	}
 
 	private void createMap() {
@@ -366,18 +370,34 @@ public class Game implements java.io.Serializable {
 			goTo(returnTo());
 			break;
 
-		// Executer la solution
+		// Executer la solution de base
 		case "T":
 		case "TERMINER":
 			if (currentZone == zones[0]) {
 				if (cigs.getRandomInt() == 1) {
-					System.out.println("Execution solution 1");
 					executeSolution(file1);
 					break;
 				}
 				if (cigs.getRandomInt() == 2) {
-					System.out.println("Execution solution 2");
 					executeSolution(file2);
+					break;
+				}
+				break;
+			} else {
+				gui.show("\nPour executer cette commande il faut etre dans la Cellule et au debut du jeu!");
+				gui.show();
+				break;
+			}
+
+		case "TSEC":
+		case "TERMINER_SEC":
+			if (currentZone == zones[0]) {
+				if (cigs.getRandomInt() == 1) {
+					executeSolution(secretFile1);
+					break;
+				}
+				if (cigs.getRandomInt() == 2) {
+					executeSolution(secretFile2);
 					break;
 				}
 				break;
@@ -1381,16 +1401,36 @@ public class Game implements java.io.Serializable {
 					case "COUPER":
 						executeCommand("COUPER");
 						break;
+					case "T1":
+						executeCommand("T1");
+						break;
 					case "T2":
 						executeCommand("T2");
+						break;
+					case "T3":
+						executeCommand("T3");
 						break;
 					case "T4":
 						executeCommand("T4");
 						break;
+					case "SAUTER":
+						executeCommand("SAUTER");
+						if (currentZone == zones[8]) {
+							GUI.musicGame.stopMusic();
+							GUI.disposeGUIFrame();
+							@SuppressWarnings("unused")
+							End end = new End("GoodEnding");
+						}
+						break;
 					case "FUIR":
 						executeCommand("FUIR");
 						break;
-
+					case "BUREAU":
+						backpack.removeElement(key);
+						backpack.key = false;
+						initialize();
+						gui.replaceMainCharacter(mainCharacter, 951, 229);
+						break;
 					default:
 						goTo(currentLine);
 						break;

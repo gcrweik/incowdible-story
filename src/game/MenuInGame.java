@@ -113,7 +113,8 @@ public class MenuInGame implements ActionListener, KeyListener {
 			SoundMenu sound = new SoundMenu(loadedoptions);
 		}
 		if (e.getSource() == btnControls) {
-			// A développer
+			@SuppressWarnings("unused")
+			ControlsMenu controls = new ControlsMenu();
 		}
 		if (e.getSource() == btnMenu) {
 			GUI.musicGame.stopMusic();
