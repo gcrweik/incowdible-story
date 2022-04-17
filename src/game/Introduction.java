@@ -19,7 +19,6 @@ import javax.swing.JPanel;
  * @version 1.0.0
  */
 public class Introduction implements KeyListener {
-
 	/**
 	 * JFrame de la classe Introduction.
 	 */
