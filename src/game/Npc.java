@@ -184,7 +184,7 @@ public class Npc extends Element {
 		}
 		if (dialogStateJoe == 3) {
 			joeDialogs.clear();
-			joeDialogs.put(0, dialogOwner + "Combien de chaises y-a-t'il dans la salle de sport?\n");
+			joeDialogs.put(0, dialogOwner + "Combien de chaises y-a-t'il dans la cours de sport?\n");
 
 			phrase = joeDialogs.get(dialogCounter);
 			return phrase;
@@ -337,8 +337,7 @@ public class Npc extends Element {
 			jackDialogs.put(7, dialogOwner + "*Remarque le regarde que vous jetez sur sa pelle*\n");
 
 			jackDialogs.put(8, dialogOwner + "Tu l'as veux? Hmmmm....\n");
-			jackDialogs.put(9,
-					dialogOwner + "Ramene moi du fromage ouuu...\n" + sp + "un paquet de cigarettes !\n");
+			jackDialogs.put(9, dialogOwner + "Ramene moi du fromage ouuu...\n" + sp + "un paquet de cigarettes !\n");
 
 			jackDialogs.put(10, dialogOwner + "Et traine pas trop sinon tu peux dire au revoir à la pelle hehe !\n");
 
