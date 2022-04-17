@@ -101,32 +101,26 @@ public class GUI implements ActionListener, java.io.Serializable {
 		if (imageURL != null) {
 			image.setIcon(new ImageIcon(imageURL));
 
-			final JTextField text = new JTextField();
-			;
-			guiFrame.add(text, BorderLayout.SOUTH);
-
-			image.addMouseListener(new MouseListener() {
-				public void mousePressed(MouseEvent me) {
-				}
-
-				public void mouseReleased(MouseEvent me) {
-				}
-
-				public void mouseEntered(MouseEvent me) {
-				}
-
-				public void mouseExited(MouseEvent me) {
-				}
-
-				// Permet d'afficher les coordonnees de l'endroit d'ecran ou on clique.
-				// Utilisation : connaitre les coordonnes pour placer les elements,
-				// personnages,etc. Ne fonctionne plus car -> gameFrame.setResizable(false);
-				public void mouseClicked(MouseEvent me) {
-					int x = me.getX();
-					int y = me.getY();
-					text.setText("X:" + x + " Y:" + y);
-				}
-			});
+			// Permet d'afficher les coordonnees de l'endroit d'ecran ou on clique.
+			// Utilisation : connaitre les coordonnes pour placer les elements,
+			// personnages,etc.
+			/*
+			 * final JTextField text = new JTextField();
+			 * 
+			 * guiFrame.add(text, BorderLayout.SOUTH);
+			 * 
+			 * image.addMouseListener(new MouseListener() { public void
+			 * mousePressed(MouseEvent me) { }
+			 * 
+			 * public void mouseReleased(MouseEvent me) { }
+			 * 
+			 * public void mouseEntered(MouseEvent me) { }
+			 * 
+			 * public void mouseExited(MouseEvent me) { }
+			 * 
+			 * public void mouseClicked(MouseEvent me) { int x = me.getX(); int y =
+			 * me.getY(); text.setText("X:" + x + " Y:" + y); } });
+			 */
 		}
 	}
 
