@@ -1004,7 +1004,7 @@ public class Game implements java.io.Serializable {
 				mainCharacter.alarmUp = true;
 				gui.show("Vous coupez le grillage et passez à travers !\n");
 				gui.show("🚨Une alarme vient d'etre lancer ! Ne perdez plus de temps !🚨\n");
-				gui.show("🚨Vous avez assez du temps pour en creuser deux trous !🚨\n");
+				gui.show("🚨Vous avez, tout juste assez de temps pour creuser deux trous !🚨\n");
 				gui.show("🚨Depechez-vous !!!🚨\n");
 				teleport(6);
 			}

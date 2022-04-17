@@ -239,7 +239,7 @@ public class Npc extends Element {
 			joeDialogs.put(1, dialogOwner + "T'as merité ce secateur ainsi que ce petit indice...\n");
 			joeDialogs.put(2, dialogOwner + "Si tu trouves une clé dans un trou..\n");
 			joeDialogs.put(3,
-					dialogOwner + "N'hesite pas d'y sauter,\n" + sp + "ca te rameneras surement quelque part..\n");
+					dialogOwner + "N'hesite pas de sauter dans le trou,\n" + sp + "ca te rameneras surement quelque part..\n");
 			joeDialogs.put(4, dialogOwner + "*Il rigole encore*\n");
 			joeDialogs.put(5, dialogOwner + "Aller, aller Marguerite.. bon courage à toi..\n");
 			joeDialogs.put(6, dialogOwner + "*Il se rendort*\n");
